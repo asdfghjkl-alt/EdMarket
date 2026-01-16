@@ -13,7 +13,7 @@
     "lint-fix": "eslint --fix '**/*.{ts,js}'",
     "start": "cross-env NODE_ENV=production npx tsx src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx tsx watch --clear-screen=false src/index.ts"
+    "dev": "npx tsx watch src/index.ts"
   },
   "dependencies": {
     "connect-mongo": "^6.0.0",

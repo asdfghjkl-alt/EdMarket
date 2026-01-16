@@ -10,16 +10,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "strict": true,
-
-    "exactOptionalPropertyTypes": true,
-
-    // Recommended Options
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force"
+    "strict": true
   },
   "exclude": ["**/**_broken.ts", "node_modules"]
 }

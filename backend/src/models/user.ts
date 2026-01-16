@@ -1,7 +1,8 @@
 import { Schema, model } from "mongoose";
-import passportLocalMongoose, {
-  type PassportLocalMongooseModel,
-  type PassportLocalMongooseDocument,
+import passportLocalMongoose from "passport-local-mongoose";
+import type {
+  PassportLocalMongooseModel,
+  PassportLocalMongooseDocument,
 } from "passport-local-mongoose";
 
 export interface IUser extends PassportLocalMongooseDocument {
@@ -16,6 +17,7 @@ const userSchema = new Schema({
   },
 });
 
+// eslint-disable-next-line
 userSchema.plugin((passportLocalMongoose as any).default);
 
 const User = model<IUser, PassportLocalMongooseModel<IUser>>(

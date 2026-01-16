@@ -12,8 +12,8 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import ShopError from "./utils/ShopError.js";
 import userRoutes from "./routes/user";
-import User from "./models/user.js";
-import { type IUser } from "./models/user.js";
+import User, { type IUser } from "./models/user.js";
+import { isLoggedIn } from "./middleware/user.js";
 
 let dbUrl: string;
 
@@ -73,6 +73,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use("/auth", userRoutes);
+app.get("/protected", isLoggedIn, (req: Request, res: Response) => {
+  res.send("Successful! You were authenticated!");
+});
 
 app.all(/(.*)/, (req, res, next) => {
   next(new ShopError("Page not found", 404));
@@ -83,8 +86,9 @@ app.use(
     err: { statusCode?: number; message?: string },
     req: Request,
     res: Response,
-    _next: NextFunction
+    next: NextFunction
   ) => {
+    void next;
     const { statusCode = 500 } = err as {
       statusCode?: number;
     };

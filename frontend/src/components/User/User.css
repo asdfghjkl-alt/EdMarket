@@ -1,0 +1,4 @@
+@import "tailwindcss";
+.btn-auth {
+  @apply m-0.5 w-full rounded-lg border bg-blue-500 p-2 text-blue-100;
+}

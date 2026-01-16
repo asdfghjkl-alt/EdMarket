@@ -2,20 +2,24 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate } from "react-router";
 import Joi from "joi";
-import type { LoginFormData, RegisterFormData } from "../../types/user";
+import type { RegisterFormData } from "../../types/user";
 import { useState } from "react";
+import "./User.css";
 
 const registerSchema = Joi.object({
-  email: Joi.string().email(),
   username: Joi.string()
     .required()
     .messages({ "string.empty": "Username cannot be blank." }),
   password: Joi.string().required().messages({
     "string.empty": "Password cannot be blank",
   }),
+  email: Joi.string().required().email().messages({
+    "string.empty": "Email cannot be blank",
+    "string.email": "Please enter in a valid email address",
+  }),
 });
 
-export default function Login() {
+export default function Register() {
   const {
     register,
     handleSubmit,
@@ -31,7 +35,7 @@ export default function Login() {
 
   async function onSubmit(data: RegisterFormData) {
     try {
-      await fetch("http://localhost:3314/auth/register", {
+      const response = await fetch("http://localhost:3314/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,6 +43,10 @@ export default function Login() {
         body: JSON.stringify(data),
         credentials: "include",
       });
+      if (!response.ok) {
+        throw new Error("Error: Failed to create the new user");
+      }
+
       navigate("/");
     } catch (e) {
       if (e instanceof Error) {
@@ -46,38 +54,53 @@ export default function Login() {
       } else {
         setErrMsg("Unexpected error occurred");
       }
+      reset();
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      {errMsg}
-      <div>
-        <label htmlFor="email">Email: </label>
-        <input placeholder="Email" {...register("email")} />
+    <div className="flex h-screen items-center justify-center">
+      <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
+        <h1 className="text-xl">Register an account for EdMarket</h1>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          {errMsg}
+          <div>
+            <input
+              placeholder="Email"
+              className="size-full p-1 text-lg"
+              {...register("email")}
+            />
+          </div>
+          <div className="text-red-500">
+            {errors.email && <span>{errors.email.message}</span>}
+          </div>
+          <div>
+            <input
+              placeholder="Username"
+              className="size-full p-1 text-lg"
+              {...register("username")}
+            />
+          </div>
+          <div className="text-red-500">
+            {errors.username && <span>{errors.username.message}</span>}
+          </div>
+          <hr className="m-1 text-red-100" />
+          <div>
+            <input
+              type="password"
+              className="size-full p-1 text-lg"
+              placeholder="Password"
+              {...register("password")}
+            />
+          </div>
+          <div className="text-red-500">
+            {errors.password && <span>{errors.password.message}</span>}
+          </div>
+          <button type="submit" className="btn-auth">
+            Register
+          </button>
+        </form>
       </div>
-      <div className="error-box">
-        {errors.email && <span>{errors.email.message}</span>}
-      </div>
-      <div>
-        <label htmlFor="username">Username: </label>
-        <input placeholder="Username" {...register("username")} />
-      </div>
-      <div className="error-box">
-        {errors.username && <span>{errors.username.message}</span>}
-      </div>
-      <div>
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
-      </div>
-      <div className="error-box">
-        {errors.password && <span>{errors.password.message}</span>}
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
   );
 }

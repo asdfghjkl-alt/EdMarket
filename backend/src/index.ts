@@ -8,6 +8,7 @@ import session from "express-session";
 import methodOverride from "method-override";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
+import cors from "cors";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import ShopError from "./utils/ShopError.js";
@@ -34,6 +35,13 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,

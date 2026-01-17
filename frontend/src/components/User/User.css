@@ -2,3 +2,6 @@
 .btn-auth {
   @apply m-0.5 w-full rounded-lg border bg-blue-500 p-2 text-blue-100;
 }
+.input-auth {
+  @apply m-1 size-full rounded-xl border-2 border-solid border-gray-400 p-3 text-lg;
+}

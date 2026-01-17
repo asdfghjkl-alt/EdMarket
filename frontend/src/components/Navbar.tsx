@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
+import { useAuth } from "../contexts/UserContext";
+import CartImg from "../assets/cart.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about-us", label: "About Us" },
-  { href: "/auth/login", label: "Login" },
 ];
+const unauthLinks = [{ href: "/auth/login", label: "Login" }];
+const authLinks = [{ href: "/products", label: "Products" }];
 
 const linkBaseClass =
-  "uppercase tracking-wide px-5 py-2 rounded-full text-teal-50 hover:bg-teal-500 transition-colors";
+  "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,9 +19,11 @@ export default function Navbar() {
   const toggleMenu = () => setIsMenuOpen((open) => !open);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const { user, logout } = useAuth();
+
   return (
     <header
-      className="sticky top-0 z-50 bg-sky-700 font-semibold text-teal-50 shadow-lg shadow-black/30"
+      className="sticky top-0 z-50 bg-sky-700 font-normal text-teal-50 shadow-lg shadow-black/30"
       role="banner"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 p-2">
@@ -41,29 +46,62 @@ export default function Navbar() {
               key={link.href}
               to={link.href}
               className={({ isActive }) =>
-                `${linkBaseClass} ${isActive ? "bg-teal-500" : "bg-sky-700"}`
+                `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
               }
             >
               {link.label}
             </NavLink>
           ))}
-
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              `${linkBaseClass} border-2 border-white/30 shadow-lg shadow-black/50 ${
-                isActive ? "bg-teal-500" : "bg-sky-700"
-              }`
-            }
-          >
-            Contact
-          </NavLink>
+          {user ? (
+            <>
+              {authLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+              <button
+                className={`${linkBaseClass} bg-sky-700`}
+                onClick={logout}
+              >
+                Logout
+              </button>
+              <p className="text-sm text-gray-200">Welcome {user.username}</p>
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  `${linkBaseClass} flex items-center border-2 border-white/30 shadow-lg shadow-black/50 ${
+                    isActive ? "bg-sky-500" : "bg-sky-700"
+                  }`
+                }
+              >
+                <img src={CartImg} /> <p>Cart</p>
+              </NavLink>
+            </>
+          ) : (
+            unauthLinks.map((link) => (
+              <NavLink
+                key={link.href}
+                to={link.href}
+                className={({ isActive }) =>
+                  `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))
+          )}
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
           <button
             type="button"
-            className="flex h-10 w-11 flex-col items-center justify-center gap-1.5 rounded-md border border-teal-50/50 text-teal-50 transition hover:bg-teal-500"
+            className="flex h-10 w-11 flex-col items-center justify-center gap-1.5 rounded-md border border-teal-50/50 text-teal-50 transition hover:bg-sky-500"
             aria-label="Toggle navigation menu"
             aria-expanded={isMenuOpen}
             onClick={toggleMenu}
@@ -98,7 +136,7 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden">
           <nav
-            className="mx-auto flex max-w-7xl flex-col gap-2 border-t border-teal-100 bg-teal-600/80 p-5 text-base font-semibold tracking-wide uppercase"
+            className="mx-auto flex max-w-7xl flex-col gap-2 border-t border-teal-100 bg-sky-700 p-5 text-base font-semibold tracking-wide"
             aria-label="Mobile"
           >
             {navLinks.map((link) => (
@@ -106,26 +144,63 @@ export default function Navbar() {
                 key={link.href}
                 to={link.href}
                 className={({ isActive }) =>
-                  `${linkBaseClass} ${
-                    isActive ? "bg-teal-500 shadow-lg shadow-black/30" : ""
-                  }`
+                  `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
                 }
                 onClick={closeMenu}
               >
                 {link.label}
               </NavLink>
             ))}
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                `${linkBaseClass} border-2 border-white/30 text-center shadow-lg shadow-black/50 ${
-                  isActive ? "bg-teal-500" : "bg-sky-700"
-                }`
-              }
-              onClick={closeMenu}
-            >
-              Contact
-            </NavLink>
+            {user ? (
+              <>
+                {authLinks.map((link) => (
+                  <NavLink
+                    key={link.href}
+                    to={link.href}
+                    className={({ isActive }) =>
+                      `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
+                    }
+                    onClick={closeMenu}
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+                <button
+                  className={`${linkBaseClass} bg-sky-700 text-left`}
+                  onClick={() => {
+                    closeMenu();
+                    logout();
+                  }}
+                >
+                  Logout
+                </button>
+                <p className="text-sm text-gray-200">Welcome {user.username}</p>
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    `${linkBaseClass} flex items-center border-2 border-white/30 shadow-lg shadow-black/50 ${
+                      isActive ? "bg-sky-500" : "bg-sky-700"
+                    }`
+                  }
+                  onClick={closeMenu}
+                >
+                  <img src={CartImg} /> <p>Cart</p>
+                </NavLink>
+              </>
+            ) : (
+              unauthLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
+                  }
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </NavLink>
+              ))
+            )}
           </nav>
         </div>
       )}

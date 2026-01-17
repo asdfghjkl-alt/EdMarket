@@ -1,3 +1,10 @@
+import { useAuth } from "../contexts/UserContext";
+
 export default function Home() {
-  return <h2>Hi</h2>;
+  const { user } = useAuth();
+  return (
+    <div className="m-6 text-center">
+      <h1 className="text-6xl">Welcome to EdMarket!</h1>
+    </div>
+  );
 }

@@ -3,8 +3,10 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate } from "react-router";
 import Joi from "joi";
 import type { LoginFormData } from "../../types/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./User.css";
+import { useAuth } from "../../contexts/UserContext";
+import { AxiosError } from "axios";
 
 const loginSchema = Joi.object({
   username: Joi.string()
@@ -27,26 +29,30 @@ export default function Login() {
     defaultValues: { username: "", password: "" },
   });
   const navigate = useNavigate();
+  const { login: authLogin, loading, user } = useAuth();
   const [errMsg, setErrMsg] = useState("");
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Render a spinner instead of the login form
+  }
 
   async function onSubmit(data: LoginFormData) {
     try {
-      const response = await fetch("http://localhost:3314/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Error: Incorrect username or password");
-      }
-
+      await authLogin(data.username, data.password);
       navigate("/");
     } catch (e) {
-      if (e instanceof Error) {
-        setErrMsg(e.message);
+      if (e instanceof AxiosError) {
+        if (e.status === 401) {
+          setErrMsg("Either username or password is incorrect");
+        } else {
+          setErrMsg(e.message);
+        }
       } else {
         setErrMsg("Unexpected error occurred");
       }
@@ -63,7 +69,7 @@ export default function Login() {
           <div>
             <input
               placeholder="Username"
-              className="size-full p-1 text-lg"
+              className="input-auth"
               {...register("username")}
             />
           </div>
@@ -73,7 +79,7 @@ export default function Login() {
           <div>
             <input
               type="password"
-              className="size-full p-1 text-lg"
+              className="input-auth"
               placeholder="Password"
               {...register("password")}
             />

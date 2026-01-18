@@ -1,8 +1,8 @@
-import express, { NextFunction, Response, Request } from "express";
+import { Router } from "express";
 import passport from "passport";
 import { login, logout, me, register } from "../controllers/user";
 
-const router = express.Router();
+const router = Router();
 
 router.post("/register", register);
 router.post("/login", passport.authenticate("local"), login);

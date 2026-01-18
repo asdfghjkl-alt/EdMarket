@@ -1,19 +1,23 @@
-import { type NextFunction, type Request, type Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import ShopError from "../utils/ShopError";
 import User from "../models/user";
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, username, password } = req.body;
-    const user = new User({ email, username });
+    const user = new User({ email, username, isAdmin: false });
     const registeredUser = await User.register(user, password);
 
     req.login(registeredUser, (err) => {
       if (err) next(err);
       res.status(200).json({
         message: `Welcome ${username}`,
-        data: {
-          user: { username: registeredUser.username, _id: registeredUser._id },
+        body: {
+          user: {
+            username: registeredUser.username,
+            _id: registeredUser._id,
+            isAdmin: registeredUser.isAdmin,
+          },
         },
       });
     });
@@ -29,7 +33,13 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 const login = async (req: Request, res: Response) => {
   res.json({
     message: `Welcome ${req.user?.username}`,
-    data: { user: { username: req.user?.username, _id: req.user?._id } },
+    body: {
+      user: {
+        username: req.user?.username,
+        _id: req.user?._id,
+        isAdmin: req.user?.isAdmin,
+      },
+    },
   });
 };
 
@@ -44,13 +54,14 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
 
 const me = async (req: Request, res: Response) => {
   if (req.user) {
-    const { _id, username } = req.user;
+    const { _id, username, isAdmin } = req.user;
     return res.json({
       message: "Was authenticated",
-      data: {
+      body: {
         user: {
           _id,
           username,
+          isAdmin,
         },
       },
     });

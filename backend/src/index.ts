@@ -13,6 +13,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import ShopError from "./utils/ShopError.js";
 import userRoutes from "./routes/user";
+import productRoutes from "./routes/product";
 import User, { type IUser } from "./models/user.js";
 import { isLoggedIn } from "./middleware/user.js";
 
@@ -81,12 +82,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use("/auth", userRoutes);
-app.get("/protected", isLoggedIn, (req: Request, res: Response) => {
-  res.send("Successful! You were authenticated!");
-});
+app.use("/products", productRoutes);
 
 app.all(/(.*)/, (req, res, next) => {
-  next(new ShopError("Page not found", 404));
+  next(new ShopError("Unable to access the resource requested", 404));
 });
 
 app.use(
@@ -104,7 +103,7 @@ app.use(
       err.message = "Something unknown has gone wrong, sorry.";
     }
 
-    res.status(statusCode).json({ message: err.message, statusCode });
+    res.status(statusCode).json({ message: err.message });
   }
 );
 

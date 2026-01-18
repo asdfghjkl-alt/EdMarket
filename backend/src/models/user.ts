@@ -7,6 +7,7 @@ import type {
 
 export interface IUser extends PassportLocalMongooseDocument {
   email: string;
+  isAdmin: boolean;
 }
 
 const userSchema = new Schema({
@@ -14,6 +15,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
   },
 });
 

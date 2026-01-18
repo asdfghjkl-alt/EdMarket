@@ -18,8 +18,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const { data: body } = await api.get("/auth/me");
-        setUser(body.data.user);
+        const { data } = await api.get("/auth/me");
+        setUser(data.body.user);
       } catch (err) {
         // 401 means no session exists, which is fine
         setUser(null);
@@ -36,20 +36,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     username: string,
     password: string,
   ) => {
-    const { data: body } = await api.post("/auth/register", {
+    const { data } = await api.post("/auth/register", {
       email,
       username,
       password,
     });
-    setUser(body.data.user);
+    setUser(data.body.user);
   };
 
   const login = async (username: string, password: string) => {
-    const { data: body } = await api.post("/auth/login", {
+    const { data } = await api.post("/auth/login", {
       username,
       password,
     });
-    setUser(body.data.user);
+    setUser(data.body.user);
   };
 
   const logout = async () => {

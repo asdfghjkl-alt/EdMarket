@@ -5,7 +5,7 @@ export default function MainLayout() {
   return (
     <>
       <Navbar />
-      <Outlet /> {/* This renders Home or Different */}
+      <Outlet />
     </>
   );
 }

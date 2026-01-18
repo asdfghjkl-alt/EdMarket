@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Home from "./components/Home";
-import Different from "./components/Different";
-import Login from "./components/User/Login";
+import Home from "./pages/Home";
+import Login from "./pages/User/Login";
 import MainLayout from "./MainLayout";
-import Register from "./components/User/Register";
+import Register from "./pages/User/Register";
 import { AuthProvider } from "./contexts/UserContext";
-import NotFound from "./components/NotFound";
+import NotFound from "./pages/NotFound";
+import "./App.css";
+import AddProduct from "./pages/Admin/AddProduct";
 
 function App() {
   return (
@@ -16,11 +16,14 @@ function App() {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path="auth">
+                <Route index element={<NotFound />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
               </Route>
+              <Route path="products">
+                <Route path="add" element={<AddProduct />} />
+              </Route>
               <Route path="/" element={<Home />} />
-              <Route path="/different" element={<Different />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

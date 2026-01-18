@@ -6,6 +6,8 @@ import type { RegisterFormData } from "../../types/user";
 import { useEffect, useState } from "react";
 import "./User.css";
 import { useAuth } from "../../contexts/UserContext";
+import InputField from "../../components/InputField";
+import { Input } from "@headlessui/react";
 
 const registerSchema = Joi.object({
   username: Joi.string()
@@ -62,7 +64,8 @@ export default function Register() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center">
+      <h1 className="my-8 text-5xl font-bold">EdMarket</h1>
       <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1 className="text-xl">Register an account for EdMarket</h1>
         <p>
@@ -76,38 +79,29 @@ export default function Register() {
         </p>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {errMsg}
-          <div>
-            <input
-              placeholder="Email"
-              className="input-auth"
-              {...register("email")}
-            />
-          </div>
-          <div className="text-red-500">
-            {errors.email && <span>{errors.email.message}</span>}
-          </div>
-          <div>
-            <input
-              placeholder="Username"
-              className="input-auth"
-              {...register("username")}
-            />
-          </div>
-          <div className="text-red-500">
-            {errors.username && <span>{errors.username.message}</span>}
-          </div>
+          <InputField
+            name="email"
+            placeholder="Email"
+            label="Email"
+            register={register}
+            error={errors.email}
+          />
+          <InputField
+            name="username"
+            placeholder="Username"
+            label="Username"
+            register={register}
+            error={errors.username}
+          />
           <hr className="m-1 text-red-100" />
-          <div className="border-gray-500">
-            <input
-              type="password"
-              className="input-auth"
-              placeholder="Password"
-              {...register("password")}
-            />
-          </div>
-          <div className="mb-1 text-red-500">
-            {errors.password && <span>{errors.password.message}</span>}
-          </div>
+          <InputField
+            name="password"
+            placeholder="Password"
+            type="password"
+            label="Password"
+            register={register}
+            error={errors.password}
+          />
           <button type="submit" className="btn-auth">
             Register
           </button>

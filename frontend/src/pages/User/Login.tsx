@@ -3,10 +3,11 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate } from "react-router";
 import Joi from "joi";
 import type { LoginFormData } from "../../types/user";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./User.css";
 import { useAuth } from "../../contexts/UserContext";
 import { AxiosError } from "axios";
+import InputField from "../../components/InputField";
 
 const loginSchema = Joi.object({
   username: Joi.string()
@@ -31,9 +32,10 @@ export default function Login() {
   const navigate = useNavigate();
   const { login: authLogin, loading, user } = useAuth();
   const [errMsg, setErrMsg] = useState("");
+  const isLoggingIn = useRef(false);
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && !isLoggingIn.current) {
       navigate("/");
     }
   }, [user, loading, navigate]);
@@ -43,6 +45,7 @@ export default function Login() {
   }
 
   async function onSubmit(data: LoginFormData) {
+    isLoggingIn.current = true;
     try {
       await authLogin(data.username, data.password);
       navigate("/");
@@ -56,37 +59,33 @@ export default function Login() {
       } else {
         setErrMsg("Unexpected error occurred");
       }
+      isLoggingIn.current = false;
       reset();
     }
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center">
+      <h1 className="my-8 text-5xl font-bold">EdMarket</h1>
       <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <h1 className="text-xl">Login to EdMarket</h1>
+        <h1 className="text-xl font-semibold">Login to EdMarket</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {errMsg}
-          <div>
-            <input
-              placeholder="Username"
-              className="input-auth"
-              {...register("username")}
-            />
-          </div>
-          <div className="text-red-500">
-            {errors.username && <span>{errors.username.message}</span>}
-          </div>
-          <div>
-            <input
-              type="password"
-              className="input-auth"
-              placeholder="Password"
-              {...register("password")}
-            />
-          </div>
-          <div className="text-red-500">
-            {errors.password && <span>{errors.password.message}</span>}
-          </div>
+          <InputField
+            name="username"
+            placeholder="Username"
+            label="Username"
+            register={register}
+            error={errors.username}
+          />
+          <InputField
+            name="password"
+            placeholder="Password"
+            type="password"
+            label="Password"
+            register={register}
+            error={errors.password}
+          />
           <button type="submit" className="btn-auth">
             Login
           </button>

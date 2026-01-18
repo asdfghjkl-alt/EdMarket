@@ -6,7 +6,8 @@ import Register from "./pages/User/Register";
 import { AuthProvider } from "./contexts/UserContext";
 import NotFound from "./pages/NotFound";
 import "./App.css";
-import AddProduct from "./pages/Admin/AddProduct";
+import AddProduct from "./pages/Product/admin/AddProduct";
+import ProductView from "./pages/Product/ProductView";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               </Route>
               <Route path="products">
                 <Route path="add" element={<AddProduct />} />
+                <Route path=":id" element={<ProductView />} />
               </Route>
               <Route path="/" element={<Home />} />
               <Route path="*" element={<NotFound />} />

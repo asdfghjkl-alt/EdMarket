@@ -4,3 +4,6 @@ export interface ProductFormData {
   quantity: number;
   image: string;
 }
+export interface Product extends ProductFormData {
+  _id: string;
+}

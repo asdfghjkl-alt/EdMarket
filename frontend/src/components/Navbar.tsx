@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router";
 import { useAuth } from "../contexts/UserContext";
 import CartImg from "../assets/cart.png";
+import Dropdown from "./Dropdown";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -9,6 +10,7 @@ const navLinks = [
 ];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/products", label: "Products" }];
+const adminLinks = [{ href: "/products/add", label: "Add Products" }];
 
 const linkBaseClass =
   "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";
@@ -72,6 +74,9 @@ export default function Navbar() {
                 Logout
               </button>
               <p className="text-sm text-gray-200">Welcome {user.username}</p>
+              {user.isAdmin && (
+                <Dropdown title="Admin Options" links={adminLinks} />
+              )}
               <NavLink
                 to="/cart"
                 className={({ isActive }) =>
@@ -175,6 +180,9 @@ export default function Navbar() {
                   Logout
                 </button>
                 <p className="text-sm text-gray-200">Welcome {user.username}</p>
+                {user.isAdmin && (
+                  <Dropdown title="Admin Options" links={adminLinks} />
+                )}
                 <NavLink
                   to="/cart"
                   className={({ isActive }) =>

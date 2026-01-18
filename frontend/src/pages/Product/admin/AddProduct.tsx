@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/UserContext";
-import NotFound from "../NotFound";
+import { useAuth } from "../../../contexts/UserContext";
+import NotFound from "../../NotFound";
 import AddProductForm from "./AddProductForm";
 
 export default function AddProduct() {

@@ -2,13 +2,14 @@ import type { Request, Response } from "express";
 import Product from "../models/product";
 
 const addProduct = async (req: Request, res: Response) => {
-  const { name, quantity, price, image } = req.body;
+  const { name, quantity, price, image, description } = req.body;
 
   const newProduct = new Product({
     name,
     quantity,
     price,
     image,
+    description,
   });
   await newProduct.save();
   res.json({ message: "Successfully added new product" });
@@ -28,7 +29,7 @@ const findProduct = async (req: Request, res: Response) => {
   if (!product) {
     return res
       .status(404)
-      .json({ message: "Product with inputted id does not exist" });
+      .json({ message: "Product with specified id does not exist" });
   }
   res.json({
     message: "Successfully retrieved information about the product",
@@ -36,4 +37,14 @@ const findProduct = async (req: Request, res: Response) => {
   });
 };
 
-export { addProduct, allProducts, findProduct };
+const deleteProduct = async (req: Request, res: Response) => {
+  const deletedProd = await Product.findByIdAndDelete(req.params.id);
+  if (!deletedProd) {
+    return res
+      .status(404)
+      .json({ message: "Product with specified id does not exist" });
+  }
+  res.status(200).json({ message: "Successfully deleted product!" });
+};
+
+export { addProduct, allProducts, findProduct, deleteProduct };

@@ -3,6 +3,8 @@ import api from "../../../api/axios";
 import { useEffect, useState } from "react";
 import type { Product } from "../../../types/product";
 import ProductCard from "../../../components/product/ProductCard";
+import ErrorPg from "../../../components/utils/Error";
+import Loading from "../../../components/utils/Loading";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([] as Product[]);
@@ -31,6 +33,13 @@ export default function ManageProducts() {
     // 3. Cleanup function
     return () => controller.abort();
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (error) {
+    return <ErrorPg error={error} />;
+  }
 
   return (
     <div className="m-6 text-center">

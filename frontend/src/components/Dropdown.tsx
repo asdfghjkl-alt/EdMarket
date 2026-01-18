@@ -27,6 +27,7 @@ export default function Dropdown({
             <MenuItem>
               <a
                 href={link.href}
+                key={index}
                 className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
               >
                 {link.label}

@@ -5,8 +5,9 @@ import Joi from "joi";
 import { useState } from "react";
 import { AxiosError } from "axios";
 import type { ProductFormData } from "../../../types/product";
-import InputField from "../../../components/InputField";
+import InputField from "../../../components/utils/inputs/InputField";
 import api from "../../../api/axios";
+import TextArea from "../../../components/utils/inputs/TextArea";
 
 const productSchema = Joi.object({
   name: Joi.string().required().messages({
@@ -25,6 +26,9 @@ const productSchema = Joi.object({
   image: Joi.string().required().messages({
     "string.empty": "Please enter an image url",
   }),
+  description: Joi.string().required().messages({
+    "string.empty": "Please enter a description",
+  }),
 });
 
 export default function AddProductForm() {
@@ -36,7 +40,13 @@ export default function AddProductForm() {
   } = useForm<ProductFormData>({
     resolver: joiResolver(productSchema),
     mode: "onTouched",
-    defaultValues: { name: "", price: 0, quantity: 0, image: "" },
+    defaultValues: {
+      name: "",
+      price: 0,
+      quantity: 0,
+      image: "",
+      description: "",
+    },
   });
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState("");
@@ -47,7 +57,7 @@ export default function AddProductForm() {
       navigate("/");
     } catch (e) {
       if (e instanceof AxiosError) {
-        setErrMsg(e.message);
+        setErrMsg(e.response?.data.message);
       } else {
         setErrMsg("Unexpected error occurred");
       }
@@ -94,6 +104,14 @@ export default function AddProductForm() {
             placeholder="Image"
             register={register}
             error={errors.image}
+          />
+          <TextArea
+            name="description"
+            label="Description"
+            placeholder="Description"
+            register={register}
+            error={errors.description}
+            rows={3}
           />
           <button type="submit" className="btn-auth">
             Add Product

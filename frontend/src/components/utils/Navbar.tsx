@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
-import { useAuth } from "../contexts/UserContext";
-import CartImg from "../assets/cart.png";
+import { useAuth } from "../../contexts/UserContext";
+import CartImg from "../../assets/cart.png";
 import Dropdown from "./Dropdown";
 
 const navLinks = [
@@ -10,7 +10,10 @@ const navLinks = [
 ];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/products", label: "Products" }];
-const adminLinks = [{ href: "/products/add", label: "Add Products" }];
+const adminLinks = [
+  { href: "/products/add", label: "Add Products" },
+  { href: "/products/manage", label: "Manage Products" },
+];
 
 const linkBaseClass =
   "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";

@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import api from "../api/axios";
 import { AxiosError } from "axios";
-import Loading from "../components/utils/Loading";
-import ErrorPg from "../components/utils/Error";
-import type { Product } from "../types/product";
-import ProductCard from "../components/product/ProductCard";
+import api from "../../../api/axios";
+import { useEffect, useState } from "react";
+import type { Product } from "../../../types/product";
+import ProductCard from "../../../components/product/ProductCard";
 
-export default function Home() {
+export default function ManageProducts() {
   const [products, setProducts] = useState([] as Product[]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null as null | string);
@@ -34,18 +32,11 @@ export default function Home() {
     return () => controller.abort();
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (error) {
-    return <ErrorPg error={error} />;
-  }
-
   return (
     <div className="m-6 text-center">
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 lg:grid-cols-5">
         {products.map((product: Product) => (
-          <ProductCard key={product._id} product={product} />
+          <ProductCard product={product} />
         ))}
       </div>
     </div>

@@ -1,13 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/User/Login";
+import Login from "./pages/user/Login";
 import MainLayout from "./MainLayout";
-import Register from "./pages/User/Register";
+import Register from "./pages/user/Register";
 import { AuthProvider } from "./contexts/UserContext";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/utils/NotFound";
 import "./App.css";
-import AddProduct from "./pages/Product/admin/AddProduct";
-import ProductView from "./pages/Product/ProductView";
+import AddProduct from "./pages/product/admin/AddProduct";
+import ProductView from "./pages/product/ProductView";
+import ManageProducts from "./pages/product/admin/ManageProducts";
+import AdminRestrict from "./pages/utils/AdminRestrict";
 
 function App() {
   return (
@@ -22,7 +24,14 @@ function App() {
                 <Route path="register" element={<Register />} />
               </Route>
               <Route path="products">
-                <Route path="add" element={<AddProduct />} />
+                <Route
+                  path="add"
+                  element={<AdminRestrict element={<AddProduct />} />}
+                />
+                <Route
+                  path="manage"
+                  element={<AdminRestrict element={<ManageProducts />} />}
+                />
                 <Route path=":id" element={<ProductView />} />
               </Route>
               <Route path="/" element={<Home />} />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Loading from "../../components/Loading";
-import ErrorPg from "../../components/Error";
+import Loading from "../../components/utils/Loading";
+import ErrorPg from "../../components/utils/Error";
 import { AxiosError } from "axios";
 import api from "../../api/axios";
 import type { Product } from "../../types/product";

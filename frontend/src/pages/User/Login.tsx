@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import "./User.css";
 import { useAuth } from "../../contexts/UserContext";
 import { AxiosError } from "axios";
-import InputField from "../../components/InputField";
+import InputField from "../../components/utils/inputs/InputField";
 
 const loginSchema = Joi.object({
   username: Joi.string()

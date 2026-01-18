@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../../../contexts/UserContext";
-import NotFound from "../../utils/NotFound";
-import AddProductForm from "./AddProductForm";
+import { useEffect, useState, type ReactNode } from "react";
+import { useAuth } from "../../contexts/UserContext";
+import NotFound from "./NotFound";
 
-export default function AddProduct() {
+export default function AdminRestrict({ element }: { element: ReactNode }) {
   const { loading, user } = useAuth();
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -18,7 +17,7 @@ export default function AddProduct() {
     return <div>Loading</div>;
   }
   if (isAdmin) {
-    return <AddProductForm />;
+    return element;
   } else {
     return <NotFound />;
   }

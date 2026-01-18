@@ -2,3 +2,7 @@
 input {
   @apply my-1 size-full rounded-xl border-2 border-solid border-gray-400 p-3 text-lg;
 }
+
+textarea {
+  @apply my-1 size-full rounded-xl border-2 border-solid border-gray-400 p-3 text-lg;
+}

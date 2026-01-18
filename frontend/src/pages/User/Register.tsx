@@ -6,8 +6,7 @@ import type { RegisterFormData } from "../../types/user";
 import { useEffect, useState } from "react";
 import "./User.css";
 import { useAuth } from "../../contexts/UserContext";
-import InputField from "../../components/InputField";
-import { Input } from "@headlessui/react";
+import InputField from "../../components/utils/inputs/InputField";
 
 const registerSchema = Joi.object({
   username: Joi.string()

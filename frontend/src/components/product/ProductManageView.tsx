@@ -18,7 +18,7 @@ export default function ProductManageView({
       <td>{product.name}</td>
       <td>{product.quantity}g</td>
       <td>${product.price}</td>
-      <td>{product.description}</td>
+      <td className="whitespace-pre-wrap">{product.description}</td>
       <td>
         <a className="edit-btn" href={`/products/edit/${product._id}`}>
           Edit

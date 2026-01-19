@@ -2,9 +2,9 @@ import { AxiosError } from "axios";
 import api from "../../../api/axios";
 import { useEffect, useState } from "react";
 import type { Product } from "../../../types/product";
-import ProductCard from "../../../components/product/ProductCard";
 import ErrorPg from "../../../components/utils/Error";
 import Loading from "../../../components/utils/Loading";
+import ProductManageView from "../../../components/product/ProductManageView";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([] as Product[]);
@@ -41,13 +41,44 @@ export default function ManageProducts() {
     return <ErrorPg error={error} />;
   }
 
+  async function deleteProduct(_id: string) {
+    try {
+      await api.delete(`http://localhost:3314/products/${_id}`);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        console.error(e);
+      } else {
+        console.error(e);
+      }
+    } finally {
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== product._id),
+      );
+    }
+  }
+
   return (
     <div className="m-6 text-center">
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 lg:grid-cols-5">
-        {products.map((product: Product) => (
-          <ProductCard product={product} />
-        ))}
-      </div>
+      <table>
+        <thead>
+          <tr className="m-5 h-full rounded-md *:p-2 *:text-center *:font-semibold">
+            <td className="w-2/12">Image</td>
+            <td className="w-2/12">Name</td>
+            <td className="w-1/12">Quantity</td>
+            <td className="w-1/24">Price</td>
+            <td>Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product: Product) => (
+            <ProductManageView
+              key={product._id}
+              product={product}
+              onDelete={deleteProduct}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

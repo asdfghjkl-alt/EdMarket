@@ -101,7 +101,7 @@ export default function Register() {
             register={register}
             error={errors.password}
           />
-          <button type="submit" className="btn-auth">
+          <button type="submit" className="btn-submit">
             Register
           </button>
         </form>

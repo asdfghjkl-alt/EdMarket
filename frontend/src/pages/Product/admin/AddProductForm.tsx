@@ -113,7 +113,7 @@ export default function AddProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="btn-auth">
+          <button type="submit" className="btn-submit">
             Add Product
           </button>
         </form>

@@ -6,10 +6,10 @@ import Register from "./pages/user/Register";
 import { AuthProvider } from "./contexts/UserContext";
 import NotFound from "./pages/utils/NotFound";
 import "./App.css";
-import AddProduct from "./pages/product/admin/AddProduct";
 import ProductView from "./pages/product/ProductView";
 import ManageProducts from "./pages/product/admin/ManageProducts";
 import AdminRestrict from "./pages/utils/AdminRestrict";
+import AddProductForm from "./pages/product/admin/AddProductForm";
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
               <Route path="products">
                 <Route
                   path="add"
-                  element={<AdminRestrict element={<AddProduct />} />}
+                  element={<AdminRestrict element={<AddProductForm />} />}
                 />
                 <Route
                   path="manage"

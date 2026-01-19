@@ -20,10 +20,12 @@ export default function ProductManageView({
       <td>${product.price}</td>
       <td>{product.description}</td>
       <td>
-        <button className="edit-btn">Edit</button>
+        <a className="edit-btn" href={`/products/edit/${product._id}`}>
+          Edit
+        </a>
       </td>
       <td>
-        <form action={() => onDelete(product._id)} method="POST">
+        <form action={() => onDelete(product._id)}>
           <button className="delete-btn">Delete</button>
         </form>
       </td>

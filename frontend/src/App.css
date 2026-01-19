@@ -8,7 +8,7 @@ input {
 }
 
 .edit-btn {
-  @apply m-0.5 w-full rounded-lg border bg-yellow-400 p-2 text-yellow-100;
+  @apply m-0.5 w-full rounded-lg border bg-yellow-400 p-3 text-yellow-100 shadow-amber-200 hover:shadow-lg;
 }
 .delete-btn {
   @apply m-0.5 w-full rounded-lg border bg-rose-500 p-2 text-rose-100;

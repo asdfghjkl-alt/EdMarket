@@ -10,6 +10,7 @@ import ProductView from "./pages/product/ProductView";
 import ManageProducts from "./pages/product/admin/ManageProducts";
 import AdminRestrict from "./pages/utils/AdminRestrict";
 import AddProductForm from "./pages/product/admin/AddProductForm";
+import EditProductForm from "./pages/product/admin/EditProductForm";
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
                   element={<AdminRestrict element={<ManageProducts />} />}
                 />
                 <Route path=":id" element={<ProductView />} />
+                <Route
+                  path="edit/:id"
+                  element={<AdminRestrict element={<EditProductForm />} />}
+                />
               </Route>
               <Route path="/" element={<Home />} />
               <Route path="*" element={<NotFound />} />

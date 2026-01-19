@@ -47,4 +47,22 @@ const deleteProduct = async (req: Request, res: Response) => {
   res.status(200).json({ message: "Successfully deleted product!" });
 };
 
-export { addProduct, allProducts, findProduct, deleteProduct };
+const editProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, quantity, price, description } = req.body;
+
+  const product = await Product.findByIdAndUpdate(
+    id,
+    { name, quantity, price, description },
+    { runValidators: true },
+  );
+
+  if (!product) {
+    return res
+      .status(404)
+      .json({ message: "Product with specified id does not exist" });
+  }
+  res.json({ message: "Product successfully updated!" });
+};
+
+export { addProduct, allProducts, findProduct, deleteProduct, editProduct };

@@ -3,7 +3,9 @@ import ShopError from "../utils/ShopError";
 
 const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   if (!req.isAuthenticated()) {
-    return next(new ShopError("Page requires you to be logged in", 400));
+    return next(
+      new ShopError("You need to be logged in to make this request", 400),
+    );
   }
   next();
 };

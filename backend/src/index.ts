@@ -14,8 +14,8 @@ import { Strategy as LocalStrategy } from "passport-local";
 import ShopError from "./utils/ShopError.js";
 import userRoutes from "./routes/user";
 import productRoutes from "./routes/product";
+import orderRoutes from "./routes/order";
 import User, { type IUser } from "./models/user.js";
-import { isLoggedIn } from "./middleware/user.js";
 
 let dbUrl: string;
 
@@ -41,7 +41,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 
 const store = MongoStore.create({
@@ -83,6 +83,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use("/auth", userRoutes);
 app.use("/products", productRoutes);
+app.use("/orders", orderRoutes);
 
 app.all(/(.*)/, (req, res, next) => {
   next(new ShopError("Unable to access the resource requested", 404));
@@ -93,7 +94,7 @@ app.use(
     err: { statusCode?: number; message?: string },
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     void next;
     const { statusCode = 500 } = err as {
@@ -104,7 +105,7 @@ app.use(
     }
 
     res.status(statusCode).json({ message: err.message });
-  }
+  },
 );
 
 app.listen(process.env.PORT, () => {

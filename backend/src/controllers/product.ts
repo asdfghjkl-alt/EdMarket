@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import Product from "../models/product";
+import Product from "@/models/product";
 
 const addProduct = async (req: Request, res: Response) => {
   const { name, quantity, price, image, description } = req.body;

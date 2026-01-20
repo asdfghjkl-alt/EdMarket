@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import Order from "../models/order";
-import Product from "../models/product";
+import Order from "@/models/order";
+import Product from "@/models/product";
 
 interface CartItem {
   product: string;

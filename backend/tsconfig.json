@@ -10,7 +10,11 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "exclude": ["**/**_broken.ts", "node_modules"]
 }

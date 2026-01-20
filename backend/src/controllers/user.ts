@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import ShopError from "../utils/ShopError";
-import User from "../models/user";
+import ShopError from "@/utils/ShopError";
+import User from "@/models/user";
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {

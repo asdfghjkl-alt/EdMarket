@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { isAdmin, isLoggedIn } from "../middleware/user";
-import { validateProduct } from "../middleware/product";
+import { isAdmin, isLoggedIn } from "@/middleware/user";
+import { validateProduct } from "@/middleware/product";
 import {
   addProduct,
   allProducts,
   deleteProduct,
   findProduct,
   editProduct,
-} from "../controllers/product";
+} from "@/controllers/product";
 
 const router = Router();
 

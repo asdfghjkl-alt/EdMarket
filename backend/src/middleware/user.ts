@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import ShopError from "../utils/ShopError";
+import ShopError from "@/utils/ShopError";
 
 const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   if (!req.isAuthenticated()) {

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
-import { productSchema } from "./product";
-import User from "./user";
+import { productSchema } from "@/models/product";
+import User from "@/models/user";
 
 const orderSchema = new Schema({
   cart: [

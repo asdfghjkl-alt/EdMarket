@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import { productSchema } from "../schemas";
-import ShopError from "../utils/ShopError";
+import { productSchema } from "@/schemas";
+import ShopError from "@/utils/ShopError";
 import type { ValidationErrorItem } from "joi";
 
 const validateProduct = (req: Request, res: Response, next: NextFunction) => {

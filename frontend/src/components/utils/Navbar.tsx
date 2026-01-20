@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { useAuth } from "../../contexts/UserContext";
-import CartImg from "../../assets/cart.png";
 import Dropdown from "./Dropdown";
+import CartLink from "./CartLink";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about-us", label: "About Us" },
+  { href: "/products", label: "Products" },
 ];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
-const authLinks = [{ href: "/products", label: "Products" }];
+const authLinks = [{ href: "/orders", label: "My Orders" }];
 const adminLinks = [
   { href: "/products/add", label: "Add Products" },
   { href: "/products/manage", label: "Manage Products" },
 ];
 
-const linkBaseClass =
+export const linkBaseClass =
   "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";
 
 export default function Navbar() {
@@ -80,16 +80,6 @@ export default function Navbar() {
               {user.isAdmin && (
                 <Dropdown title="Admin Options" links={adminLinks} />
               )}
-              <NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  `${linkBaseClass} flex items-center border-2 border-white/30 shadow-lg shadow-black/50 ${
-                    isActive ? "bg-sky-500" : "bg-sky-700"
-                  }`
-                }
-              >
-                <img src={CartImg} /> <p>Cart</p>
-              </NavLink>
             </>
           ) : (
             unauthLinks.map((link) => (
@@ -104,6 +94,7 @@ export default function Navbar() {
               </NavLink>
             ))
           )}
+          <CartLink />
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -161,14 +152,13 @@ export default function Navbar() {
             ))}
             {user ? (
               <>
-                {authLinks.map((link) => (
+                {navLinks.map((link) => (
                   <NavLink
                     key={link.href}
                     to={link.href}
                     className={({ isActive }) =>
                       `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
                     }
-                    onClick={closeMenu}
                   >
                     {link.label}
                   </NavLink>
@@ -186,17 +176,6 @@ export default function Navbar() {
                 {user.isAdmin && (
                   <Dropdown title="Admin Options" links={adminLinks} />
                 )}
-                <NavLink
-                  to="/cart"
-                  className={({ isActive }) =>
-                    `${linkBaseClass} flex items-center border-2 border-white/30 shadow-lg shadow-black/50 ${
-                      isActive ? "bg-sky-500" : "bg-sky-700"
-                    }`
-                  }
-                  onClick={closeMenu}
-                >
-                  <img src={CartImg} /> <p>Cart</p>
-                </NavLink>
               </>
             ) : (
               unauthLinks.map((link) => (
@@ -212,6 +191,7 @@ export default function Navbar() {
                 </NavLink>
               ))
             )}
+            <CartLink />
           </nav>
         </div>
       )}

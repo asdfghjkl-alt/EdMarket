@@ -17,7 +17,7 @@ export default function CartLink() {
     >
       <img src={CartImg} /> <p>Cart</p>
       {cart.length !== 0 && (
-        <div className="ml-1 flex aspect-square items-center rounded-full bg-red-500 px-2">
+        <div className="ml-1 flex items-center rounded-full bg-red-500 px-2">
           <p>{cart.reduce((acc, item) => acc + item.quantity, 0)}</p>
         </div>
       )}

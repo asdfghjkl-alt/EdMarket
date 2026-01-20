@@ -8,6 +8,7 @@ export interface CartItem {
 export interface OrderType {
   _id: string;
   cart: CartItem[];
+  completed: boolean;
 }
 
 export interface OrderContextType {

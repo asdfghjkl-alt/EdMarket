@@ -6,7 +6,7 @@ import CartLink from "./CartLink";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
+  // { href: "/products", label: "Products" },
 ];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/orders", label: "My Orders" }];

@@ -1,8 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "@/contexts/UserContext";
 import { OrderProvider } from "@/contexts/OrderProvider";
-import "@/App.css";
-import AppRoutes from "./routes/AppRoutes";
+import "./App.css";
+import AppRoutes from "@/routes/AppRoutes";
 
 function App() {
   return (

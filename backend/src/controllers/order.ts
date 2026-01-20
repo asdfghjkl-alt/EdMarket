@@ -68,4 +68,4 @@ const viewAllOrders = async (req: Request, res: Response) => {
   });
 };
 
-export { addOrder, viewUserOrders };
+export { addOrder, viewUserOrders, viewAllOrders };

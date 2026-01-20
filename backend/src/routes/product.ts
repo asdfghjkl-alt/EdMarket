@@ -8,8 +8,11 @@ import {
   findProduct,
   editProduct,
 } from "@/controllers/product";
+import { productLimit } from "@/utils/limiter";
 
 const router = Router();
+
+router.use(productLimit);
 
 router.post("/", isLoggedIn, isAdmin, validateProduct, addProduct);
 router.get("/", allProducts);

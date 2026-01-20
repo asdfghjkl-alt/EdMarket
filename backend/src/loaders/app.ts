@@ -15,6 +15,7 @@ import productRoutes from "@/routes/product";
 import orderRoutes from "@/routes/order";
 import User, { type IUser } from "@/models/user.js";
 import { dbUrl } from "@/loaders/db";
+import { rateLimit } from "express-rate-limit";
 
 const app = express();
 
@@ -48,6 +49,7 @@ const sessionConfig = {
     secure: process.env.NODE_ENV === "production",
   },
 };
+
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }

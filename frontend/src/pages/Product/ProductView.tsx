@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Loading from "../../components/utils/Loading";
-import ErrorPg from "../../components/utils/Error";
+import Loading from "@/components/ui/Loading";
+import ErrorPg from "@/components/ui/Error";
 import { AxiosError } from "axios";
-import api from "../../api/axios";
-import type { Product } from "../../types/product";
+import api from "@/api/axios";
+import type { Product } from "@/types/product";
 import { useParams } from "react-router";
 
 export default function ProductView() {

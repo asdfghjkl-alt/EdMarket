@@ -1,5 +1,5 @@
-import { useOrder } from "../../contexts/OrderContext";
-import type { Product } from "../../types/product";
+import { useOrder } from "@/contexts/OrderContext";
+import type { Product } from "@/types/product";
 
 export default function QuantityControl({ product }: { product: Product }) {
   const { removeOneItem, addItem, cart } = useOrder();

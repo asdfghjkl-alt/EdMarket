@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { OrderContext } from "./OrderContext";
-import type { CartItem } from "../types/order";
-import type { Product } from "../types/product";
+import type { CartItem } from "@/types/order";
+import type { Product } from "@/types/product";
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState(() => {

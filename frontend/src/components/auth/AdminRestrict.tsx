@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { useAuth } from "../../contexts/UserContext";
-import NotFound from "./NotFound";
+import { useAuth } from "@/contexts/UserContext";
+import NotFound from "@/pages/NotFound";
 
 export default function AdminRestrict({ element }: { element: ReactNode }) {
   const { loading, user } = useAuth();

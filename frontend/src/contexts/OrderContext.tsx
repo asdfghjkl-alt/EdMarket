@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { OrderContextType } from "../types/order";
+import type { OrderContextType } from "@/types/order";
 
 export const OrderContext = createContext<OrderContextType | undefined>(
   undefined,

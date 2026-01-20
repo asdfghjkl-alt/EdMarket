@@ -4,10 +4,10 @@ import { useNavigate } from "react-router";
 import Joi from "joi";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import type { ProductFormData } from "../../../types/product";
-import InputField from "../../../components/utils/inputs/InputField";
-import api from "../../../api/axios";
-import TextArea from "../../../components/utils/inputs/TextArea";
+import type { ProductFormData } from "@/types/product";
+import InputField from "@/components/ui/inputs/InputField";
+import api from "@/api/axios";
+import TextArea from "@/components/ui/inputs/TextArea";
 
 const productSchema = Joi.object({
   name: Joi.string().required().messages({

@@ -5,8 +5,8 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import api from "../api/axios";
-import type { AuthContextType } from "../types/user";
+import api from "@/api/axios";
+import type { AuthContextType } from "@/types/user";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

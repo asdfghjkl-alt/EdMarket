@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
-import { useAuth } from "../../contexts/UserContext";
-import Dropdown from "./Dropdown";
-import CartLink from "./CartLink";
+import { useAuth } from "@/contexts/UserContext";
+import Dropdown from "@/components/ui/Dropdown";
+import CartLink from "@/components/ui/CartLink";
 
 const navLinks = [
   { href: "/", label: "Home" },

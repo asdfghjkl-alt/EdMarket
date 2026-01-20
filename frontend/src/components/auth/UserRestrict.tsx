@@ -1,5 +1,5 @@
 import { useEffect, type ReactNode } from "react";
-import { useAuth } from "../../contexts/UserContext";
+import { useAuth } from "@/contexts/UserContext";
 import { useNavigate } from "react-router";
 
 export default function UserRestrict({ element }: { element: ReactNode }) {

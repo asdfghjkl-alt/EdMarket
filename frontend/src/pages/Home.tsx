@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "@/api/axios";
 import { AxiosError } from "axios";
-import Loading from "../components/utils/Loading";
-import ErrorPg from "../components/utils/Error";
-import type { Product } from "../types/product";
-import ProductCard from "../components/product/ProductCard";
+import Loading from "@/components/ui/Loading";
+import ErrorPg from "@/components/ui/Error";
+import type { Product } from "@/types/product";
+import ProductCard from "@/components/product/ProductCard";
 
 export default function Home() {
   const [products, setProducts] = useState([] as Product[]);

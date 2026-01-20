@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
-import api from "../../../api/axios";
+import api from "@/api/axios";
 import { useEffect, useState } from "react";
-import type { Product } from "../../../types/product";
-import ErrorPg from "../../../components/utils/Error";
-import Loading from "../../../components/utils/Loading";
-import ProductManageView from "../../../components/product/ProductManageView";
+import type { Product } from "@/types/product";
+import ErrorPg from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import ProductManageView from "@/components/product/ProductManageView";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([] as Product[]);

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { linkBaseClass } from "./Navbar";
-import CartImg from "../../assets/cart.png";
-import { useOrder } from "../../contexts/OrderContext";
+import CartImg from "@/assets/cart.png";
+import { useOrder } from "@/contexts/OrderContext";
 
 export default function CartLink() {
   const { cart } = useOrder();

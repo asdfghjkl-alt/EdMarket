@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate } from "react-router";
 import Joi from "joi";
-import type { RegisterFormData } from "../../types/user";
+import type { RegisterFormData } from "@/types/user";
 import { useEffect, useState } from "react";
 import "./User.css";
-import { useAuth } from "../../contexts/UserContext";
-import InputField from "../../components/utils/inputs/InputField";
+import { useAuth } from "@/contexts/UserContext";
+import InputField from "@/components/ui/inputs/InputField";
 
 const registerSchema = Joi.object({
   username: Joi.string()

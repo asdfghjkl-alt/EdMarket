@@ -1,4 +1,4 @@
-import type { OrderType } from "../../types/order";
+import type { OrderType } from "@/types/order";
 
 export default function OrderDetails({ order }: { order: OrderType }) {
   return (

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Loading from "../../components/utils/Loading";
-import ErrorPg from "../../components/utils/Error";
-import api from "../../api/axios";
+import Loading from "@/components/ui/Loading";
+import ErrorPg from "@/components/ui/Error";
+import api from "@/api/axios";
 import { AxiosError } from "axios";
-import type { OrderType } from "../../types/order";
-import OrderDetails from "../../components/order/OrderDetails";
+import type { OrderType } from "@/types/order";
+import OrderDetails from "@/components/order/OrderDetails";
 
 export default function UserOrders() {
   const [orders, setOrders] = useState([]);

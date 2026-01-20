@@ -1,5 +1,5 @@
-import { useOrder } from "../../contexts/OrderContext";
-import type { Product } from "../../types/product";
+import { useOrder } from "@/contexts/OrderContext";
+import type { Product } from "@/types/product";
 import QuantityControl from "./QuantityControl";
 
 export default function ProductCard({ product }: { product: Product }) {

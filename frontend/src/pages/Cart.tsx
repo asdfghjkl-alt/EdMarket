@@ -1,7 +1,7 @@
 import { useState } from "react";
-import api from "../api/axios";
-import ProductCartView from "../components/product/ProductCartView";
-import { useOrder } from "../contexts/OrderContext";
+import api from "@/api/axios";
+import ProductCartView from "@/components/product/ProductCartView";
+import { useOrder } from "@/contexts/OrderContext";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router";
 
@@ -61,10 +61,12 @@ export default function Cart() {
         <div>
           <p>
             Total Cost: $
-            {cart.reduce(
-              (acc, item) => acc + item.quantity * item.product.price,
-              0,
-            )}
+            {cart
+              .reduce(
+                (acc, item) => acc + item.quantity * item.product.price,
+                0,
+              )
+              .toFixed(2)}
           </p>
         </div>
       )}

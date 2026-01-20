@@ -48,7 +48,7 @@ const viewUserOrders = async (req: Request, res: Response) => {
   const userOrders = await Order.find({ user: req.user._id });
 
   const userOrdersFiltered = userOrders.map((order) => {
-    return { cart: order.cart, _id: order._id };
+    return { cart: order.cart, _id: order._id, completed: order.completed };
   });
 
   res.json({

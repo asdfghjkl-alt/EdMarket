@@ -51,7 +51,7 @@ export default function Register() {
   async function onSubmit(data: RegisterFormData) {
     try {
       await authRegister(data.email, data.username, data.password);
-      navigate("/");
+      navigate(-1);
     } catch (e) {
       if (e instanceof Error) {
         setErrMsg(e.message);

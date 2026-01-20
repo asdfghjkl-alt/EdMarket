@@ -48,7 +48,7 @@ export default function Login() {
     isLoggingIn.current = true;
     try {
       await authLogin(data.username, data.password);
-      navigate("/");
+      navigate(-1);
     } catch (e) {
       if (e instanceof AxiosError) {
         if (e.status === 401) {

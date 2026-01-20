@@ -4,7 +4,7 @@ import ErrorPg from "../../components/utils/Error";
 import api from "../../api/axios";
 import { AxiosError } from "axios";
 import type { OrderType } from "../../types/order";
-import Order from "../../components/order/Order";
+import OrderDetails from "../../components/order/OrderDetails";
 
 export default function UserOrders() {
   const [orders, setOrders] = useState([]);
@@ -44,7 +44,7 @@ export default function UserOrders() {
   return (
     <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
       {orders.map((order: OrderType) => (
-        <Order order={order} key={order._id} />
+        <OrderDetails order={order} key={order._id} />
       ))}
     </div>
   );

@@ -1,6 +1,6 @@
 import type { OrderType } from "../../types/order";
 
-export default function Order({ order }: { order: OrderType }) {
+export default function OrderDetails({ order }: { order: OrderType }) {
   return (
     <div className="rounded-xl border border-solid border-gray-400 p-3 text-center">
       <h1 className="text-2xl font-bold">Order Details</h1>

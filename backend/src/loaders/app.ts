@@ -14,7 +14,7 @@ import userRoutes from "@/routes/user";
 import productRoutes from "@/routes/product";
 import orderRoutes from "@/routes/order";
 import User, { type IUser } from "@/models/user.js";
-import { dbUrl } from "@/db";
+import { dbUrl } from "@/loaders/db";
 
 const app = express();
 

@@ -1,6 +1,6 @@
-import "@/loader";
-import { connectDB } from "@/db";
-import app from "@/app";
+import "@/loaders/loader";
+import { connectDB } from "@/loaders/db";
+import app from "@/loaders/app";
 
 connectDB();
 

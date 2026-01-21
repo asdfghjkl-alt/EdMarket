@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import Joi from "joi";
 import type { LoginFormData } from "@/types/user";
 import { useEffect, useRef, useState } from "react";
-import "./User.css";
 import { useAuth } from "@/contexts/UserContext";
 import { AxiosError } from "axios";
 import InputField from "@/components/ui/inputs/InputField";

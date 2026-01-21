@@ -41,7 +41,11 @@ export default function UserOrders() {
     return <ErrorPg error={error} />;
   }
 
-  return (
+  return orders.length === 0 ? (
+    <div className="flex h-screen items-center justify-center">
+      <p className="text-center text-xl font-bold">No orders found</p>
+    </div>
+  ) : (
     <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
       {orders.map((order: OrderType) => (
         <OrderDetails order={order} key={order._id} />

@@ -41,7 +41,11 @@ export default function Home() {
     return <ErrorPg error={error} />;
   }
 
-  return (
+  return products.length === 0 ? (
+    <div className="flex h-screen items-center justify-center">
+      <p className="text-center text-xl font-bold">No products found</p>
+    </div>
+  ) : (
     <div className="m-6 text-center">
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 lg:grid-cols-5">
         {products.map((product: Product) => (

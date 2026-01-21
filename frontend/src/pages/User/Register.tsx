@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import Joi from "joi";
 import type { RegisterFormData } from "@/types/user";
 import { useEffect, useState } from "react";
-import "./User.css";
 import { useAuth } from "@/contexts/UserContext";
 import InputField from "@/components/ui/inputs/InputField";
 

@@ -2,9 +2,8 @@ import { AxiosError } from "axios";
 import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import type { Product } from "@/types/product";
-import ErrorPg from "@/components/ui/Error";
-import Loading from "@/components/ui/Loading";
 import ProductManageView from "@/components/product/ProductManageView";
+import Loading from "@/components/ui/Loading";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([] as Product[]);
@@ -30,29 +29,16 @@ export default function ManageProducts() {
 
     fetchProducts();
 
-    // 3. Cleanup function
     return () => controller.abort();
   }, []);
 
-  async function deleteProduct(_id: string) {
-    try {
-      await api.delete(`/products/${_id}`);
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        console.error(e);
-      } else {
-        console.error(e);
-      }
-    } finally {
-      setIsLoading(false);
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product._id !== product._id),
-      );
-    }
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <div className="m-6 text-center">
+      {error && <p className="text-red-500">{error}</p>}
       <table>
         <thead>
           <tr className="m-5 h-full rounded-md *:p-2 *:text-center *:font-semibold">
@@ -68,7 +54,8 @@ export default function ManageProducts() {
             <ProductManageView
               key={product._id}
               product={product}
-              onDelete={deleteProduct}
+              setProducts={setProducts}
+              setError={setError}
             />
           ))}
         </tbody>

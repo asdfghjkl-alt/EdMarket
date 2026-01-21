@@ -47,7 +47,7 @@ router.post(
 );
 router.get("/", allProducts);
 router.get("/:id", findProduct);
-router.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
+// router.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
 router.put(
   "/:id",
   isLoggedIn,

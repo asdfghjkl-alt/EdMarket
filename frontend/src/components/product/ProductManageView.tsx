@@ -1,14 +1,35 @@
+import api from "@/api/axios";
 import type { Product } from "@/types/product";
+import { AxiosError } from "axios";
 import { useState } from "react";
 
 export default function ProductManageView({
   product,
-  onDelete,
+  setProducts,
+  setError,
 }: {
   product: Product;
-  onDelete: Function;
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
   const [disableDelete, setDisableDelete] = useState(false);
+
+  async function deleteProduct(_id: string) {
+    try {
+      setError(null);
+      await api.delete(`/products/${_id}`);
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== _id),
+      );
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        setError(e.response?.data.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
+      setDisableDelete(false);
+    }
+  }
 
   return (
     <tr className="m-5 h-full border-collapse rounded-md p-3 text-left shadow-gray-400 *:border-t-2 *:p-2 hover:shadow-md">
@@ -31,7 +52,7 @@ export default function ProductManageView({
         <form
           action={() => {
             setDisableDelete(true);
-            onDelete(product._id);
+            deleteProduct(product._id);
           }}
         >
           <button

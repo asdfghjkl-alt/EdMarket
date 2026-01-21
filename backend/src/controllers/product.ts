@@ -1,16 +1,50 @@
 import type { Request, Response } from "express";
 import Product from "@/models/product";
+import { cloudinary } from "@/cloudinary/index";
+import { destroyAllUploads } from "@/middleware/product";
+
+const processCampImages = async (files: Express.Multer.File[]) => {
+  const uploadedImages = await Promise.all(
+    files.map(async (file) => {
+      const result = await cloudinary.uploader.upload(file.path, {
+        folder: "EdMarket",
+        transformation: [{ quality: "auto", fetch_format: "auto" }],
+      });
+
+      return {
+        url: result.secure_url,
+        filename: result.public_id,
+        size: result.bytes,
+      };
+    }),
+  );
+
+  destroyAllUploads(files);
+  return uploadedImages;
+};
 
 const addProduct = async (req: Request, res: Response) => {
-  const { name, quantity, price, image, description } = req.body;
+  const { name, quantity, price, description } = req.body;
+
+  if (!req.user) {
+    return res.status(401).json({ message: "Somehow you are not logged in" });
+  }
+  if (!req.files) {
+    return res.status(400).json({ message: "You need to upload an image" });
+  }
+
+  // Declares files as array of files
+  const files = req.files as Express.Multer.File[];
+  const uploadedImages = await processCampImages(files);
 
   const newProduct = new Product({
     name,
     quantity,
     price,
-    image,
+    images: uploadedImages,
     description,
   });
+
   await newProduct.save();
   res.json({ message: "Successfully added new product" });
 };

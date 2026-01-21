@@ -11,8 +11,8 @@ export default function ProductManageView({
     <tr className="m-5 h-full border-collapse rounded-md p-3 text-left shadow-gray-400 *:border-t-2 *:p-2 hover:shadow-md">
       <td>
         <img
-          className="m-5 h-30 w-2xl object-contain object-center"
-          src={product.image}
+          className="h-30 object-contain object-center"
+          src={product.images[0].url}
         />
       </td>
       <td>{product.name}</td>

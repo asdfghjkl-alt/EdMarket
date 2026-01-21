@@ -24,5 +24,9 @@
     "server": "cd backend && npm run dev",
     "client": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "cloudinary": "^2.9.0",
+    "multer": "^2.0.2"
   }
 }

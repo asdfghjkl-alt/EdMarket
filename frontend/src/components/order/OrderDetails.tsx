@@ -9,7 +9,7 @@ export default function OrderDetails({ order }: { order: OrderType }) {
           key={item.product._id}
           className="grid grid-cols-5 items-center border-t"
         >
-          <img src={item.product.image} />
+          <img src={item.product.images[0].thumbnail} />
           <div className="col-span-2 flex flex-col">
             <span className="font-semibold text-gray-800">
               {item.product.name}

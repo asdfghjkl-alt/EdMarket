@@ -14,9 +14,6 @@ const productSchema = Joi.object({
     "number.greater": "Quantity must be greater than 0",
     "number.base": "Please enter a quantity",
   }),
-  image: Joi.string().required().messages({
-    "string.empty": "Please enter an image url",
-  }),
   description: Joi.string().required().messages({
     "string.empty": "Please enter a description",
   }),

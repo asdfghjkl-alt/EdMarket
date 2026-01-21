@@ -7,7 +7,7 @@ export default function ProductCartView({ product }: { product: Product }) {
       <td>
         <img
           className="h-30 w-xl object-contain object-center"
-          src={product.image}
+          src={product.images[0].url}
         />
       </td>
       <td>{product.name}</td>

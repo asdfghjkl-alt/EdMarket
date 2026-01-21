@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <a href={`/products/${product._id}`}>
           <img
             className="h-50 w-full object-contain object-center"
-            src={product.image}
+            src={product.images[0]?.url}
           />
           <p className="font-semibold">
             {product.name} | {product.quantity}g

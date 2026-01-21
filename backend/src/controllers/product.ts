@@ -3,7 +3,7 @@ import Product from "@/models/product";
 import { cloudinary } from "@/cloudinary/index";
 import { destroyAllUploads } from "@/middleware/product";
 
-const processCampImages = async (files: Express.Multer.File[]) => {
+const processProductImages = async (files: Express.Multer.File[]) => {
   const uploadedImages = await Promise.all(
     files.map(async (file) => {
       const result = await cloudinary.uploader.upload(file.path, {
@@ -35,7 +35,7 @@ const addProduct = async (req: Request, res: Response) => {
 
   // Declares files as array of files
   const files = req.files as Express.Multer.File[];
-  const uploadedImages = await processCampImages(files);
+  const uploadedImages = await processProductImages(files);
 
   const newProduct = new Product({
     name,
@@ -100,7 +100,7 @@ const editProduct = async (req: Request, res: Response) => {
 
   if (req.files) {
     const files = req.files as Express.Multer.File[];
-    const uploadedImages = await processCampImages(files);
+    const uploadedImages = await processProductImages(files);
     product.images.push(...uploadedImages);
   }
 

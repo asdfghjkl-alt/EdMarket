@@ -1,3 +1,4 @@
+import { cloudinary } from "@/cloudinary";
 import { Schema, model } from "mongoose";
 
 const imageSchema = new Schema(
@@ -42,6 +43,12 @@ export const productSchema = new Schema({
     type: String,
     required: true,
   },
+});
+
+productSchema.post("findOneAndDelete", async function (product) {
+  for (const { filename } of product.images) {
+    await cloudinary.uploader.destroy(filename);
+  }
 });
 
 const Product = model("Product", productSchema);

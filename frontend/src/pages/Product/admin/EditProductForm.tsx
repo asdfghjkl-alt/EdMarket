@@ -66,9 +66,9 @@ export default function EditProductForm() {
       formData.append("quantity", data.quantity.toString());
       formData.append("description", data.description);
 
-      if (data.images && data.images.length > 0) {
-        for (let i = 0; i < data.images.length; i++) {
-          formData.append("images", data.images[i]);
+      if (images && images.length > 0) {
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
         }
       }
 

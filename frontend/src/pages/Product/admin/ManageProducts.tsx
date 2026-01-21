@@ -34,16 +34,9 @@ export default function ManageProducts() {
     return () => controller.abort();
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (error) {
-    return <ErrorPg error={error} />;
-  }
-
   async function deleteProduct(_id: string) {
     try {
-      await api.delete(`http://localhost:3314/products/${_id}`);
+      await api.delete(`/products/${_id}`);
     } catch (e) {
       if (e instanceof AxiosError) {
         console.error(e);
@@ -51,6 +44,7 @@ export default function ManageProducts() {
         console.error(e);
       }
     } finally {
+      setIsLoading(false);
       setProducts((prevProducts) =>
         prevProducts.filter((product) => product._id !== product._id),
       );

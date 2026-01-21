@@ -4,6 +4,7 @@ import ShopError from "@/utils/ShopError";
 import type { ValidationErrorItem } from "joi";
 import fs from "fs";
 import Product from "@/models/product";
+import { cloudinary } from "@/cloudinary";
 
 const MB_SIZE = 1024 * 1024;
 
@@ -83,9 +84,7 @@ const checkEditImagesValid = async (
 ) => {
   if (!req.files) {
     return res.status(400).json({ message: `Need at least one image` });
-    return res.redirect(`${req.baseUrl}/${req.params.id}/edit`);
   }
-  const files = req.files as Express.Multer.File[];
   const product = await Product.findById(req.params.id);
   if (!product) {
     return res
@@ -99,7 +98,7 @@ const checkEditImagesValid = async (
     0,
   );
 
-  if (!validateImages(req, res, initNoFiles, initFileSizes)) {
+  if (validateImages(req, res, initNoFiles, initFileSizes) !== true) {
     return;
   }
   next();

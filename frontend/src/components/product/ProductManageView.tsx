@@ -1,4 +1,5 @@
 import type { Product } from "@/types/product";
+import { useState } from "react";
 
 export default function ProductManageView({
   product,
@@ -7,6 +8,8 @@ export default function ProductManageView({
   product: Product;
   onDelete: Function;
 }) {
+  const [disableDelete, setDisableDelete] = useState(false);
+
   return (
     <tr className="m-5 h-full border-collapse rounded-md p-3 text-left shadow-gray-400 *:border-t-2 *:p-2 hover:shadow-md">
       <td>
@@ -25,8 +28,18 @@ export default function ProductManageView({
         </a>
       </td>
       <td>
-        <form action={() => onDelete(product._id)}>
-          <button className="delete-btn">Delete</button>
+        <form
+          action={() => {
+            setDisableDelete(true);
+            onDelete(product._id);
+          }}
+        >
+          <button
+            disabled={disableDelete}
+            className="delete-btn disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            Delete
+          </button>
         </form>
       </td>
     </tr>

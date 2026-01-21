@@ -73,7 +73,7 @@ export default function AddProductForm() {
 
       await api.post("/products", formData);
       setIsLoading(false);
-      navigate("/products/add");
+      navigate("/products/manage");
     } catch (e) {
       setIsLoading(false);
       if (e instanceof AxiosError) {

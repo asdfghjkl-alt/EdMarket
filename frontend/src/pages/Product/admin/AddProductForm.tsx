@@ -37,9 +37,9 @@ export default function AddProductForm() {
   const {
     register,
     handleSubmit,
-    reset,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<ProductFormData>({
     resolver: joiResolver(productSchema),
@@ -73,7 +73,7 @@ export default function AddProductForm() {
 
       await api.post("/products", formData);
       setIsLoading(false);
-      navigate("/");
+      navigate("/products/add");
     } catch (e) {
       setIsLoading(false);
       if (e instanceof AxiosError) {
@@ -81,7 +81,6 @@ export default function AddProductForm() {
       } else {
         setErrMsg("Unexpected error occurred");
       }
-      reset();
     }
   }
 
@@ -138,6 +137,12 @@ export default function AddProductForm() {
               {...register("images")}
               onChange={(e) => {
                 const files = Array.from(e.target.files || []);
+                if (images.length + files.length > 5) {
+                  e.target.value = "";
+                  return setError("images", {
+                    message: "You can send up to 5 images",
+                  });
+                }
 
                 setValue("images", [...images, ...files], {
                   shouldValidate: true,

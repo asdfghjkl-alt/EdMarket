@@ -3,6 +3,7 @@ import { productSchema } from "@/schemas";
 import ShopError from "@/utils/ShopError";
 import type { ValidationErrorItem } from "joi";
 import fs from "fs";
+import Product from "@/models/product";
 
 const MB_SIZE = 1024 * 1024;
 
@@ -75,10 +76,44 @@ const checkInitImagesValid = (
   next();
 };
 
+const checkEditImagesValid = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.files) {
+    return res.status(400).json({ message: `Need at least one image` });
+    return res.redirect(`${req.baseUrl}/${req.params.id}/edit`);
+  }
+  const files = req.files as Express.Multer.File[];
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    return res
+      .status(400)
+      .json({ message: "Product with sent id could not be found" });
+  }
+
+  const initNoFiles = product.images.length;
+  const initFileSizes = product.images.reduce(
+    (acc, file) => acc + file.size,
+    0,
+  );
+
+  if (!validateImages(req, res, initNoFiles, initFileSizes)) {
+    return;
+  }
+  next();
+};
+
 const destroyAllUploads = (files: Express.Multer.File[]) => {
   files.forEach((file) => {
     fs.unlinkSync(file.path);
   });
 };
 
-export { validateProduct, checkInitImagesValid, destroyAllUploads };
+export {
+  validateProduct,
+  checkInitImagesValid,
+  destroyAllUploads,
+  checkEditImagesValid,
+};

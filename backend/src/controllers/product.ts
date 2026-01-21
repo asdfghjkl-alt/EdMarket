@@ -85,17 +85,26 @@ const editProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, quantity, price, description } = req.body;
 
-  const product = await Product.findByIdAndUpdate(
-    id,
-    { name, quantity, price, description },
-    { runValidators: true },
-  );
+  const product = await Product.findById(id);
 
   if (!product) {
     return res
       .status(404)
       .json({ message: "Product with specified id does not exist" });
   }
+
+  product.name = name;
+  product.quantity = quantity;
+  product.price = price;
+  product.description = description;
+
+  if (req.files) {
+    const files = req.files as Express.Multer.File[];
+    const uploadedImages = await processCampImages(files);
+    product.images.push(...uploadedImages);
+  }
+
+  await product.save();
   res.json({ message: "Product successfully updated!" });
 };
 

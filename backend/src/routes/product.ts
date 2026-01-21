@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { isAdmin, isLoggedIn } from "@/middleware/user";
-import { checkInitImagesValid, validateProduct } from "@/middleware/product";
+import {
+  checkEditImagesValid,
+  checkInitImagesValid,
+  validateProduct,
+} from "@/middleware/product";
 import {
   addProduct,
   allProducts,
@@ -44,6 +48,13 @@ router.post(
 router.get("/", allProducts);
 router.get("/:id", findProduct);
 router.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
-router.put("/:id", isLoggedIn, isAdmin, editProduct);
+router.put(
+  "/:id",
+  isLoggedIn,
+  isAdmin,
+  upload.array("images", 5),
+  checkEditImagesValid,
+  editProduct,
+);
 
 export default router;

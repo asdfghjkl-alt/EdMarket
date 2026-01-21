@@ -1,11 +1,14 @@
 import { Schema, model } from "mongoose";
 
-const imageSchema = new Schema({
-  _id: { _id: false },
-  url: { type: String, required: true },
-  filename: { type: String, required: true },
-  size: { type: Number, required: true },
-});
+const imageSchema = new Schema(
+  {
+    _id: { _id: false },
+    url: { type: String, required: true },
+    filename: { type: String, required: true },
+    size: { type: Number, required: true },
+  },
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
+);
 imageSchema.virtual("thumbnail").get(function () {
   return this.url.replace("/upload", "/upload/w_200,h_150,c_fill");
 });

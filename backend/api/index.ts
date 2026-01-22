@@ -1,6 +1,6 @@
 
-import app from '../src/loaders/app';
-import { connectDB } from '../src/loaders/db';
+import app from '../src/loaders/app.js';
+import { connectDB } from '../src/loaders/db.js';
 
 connectDB();
 

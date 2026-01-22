@@ -3,7 +3,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, Link } from "react-router";
 import Joi from "joi";
 import type { RegisterFormData } from "@/types/user";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/UserContext";
 import InputField from "@/components/ui/inputs/InputField";
 
@@ -34,7 +34,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState("");
   const { register: authRegister } = useAuth();
-  const isRegistering = useRef(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const { user, loading } = useAuth();
 
@@ -49,7 +49,8 @@ export default function Register() {
   }
 
   async function onSubmit(data: RegisterFormData) {
-    isRegistering.current = true;
+    setIsRegistering(true);
+    setErrMsg("");
     try {
       await authRegister(data.email, data.username, data.password);
       navigate(-1);
@@ -59,7 +60,7 @@ export default function Register() {
       } else {
         setErrMsg("Unexpected error occurred");
       }
-      isRegistering.current = false;
+      setIsRegistering(false);
       reset();
     }
   }
@@ -105,7 +106,7 @@ export default function Register() {
           />
           <button
             type="submit"
-            disabled={isRegistering.current}
+            disabled={isRegistering}
             className="btn-submit cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Register

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import api from "@/api/axios";
 import ProductCartView from "@/components/product/ProductCartView";
 import { useOrder } from "@/contexts/OrderContext";
@@ -10,12 +10,12 @@ export default function Cart() {
   const [error, setError] = useState("");
   const { resetCart } = useOrder();
 
-  const isSubmittingCart = useRef(false);
+  const [isSubmittingCart, setIsSubmittingCart] = useState(false);
 
   const navigate = useNavigate();
 
   const submitOrder = async () => {
-    isSubmittingCart.current = true;
+    setIsSubmittingCart(true);
 
     try {
       setError("");
@@ -27,12 +27,13 @@ export default function Cart() {
       resetCart();
       navigate("/orders");
     } catch (e) {
-      isSubmittingCart.current = false;
       if (e instanceof AxiosError) {
         setError(e.response?.data.message);
       } else {
         setError("Unexpected error occurred");
       }
+    } finally {
+      setIsSubmittingCart(false);
     }
   };
 
@@ -76,7 +77,7 @@ export default function Cart() {
         </div>
       )}
       <button
-        disabled={cart.length === 0 || isSubmittingCart.current}
+        disabled={cart.length === 0 || isSubmittingCart}
         onClick={submitOrder}
         className="btn-submit cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
       >

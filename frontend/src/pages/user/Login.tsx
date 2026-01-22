@@ -3,7 +3,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, Link } from "react-router";
 import Joi from "joi";
 import type { LoginFormData } from "@/types/user";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/UserContext";
 import { AxiosError } from "axios";
 import InputField from "@/components/ui/inputs/InputField";
@@ -31,10 +31,10 @@ export default function Login() {
   const navigate = useNavigate();
   const { login: authLogin, loading, user } = useAuth();
   const [errMsg, setErrMsg] = useState("");
-  const isLoggingIn = useRef(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
-    if (!loading && user && !isLoggingIn.current) {
+    if (!loading && user && !isLoggingIn) {
       navigate("/");
     }
   }, [user, loading, navigate]);
@@ -44,7 +44,8 @@ export default function Login() {
   }
 
   async function onSubmit(data: LoginFormData) {
-    isLoggingIn.current = true;
+    setIsLoggingIn(true);
+    setErrMsg("");
     try {
       await authLogin(data.username, data.password);
       navigate(-1);
@@ -58,7 +59,7 @@ export default function Login() {
       } else {
         setErrMsg("Unexpected error occurred");
       }
-      isLoggingIn.current = false;
+      setIsLoggingIn(false);
       reset();
     }
   }
@@ -87,7 +88,7 @@ export default function Login() {
           />
           <button
             type="submit"
-            disabled={isLoggingIn.current}
+            disabled={isLoggingIn}
             className="btn-submit cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Login

@@ -4,6 +4,7 @@ package-lock.json   # Optional: keep this if you want version consistency, ignor
 
 # --- Production Build ---
 /dist
+dist
 /build
 
 # --- Environment Variables (SECURITY CRITICAL) ---

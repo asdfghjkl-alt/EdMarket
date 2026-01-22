@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { productSchema } from "@/schemas";
 import ShopError from "@/utils/ShopError";
 import type { ValidationErrorItem } from "joi";
-import fs from "fs";
+
 import Product from "@/models/product";
 
 const MB_SIZE = 1024 * 1024;
@@ -103,19 +103,10 @@ const checkEditImagesValid = async (
   next();
 };
 
-const destroyAllUploads = (files: Express.Multer.File[]) => {
-  files.forEach((file) => {
-    fs.unlink(file.path, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
-  });
-};
+
 
 export {
   validateProduct,
   checkInitImagesValid,
-  destroyAllUploads,
   checkEditImagesValid,
 };

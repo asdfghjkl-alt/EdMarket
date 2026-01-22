@@ -15,8 +15,10 @@ import {
 import { productLimit } from "@/utils/limiter";
 import multer from "multer";
 
+
 const upload = multer({
   storage: multer.memoryStorage(),
+  limits: { fileSize: 7 * 1024 * 1024, files: 5 },
   fileFilter: (req, file, cb) => {
     // Allowed ext
     const filetypes = /jpeg|jpg|png|webp/;
@@ -40,8 +42,8 @@ router.post(
   "/",
   isLoggedIn,
   isAdmin,
-  validateProduct,
   upload.array("images", 5),
+  validateProduct,
   checkInitImagesValid,
   addProduct,
 );

@@ -1,5 +1,5 @@
-import app from "../src/loaders/app";
-import { connectDB } from "../src/loaders/db";
+import app from "@/loaders/app";
+import { connectDB } from "@/loaders/db";
 
 connectDB();
 

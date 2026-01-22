@@ -13,7 +13,7 @@ import ShopError from "@/utils/ShopError.js";
 import userRoutes from "@/routes/user";
 import productRoutes from "@/routes/product";
 import orderRoutes from "@/routes/order";
-import User, { type IUser } from "@/models/user.js";
+import User, { type IUser } from "@/models/user";
 import { dbUrl } from "@/loaders/db";
 import helmet from "helmet";
 

@@ -22,3 +22,5 @@ Thumbs.db       # Windows-specific junk file
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.vercel
+.env*.local

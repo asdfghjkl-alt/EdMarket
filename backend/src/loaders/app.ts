@@ -47,12 +47,16 @@ const sessionConfig = {
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 1,
     secure: process.env.NODE_ENV === "production",
+    sameSite: (process.env.NODE_ENV === "production" ? "none" : "lax") as
+      | "none"
+      | "lax",
   },
 };
 
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
+
 app.use(session(sessionConfig));
 
 declare global {

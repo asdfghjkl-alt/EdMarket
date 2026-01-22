@@ -41,6 +41,7 @@
     "@types/node": "^25.0.8",
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.2",
     "globals": "^17.0.0",
     "jiti": "^2.6.1",

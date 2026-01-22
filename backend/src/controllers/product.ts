@@ -1,25 +1,44 @@
 import type { Request, Response } from "express";
 import Product from "@/models/product";
 import { cloudinary } from "@/cloudinary/index";
-import { destroyAllUploads } from "@/middleware/product";
+import { Readable } from "stream";
 
-const processProductImages = async (files: Express.Multer.File[]) => {
-  const uploadedImages = await Promise.all(
+interface ImageType {
+  url: string;
+  filename: string;
+  size: number;
+}
+
+const processProductImages = async (
+  files: Express.Multer.File[],
+): Promise<ImageType[]> => {
+  const uploadedImages = (await Promise.all(
     files.map(async (file) => {
-      const result = await cloudinary.uploader.upload(file.path, {
-        folder: "EdMarket",
-        transformation: [{ quality: "auto", fetch_format: "auto" }],
+      // 1. We must create a promise wrapper because upload_stream is callback-based
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "EdMarket",
+            transformation: [{ quality: "auto", fetch_format: "auto" }],
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            if (!result) return reject(new Error("Upload failed"));
+
+            resolve({
+              url: result.secure_url,
+              filename: result.public_id,
+              size: result.bytes,
+            });
+          },
+        );
+
+        // 2. Convert the Multer buffer to a readable stream and pipe it to Cloudinary
+        Readable.from(file.buffer).pipe(uploadStream);
       });
-
-      return {
-        url: result.secure_url,
-        filename: result.public_id,
-        size: result.bytes,
-      };
     }),
-  );
+  )) as ImageType[];
 
-  destroyAllUploads(files);
   return uploadedImages;
 };
 
@@ -29,6 +48,7 @@ const addProduct = async (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(401).json({ message: "Somehow you are not logged in" });
   }
+
   if (!req.files) {
     return res.status(400).json({ message: "You need to upload an image" });
   }

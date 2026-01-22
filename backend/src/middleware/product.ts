@@ -4,7 +4,6 @@ import ShopError from "@/utils/ShopError";
 import type { ValidationErrorItem } from "joi";
 import fs from "fs";
 import Product from "@/models/product";
-import { cloudinary } from "@/cloudinary";
 
 const MB_SIZE = 1024 * 1024;
 

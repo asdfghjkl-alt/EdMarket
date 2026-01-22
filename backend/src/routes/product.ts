@@ -16,7 +16,7 @@ import { productLimit } from "@/utils/limiter";
 import multer from "multer";
 
 const upload = multer({
-  dest: "uploads/",
+  storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
     // Allowed ext
     const filetypes = /jpeg|jpg|png|webp/;

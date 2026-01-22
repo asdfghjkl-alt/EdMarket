@@ -15,9 +15,10 @@ export default function Cart() {
   const navigate = useNavigate();
 
   const submitOrder = async () => {
+    isSubmittingCart.current = true;
+
     try {
       setError("");
-      isSubmittingCart.current = true;
       const cartToSend = cart.map(({ product, quantity }) => {
         return { product: product._id, quantity };
       });

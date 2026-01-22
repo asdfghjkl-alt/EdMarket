@@ -1,3 +1,4 @@
+import "module-alias/register";
 import "@/loaders/loader";
 import { connectDB } from "@/loaders/db";
 import app from "@/loaders/app";

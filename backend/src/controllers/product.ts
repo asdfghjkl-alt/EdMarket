@@ -33,7 +33,6 @@ const addProduct = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "You need to upload an image" });
   }
 
-  // Declares files as array of files
   const files = req.files as Express.Multer.File[];
   const uploadedImages = await processProductImages(files);
 

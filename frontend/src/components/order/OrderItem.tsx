@@ -6,7 +6,10 @@ export default function OrderItem({ item }: { item: CartItem }) {
       key={item.product._id}
       className="grid grid-cols-5 items-center border-t p-1"
     >
-      <img src={item.product.images[0].thumbnail} />
+      <img
+        className="object-contain object-center"
+        src={item.product.images[0].thumbnail}
+      />
       <div className="col-span-2 flex flex-col">
         <span className="font-semibold text-gray-800">{item.product.name}</span>
         <span className="text-sm text-gray-500">1250g</span>

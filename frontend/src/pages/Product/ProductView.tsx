@@ -5,6 +5,8 @@ import { AxiosError } from "axios";
 import api from "@/api/axios";
 import type { Product } from "@/types/product";
 import { useParams } from "react-router";
+import QuantityControl from "@/components/product/QuantityControl";
+import Carousel from "@/components/ui/Carousel";
 
 export default function ProductView() {
   const [product, setProduct] = useState(null as null | Product);
@@ -13,10 +15,6 @@ export default function ProductView() {
 
   const { id } = useParams();
 
-  useEffect(() => {
-    async function fetchProduct() {}
-    fetchProduct();
-  }, []);
   useEffect(() => {
     const controller = new AbortController();
 
@@ -45,10 +43,34 @@ export default function ProductView() {
   if (error) {
     return <ErrorPg error={error} />;
   }
-
-  return (
-    <div>
-      <h1>{product?.name}</h1>
-    </div>
-  );
+  if (product) {
+    return (
+      <>
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2">
+          <div className="row-span-2 flex flex-col p-3">
+            <Carousel images={product.images} />
+          </div>
+          <div className="p-3">
+            <h1 className="my-4">
+              {product.name} | {product.quantity}g
+            </h1>
+            <h2 className="mb-4">${product.price}</h2>
+            <p className="mb-4 text-sm text-gray-400">
+              ${((product.price / product.quantity) * 100).toFixed(2)} / 100g
+            </p>
+            <QuantityControl
+              className="sm:w-72 md:w-80 lg:w-96"
+              product={product}
+            />
+            <div className="mr-20">
+              <h1 className="mt-10 mb-4">Product Details</h1>
+              <p className="text-lg whitespace-pre-line">
+                {product.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 }

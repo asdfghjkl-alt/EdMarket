@@ -1,14 +1,21 @@
 import { useOrder } from "@/contexts/OrderContext";
 import type { Product } from "@/types/product";
 
-export default function QuantityControl({ product }: { product: Product }) {
+export default function QuantityControl({
+  product,
+  className = "w-full",
+}: {
+  product: Product;
+  className?: string;
+}) {
   const { removeOneItem, addItem, cart } = useOrder();
-  return (
-    <div className="mt-auto flex justify-center">
-      <div className="flex w-fit items-center justify-center rounded-full border border-solid border-black p-1">
+
+  return cart.some((item) => item.product._id === product._id) ? (
+    <div className={`mt-auto flex justify-center ${className}`}>
+      <div className="flex w-full items-center justify-between rounded-full border border-solid border-black p-1">
         <button
           onClick={() => removeOneItem(product)}
-          className="mr-6 ml-1 h-8 w-8 rounded-full border bg-rose-600 text-rose-100"
+          className="left-0 h-8 w-8 rounded-full border bg-rose-600 text-rose-100"
         >
           -
         </button>
@@ -17,11 +24,18 @@ export default function QuantityControl({ product }: { product: Product }) {
         </p>
         <button
           onClick={() => addItem(product)}
-          className="mr-1 ml-6 h-8 w-8 rounded-full border bg-emerald-600 text-emerald-100"
+          className="right-0 h-8 w-8 rounded-full border bg-emerald-600 text-emerald-100"
         >
           +
         </button>
       </div>
     </div>
+  ) : (
+    <button
+      onClick={() => addItem(product)}
+      className={`mt-auto rounded-full border bg-red-500 p-2 text-red-100 hover:bg-red-600 ${className}`}
+    >
+      Add to Cart
+    </button>
   );
 }

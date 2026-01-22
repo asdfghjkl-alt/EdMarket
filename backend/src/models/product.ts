@@ -11,13 +11,13 @@ const imageSchema = new Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
 imageSchema.virtual("thumbnail").get(function () {
-  return this.url.replace("/upload", "/upload/w_200,h_150,c_fill");
+  return this.url.replace("/upload", "/upload/w_300,h_300,c_pad");
 });
 imageSchema.virtual("main").get(function () {
-  return this.url.replace("/upload", "/upload/w_600,h_450,c_fill");
+  return this.url.replace("/upload", "/upload/w_1200,h_1200,c_pad");
 });
 imageSchema.virtual("display").get(function () {
-  return this.url.replace("/upload", "/upload/w_400,h_300,c_fill");
+  return this.url.replace("/upload", "/upload/w_500,h_500,c_pad");
 });
 
 export const productSchema = new Schema({

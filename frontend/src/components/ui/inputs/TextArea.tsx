@@ -32,6 +32,7 @@ export default function TextArea<T extends FieldValues>({
           <textarea
             placeholder={placeholder}
             rows={rows}
+            id={name}
             {...register(name)}
           ></textarea>
         </div>

@@ -14,7 +14,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <p className="font-semibold">
             {product.name} | {product.quantity}g
           </p>
-          <h3 className="text-xl font-bold">${product.price}</h3>
+          <h3 className="text-xl font-bold">${product.price.toFixed(2)}</h3>
           <p className="text-sm">
             ${((product.price / product.quantity) * 100).toFixed(2)} / 100g
           </p>

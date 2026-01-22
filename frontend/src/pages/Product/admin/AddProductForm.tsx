@@ -139,6 +139,8 @@ export default function AddProductForm() {
             <input
               type="file"
               multiple={true}
+              name="images"
+              id="images"
               accept="image/png, image/jpeg, image/webp, image/jpg"
               onChange={(e) => {
                 const files = Array.from(e.target.files || []);

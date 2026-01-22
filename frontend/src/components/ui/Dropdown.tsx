@@ -24,7 +24,7 @@ export default function Dropdown({
       >
         <div className="py-1">
           {links.map((link, index) => (
-            <MenuItem>
+            <MenuItem key={index}>
               <a
                 href={link.href}
                 key={index}

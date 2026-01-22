@@ -29,7 +29,12 @@ export default function InputField<T extends FieldValues>({
           <label className="font-medium" htmlFor={name}>
             {label}
           </label>
-          <input type={type} placeholder={placeholder} {...register(name)} />
+          <input
+            id={name}
+            type={type}
+            placeholder={placeholder}
+            {...register(name)}
+          />
         </div>
         <div className="text-red-500">
           {error && <span>{error.message}</span>}

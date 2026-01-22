@@ -15,7 +15,7 @@ import productRoutes from "@/routes/product";
 import orderRoutes from "@/routes/order";
 import User, { type IUser } from "@/models/user.js";
 import { dbUrl } from "@/loaders/db";
-import { rateLimit } from "express-rate-limit";
+import helmet from "helmet";
 
 const app = express();
 
@@ -62,6 +62,44 @@ declare global {
     interface User extends IUser {}
   }
 }
+
+const scriptSrcUrls = [
+  "https://kit.fontawesome.com/",
+  "https://cdnjs.cloudflare.com/",
+  "https://cdn.jsdelivr.net/",
+  "https://cdn.jsdelivr.net/npm",
+  "https://code.jquery.com/",
+];
+const styleSrcUrls = [
+  "https://kit-free.fontawesome.com/",
+  "https://fonts.googleapis.com/",
+  "https://use.fontawesome.com/",
+  "https://cdn.jsdelivr.net/",
+];
+const connectSrcUrls = ["https://cdn.jsdelivr.net/npm/"];
+
+const fontSrcUrls: string[] = [];
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: [],
+      connectSrc: ["'self'", ...connectSrcUrls],
+      scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+      workerSrc: ["'self'", "blob:"],
+      childSrc: ["blob:"],
+      objectSrc: [],
+      imgSrc: [
+        "'self'",
+        "blob:",
+        "data:",
+        `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`,
+      ],
+      fontSrc: ["'self'", ...fontSrcUrls],
+    },
+  }),
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));

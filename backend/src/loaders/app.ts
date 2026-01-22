@@ -9,7 +9,7 @@ import MongoStore from "connect-mongo";
 import cors from "cors";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import ShopError from "@/utils/ShopError.js";
+import ShopError from "@/utils/ShopError";
 import userRoutes from "@/routes/user";
 import productRoutes from "@/routes/product";
 import orderRoutes from "@/routes/order";

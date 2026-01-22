@@ -4,10 +4,9 @@
   "description": "Backend for edmarket",
   "license": "ISC",
   "author": "Edward LIu",
-  "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "lint": "eslint '**/*.{ts,js}'",
     "lint-fix": "eslint --fix '**/*.{ts,js}'",
     "start": "cross-env NODE_ENV=production npx tsx src/index.ts",
@@ -44,6 +43,7 @@
     "eslint": "^9.39.2",
     "globals": "^17.0.0",
     "jiti": "^2.6.1",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0"
   }

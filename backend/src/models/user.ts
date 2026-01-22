@@ -23,7 +23,7 @@ const userSchema = new Schema({
 });
 
 // eslint-disable-next-line
-userSchema.plugin((passportLocalMongoose as any).default);
+userSchema.plugin(passportLocalMongoose);
 
 const User = model<IUser, PassportLocalMongooseModel<IUser>>(
   "User",

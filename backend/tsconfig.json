@@ -3,7 +3,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
-    "noEmit": true,
+    "noEmit": false,
     "resolveJsonModule": true,
     "allowJs": true,
     "target": "ES2022",
@@ -12,9 +12,12 @@
     "skipLibCheck": true,
     "strict": true,
     "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "exclude": ["**/**_broken.ts", "node_modules"]
+  "include": ["src"],
+  "exclude": ["**/**_broken.ts", "node_modules", "dist"]
 }

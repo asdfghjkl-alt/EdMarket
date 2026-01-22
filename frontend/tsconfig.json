@@ -9,5 +9,8 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+  },
+  "scripts": {
+    "build": "tsc -b && vite build"
   }
 }

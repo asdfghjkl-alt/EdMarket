@@ -4,7 +4,6 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noEmit": false,
-    "noEmit": false,
     "resolveJsonModule": true,
     "allowJs": true,
     "target": "ES2022",
@@ -13,8 +12,6 @@
     "skipLibCheck": true,
     "strict": true,
     "baseUrl": ".",
-    "outDir": "./dist",
-    "rootDir": ".",
     "outDir": "./dist",
     "rootDir": ".",
     "paths": {

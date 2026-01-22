@@ -85,7 +85,11 @@ export default function Login() {
             register={register}
             error={errors.password}
           />
-          <button type="submit" className="btn-submit cursor-pointer">
+          <button
+            type="submit"
+            disabled={isLoggingIn.current}
+            className="btn-submit cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+          >
             Login
           </button>
           <p className="mt-2">

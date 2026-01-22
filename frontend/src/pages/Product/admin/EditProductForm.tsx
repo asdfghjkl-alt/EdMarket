@@ -26,7 +26,7 @@ const productSchema = Joi.object({
     "number.greater": "Quantity must be greater than 0",
     "number.base": "Please enter a quantity",
   }),
-  images: Joi.any(),
+  images: Joi.array().required(),
   description: Joi.string().required().messages({
     "string.empty": "Please enter a description",
   }),
@@ -122,6 +122,10 @@ export default function EditProductForm() {
     return () => controller.abort();
   }, [id, setValue]);
 
+  useEffect(() => {
+    register("images");
+  }, [register]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -188,7 +192,6 @@ export default function EditProductForm() {
               type="file"
               multiple={true}
               accept="image/png, image/jpeg, image/webp, image/jpg"
-              {...register("images")}
               onChange={(e) => {
                 const files = Array.from(e.target.files || []);
                 if (existingImages.length + images.length + files.length > 5) {

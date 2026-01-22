@@ -149,7 +149,7 @@ export default function Navbar() {
             ))}
             {user ? (
               <>
-                {navLinks.map((link) => (
+                {authLinks.map((link) => (
                   <NavLink
                     key={link.href}
                     to={link.href}

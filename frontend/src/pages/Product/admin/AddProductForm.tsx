@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate } from "react-router";
 import Joi from "joi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AxiosError } from "axios";
 import type { ProductFormData } from "@/types/product";
 import InputField from "@/components/ui/inputs/InputField";
@@ -13,7 +13,7 @@ import Close from "@/assets/close.png";
 
 const productSchema = Joi.object({
   name: Joi.string().required().messages({
-    "string.empty": "Please enter an image url",
+    "string.empty": "Please enter a name",
   }),
   price: Joi.number().multiple(0.01).required().greater(0).messages({
     "number.multiple": "Price can only have 2 decimal places",
@@ -25,8 +25,8 @@ const productSchema = Joi.object({
     "number.greater": "Quantity must be greater than 0",
     "number.base": "Please enter a quantity",
   }),
-  images: Joi.any().required().messages({
-    "any.required": "Please upload at least one image",
+  images: Joi.array().min(1).required().messages({
+    "array.min": "Please upload at least one image",
   }),
   description: Joi.string().required().messages({
     "string.empty": "Please enter a description",
@@ -52,6 +52,11 @@ export default function AddProductForm() {
       description: "",
     },
   });
+
+  useEffect(() => {
+    register("images");
+  }, [register]);
+
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -63,6 +68,7 @@ export default function AddProductForm() {
       formData.append("name", data.name);
       formData.append("price", data.price.toString());
       formData.append("quantity", data.quantity.toString());
+
       if (images && images.length > 0) {
         for (let i = 0; i < images.length; i++) {
           formData.append("images", images[i]);
@@ -134,7 +140,6 @@ export default function AddProductForm() {
               type="file"
               multiple={true}
               accept="image/png, image/jpeg, image/webp, image/jpg"
-              {...register("images")}
               onChange={(e) => {
                 const files = Array.from(e.target.files || []);
                 if (images.length + files.length > 5) {

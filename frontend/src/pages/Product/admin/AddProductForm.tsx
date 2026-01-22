@@ -192,7 +192,7 @@ export default function AddProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="btn-submit">
+          <button type="submit" className="btn-submit cursor-pointer">
             Add Product
           </button>
         </form>

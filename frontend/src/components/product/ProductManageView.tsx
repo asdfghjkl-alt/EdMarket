@@ -58,7 +58,7 @@ export default function ProductManageView({
         >
           <button
             disabled={disableDelete}
-            className="delete-btn disabled:cursor-not-allowed disabled:opacity-30"
+            className="delete-btn cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
           >
             Delete
           </button>

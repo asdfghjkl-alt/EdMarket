@@ -106,7 +106,11 @@ const checkEditImagesValid = async (
 
 const destroyAllUploads = (files: Express.Multer.File[]) => {
   files.forEach((file) => {
-    fs.unlinkSync(file.path);
+    fs.unlink(file.path, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
   });
 };
 

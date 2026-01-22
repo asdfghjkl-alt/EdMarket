@@ -3,6 +3,7 @@ import { NavLink } from "react-router";
 import { useAuth } from "@/contexts/UserContext";
 import Dropdown from "@/components/ui/Dropdown";
 import CartLink from "@/components/ui/CartLink";
+import EdMarket from "@/assets/EdMarket.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -34,6 +35,7 @@ export default function Navbar() {
           className="flex items-center no-underline"
           onClick={closeMenu}
         >
+          <img src={EdMarket} alt="EdMarket" className="h-12 w-12" />
           <div className="ps-1 leading-snug">
             <div className="text-xl font-extrabold tracking-wide">EdMarket</div>
             <div className="text-xs font-light tracking-[0.3em] text-teal-100 uppercase">

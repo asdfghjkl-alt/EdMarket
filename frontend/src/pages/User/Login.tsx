@@ -85,7 +85,7 @@ export default function Login() {
             register={register}
             error={errors.password}
           />
-          <button type="submit" className="btn-submit">
+          <button type="submit" className="btn-submit cursor-pointer">
             Login
           </button>
           <p className="mt-2">

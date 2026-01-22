@@ -245,7 +245,7 @@ export default function EditProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="edit-btn">
+          <button type="submit" className="edit-btn cursor-pointer">
             Update Product
           </button>
         </form>

@@ -4,7 +4,7 @@ input {
 }
 
 .btn-submit {
-  @apply m-0.5 w-full rounded-lg border bg-blue-500 p-2 text-blue-100;
+  @apply m-0.5 w-full rounded-lg border bg-emerald-600 p-2 text-emerald-100;
 }
 
 .edit-btn {

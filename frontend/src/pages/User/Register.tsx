@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import Joi from "joi";
 import type { RegisterFormData } from "@/types/user";
 import { useEffect, useState } from "react";
@@ -63,17 +63,17 @@ export default function Register() {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <h1 className="my-8 text-5xl font-bold">EdMarket</h1>
+      <p className="my-8 text-5xl font-bold">EdMarket</p>
       <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <h1 className="text-xl">Register an account for EdMarket</h1>
+        <h1>Register an account for EdMarket</h1>
         <p>
           Already have an account?{" "}
-          <a
-            href="/auth/login"
+          <Link
+            to="/auth/login"
             className="text-blue-600 decoration-blue-500 decoration-solid hover:text-blue-400 hover:underline"
           >
             Login
-          </a>
+          </Link>
         </p>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {errMsg}

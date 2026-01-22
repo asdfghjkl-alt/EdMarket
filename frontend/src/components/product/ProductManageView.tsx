@@ -2,6 +2,7 @@ import api from "@/api/axios";
 import type { Product } from "@/types/product";
 import { AxiosError } from "axios";
 import { useState } from "react";
+import { Link } from "react-router";
 
 export default function ProductManageView({
   product,
@@ -44,9 +45,9 @@ export default function ProductManageView({
       <td>${product.price}</td>
       <td className="whitespace-pre-wrap">{product.description}</td>
       <td>
-        <a className="edit-btn" href={`/products/edit/${product._id}`}>
+        <Link className="edit-btn" to={`/products/edit/${product._id}`}>
           Edit
-        </a>
+        </Link>
       </td>
       <td>
         <form

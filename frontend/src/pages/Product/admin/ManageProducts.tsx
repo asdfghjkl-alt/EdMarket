@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Product } from "@/types/product";
 import ProductManageView from "@/components/product/ProductManageView";
 import Loading from "@/components/ui/Loading";
+import { Link } from "react-router";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([] as Product[]);
@@ -37,7 +38,15 @@ export default function ManageProducts() {
   }
 
   return (
-    <div className="m-6 text-center">
+    <div className="m-6">
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="w-full text-center text-2xl font-bold">
+          Manage Products
+        </h1>
+        <Link to="/products/add" className="btn-submit text-center">
+          Add New Product
+        </Link>
+      </div>
       {error && <p className="text-red-500">{error}</p>}
       <table>
         <thead>

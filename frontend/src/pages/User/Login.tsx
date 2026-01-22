@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import Joi from "joi";
 import type { LoginFormData } from "@/types/user";
 import { useEffect, useRef, useState } from "react";
@@ -65,9 +65,9 @@ export default function Login() {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <h1 className="my-8 text-5xl font-bold">EdMarket</h1>
+      <p className="my-8 text-5xl font-bold">EdMarket</p>
       <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <h1 className="text-xl font-semibold">Login to EdMarket</h1>
+        <h1>Login to EdMarket</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {errMsg}
           <InputField
@@ -90,12 +90,12 @@ export default function Login() {
           </button>
           <p className="mt-2">
             Do not have an EdMarket Account?{" "}
-            <a
-              href="/auth/register"
+            <Link
+              to="/auth/register"
               className="text-blue-600 decoration-blue-500 decoration-solid hover:text-blue-400 hover:underline"
             >
               Create an EdMarket Account
-            </a>
+            </Link>
           </p>
         </form>
       </div>

@@ -10,10 +10,7 @@ const navLinks = [
 ];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/orders", label: "My Orders" }];
-const adminLinks = [
-  { href: "/products/add", label: "Add Products" },
-  { href: "/products/manage", label: "Manage Products" },
-];
+const adminLinks = [{ href: "/products/manage", label: "Manage Products" }];
 
 export const linkBaseClass =
   "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";
@@ -32,8 +29,8 @@ export default function Navbar() {
       role="banner"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 p-2">
-        <a
-          href="/"
+        <NavLink
+          to="/"
           className="flex items-center no-underline"
           onClick={closeMenu}
         >
@@ -43,7 +40,7 @@ export default function Navbar() {
               Since 2025
             </div>
           </div>
-        </a>
+        </NavLink>
 
         <nav className="hidden items-center gap-3 md:flex" aria-label="Primary">
           {navLinks.map((link) => (

@@ -23,7 +23,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
     });
   } catch (e) {
     if (e instanceof Error) {
-      throw new ShopError(e.message, 400);
+      throw new ShopError("Invalid credentials", 400);
     } else {
       throw new ShopError("Unknown error occurred", 500);
     }

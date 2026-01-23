@@ -20,16 +20,16 @@ import helmet from "helmet";
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-app.use(express.json());
-
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
+
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(express.json());
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,

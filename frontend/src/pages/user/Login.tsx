@@ -54,7 +54,7 @@ export default function Login() {
         if (e.status === 401) {
           setErrMsg("Either username or password is incorrect");
         } else {
-          setErrMsg(e.message);
+          setErrMsg(e.response?.data.message || e.response?.data);
         }
       } else {
         setErrMsg("Unexpected error occurred");
@@ -70,7 +70,7 @@ export default function Login() {
       <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1>Login to EdMarket</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          {errMsg}
+          <p className="text-red-500">{errMsg}</p>
           <InputField
             name="username"
             placeholder="Username"

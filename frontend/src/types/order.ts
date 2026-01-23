@@ -10,6 +10,11 @@ export interface OrderType {
   cart: CartItem[];
   date: Date;
   completed: boolean;
+  completionDate?: Date;
+  user?: {
+    _id: string;
+    username: string;
+  };
 }
 
 export interface OrderContextType {

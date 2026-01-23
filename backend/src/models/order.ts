@@ -34,6 +34,9 @@ const orderSchema = new Schema({
       message: "User id does not exist",
     },
   },
+  completionDate: {
+    type: Date,
+  },
   completed: {
     type: Boolean,
     required: true,

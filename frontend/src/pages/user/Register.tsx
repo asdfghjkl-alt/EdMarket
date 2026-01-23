@@ -6,6 +6,7 @@ import type { RegisterFormData } from "@/types/user";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/UserContext";
 import InputField from "@/components/ui/inputs/InputField";
+import { AxiosError } from "axios";
 
 const registerSchema = Joi.object({
   username: Joi.string()
@@ -55,8 +56,12 @@ export default function Register() {
       await authRegister(data.email, data.username, data.password);
       navigate(-1);
     } catch (e) {
-      if (e instanceof Error) {
-        setErrMsg(e.message);
+      if (e instanceof AxiosError) {
+        if (e.status === 401) {
+          setErrMsg("Either username or password is incorrect");
+        } else {
+          setErrMsg(e.response?.data.message || e.response?.data);
+        }
       } else {
         setErrMsg("Unexpected error occurred");
       }
@@ -80,7 +85,7 @@ export default function Register() {
           </Link>
         </p>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          {errMsg}
+          <p className="text-red-500">{errMsg}</p>
           <InputField
             name="email"
             placeholder="Email"

@@ -21,7 +21,7 @@ export default function UserOrders() {
         setOrders(data.body.orders);
       } catch (err) {
         if (err instanceof AxiosError && err.name !== "AbortError") {
-          setError(err.response?.data.message);
+          setError(err.response?.data.message || err.response?.data);
         }
       } finally {
         setIsLoading(false);
@@ -30,7 +30,6 @@ export default function UserOrders() {
 
     fetchProducts();
 
-    // 3. Cleanup function
     return () => controller.abort();
   }, []);
 

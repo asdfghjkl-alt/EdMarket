@@ -53,6 +53,7 @@ const viewUserOrders = async (req: Request, res: Response) => {
       _id: order._id,
       completed: order.completed,
       date: order.date,
+      completionDate: order.completionDate,
     };
   });
 
@@ -63,7 +64,7 @@ const viewUserOrders = async (req: Request, res: Response) => {
 };
 
 const viewAllOrders = async (req: Request, res: Response) => {
-  const allOrders = await Order.find();
+  const allOrders = await Order.find().populate("user", "username");
 
   res.json({
     message: "Successfully retrieved all orders!",
@@ -73,4 +74,51 @@ const viewAllOrders = async (req: Request, res: Response) => {
   });
 };
 
-export { addOrder, viewUserOrders, viewAllOrders };
+const markAsDelivered = async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ message: "Somehow you were not authenticated" });
+  }
+
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  order.completed = true;
+  order.completionDate = new Date();
+
+  await order.save();
+
+  res.json({ message: "Order successfully marked as delivered!" });
+};
+
+const markAsUndelivered = async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ message: "Somehow you were not authenticated" });
+  }
+
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  order.completed = false;
+
+  await order.save();
+
+  res.json({ message: "Order successfully marked as undelivered!" });
+};
+
+export {
+  addOrder,
+  viewUserOrders,
+  viewAllOrders,
+  markAsDelivered,
+  markAsUndelivered,
+};

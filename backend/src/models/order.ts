@@ -24,6 +24,7 @@ const orderSchema = new Schema({
     ref: "User",
     required: true,
     validate: {
+      // Custom validation software to check that associated user is valid
       validator: async function (value: Schema.Types.ObjectId) {
         const isValid = await User.exists({ _id: value });
         if (isValid) {

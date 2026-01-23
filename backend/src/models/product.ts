@@ -45,6 +45,7 @@ export const productSchema = new Schema({
   },
 });
 
+// Post middleware to delete images from Cloudinary when a product is deleted
 productSchema.post("findOneAndDelete", async function (product) {
   for (const { filename } of product.images) {
     await cloudinary.uploader.destroy(filename);

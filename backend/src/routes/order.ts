@@ -14,8 +14,11 @@ const router = Router();
 
 router.use(orderLimit);
 
-router.post("/", isLoggedIn, filterInvalidItems, addOrder);
-router.get("/", isLoggedIn, viewUserOrders);
+router
+  .route("/")
+  .post(isLoggedIn, filterInvalidItems, addOrder)
+  .get(isLoggedIn, viewUserOrders);
+
 router.get("/all", isLoggedIn, isAdmin, viewAllOrders);
 router.put("/:id/delivered", isLoggedIn, isAdmin, markAsDelivered);
 router.put("/:id/undelivered", isLoggedIn, isAdmin, markAsUndelivered);

@@ -22,12 +22,12 @@ const userSchema = new Schema({
   },
 });
 
-// eslint-disable-next-line
+// Plugs in extensions from passport-local-mongoose
 userSchema.plugin(passportLocalMongoose);
 
 const User = model<IUser, PassportLocalMongooseModel<IUser>>(
   "User",
-  userSchema
+  userSchema,
 );
 
 export default User;

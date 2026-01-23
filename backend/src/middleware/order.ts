@@ -14,15 +14,15 @@ const filterInvalidItems = async (
   const { cart } = req.body;
   const cartProductIds = cart.map((item: CartItem) => item.product);
 
+  // Finds all valid products that are in the cart
   const validProducts = await Product.find({
     _id: { $in: cartProductIds },
   }).select("_id");
 
   const validIdSet = new Set(validProducts.map((p) => p._id.toString()));
 
-  req.body.cart = cart.filter((item: CartItem) => {
-    return validIdSet.has(item.product);
-  });
+  // Filters out items not recorded in the database
+  req.body.cart = cart.filter((item: CartItem) => validIdSet.has(item.product));
 
   next();
 };

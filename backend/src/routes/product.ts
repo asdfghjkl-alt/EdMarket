@@ -15,14 +15,14 @@ import {
 import { productLimit } from "@/utils/limiter";
 import multer from "multer";
 
-
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 7 * 1024 * 1024, files: 5 },
   fileFilter: (req, file, cb) => {
     // Allowed ext
     const filetypes = /jpeg|jpg|png|webp/;
-    // Check mime
+
+    // Tests if the file types are valid
     const mimetype = filetypes.test(file.mimetype);
 
     if (mimetype) {
@@ -38,25 +38,28 @@ const router = Router();
 
 router.use(productLimit);
 
-router.post(
-  "/",
-  isLoggedIn,
-  isAdmin,
-  upload.array("images", 5),
-  validateProduct,
-  checkInitImagesValid,
-  addProduct,
-);
-router.get("/", allProducts);
-router.get("/:id", findProduct);
-router.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
-router.put(
-  "/:id",
-  isLoggedIn,
-  isAdmin,
-  upload.array("images", 5),
-  checkEditImagesValid,
-  editProduct,
-);
+router
+  .route("/")
+  .post(
+    isLoggedIn,
+    isAdmin,
+    upload.array("images", 5),
+    validateProduct,
+    checkInitImagesValid,
+    addProduct,
+  )
+  .get(allProducts);
+
+router
+  .route("/:id")
+  .get(findProduct)
+  .delete(isLoggedIn, isAdmin, deleteProduct)
+  .put(
+    isLoggedIn,
+    isAdmin,
+    upload.array("images", 5),
+    checkEditImagesValid,
+    editProduct,
+  );
 
 export default router;

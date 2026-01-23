@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const checkSession = async () => {
       try {
         const { data: csrfData } = await api.get("/csrf-token");
+        // Sets the CSRF token for all subsequent requests
         api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
 
         const { data } = await api.get("/auth/me");
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const { data: csrfData } = await api.get("/csrf-token");
+    // Sets the CSRF token for all subsequent requests
     api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
 
     setUser(data.body.user);
@@ -62,7 +64,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     await api.post("/auth/logout");
     setUser(null);
-    // Refresh CSRF token after logout to ensure next request (e.g. login) has valid token
+
+    // Refresh CSRF token after logout to ensure next request has a valid token
     const { data: csrfData } = await api.get("/csrf-token");
     api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
   };

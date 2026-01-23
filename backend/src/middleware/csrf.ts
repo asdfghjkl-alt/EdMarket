@@ -16,10 +16,6 @@ export const refreshCsrfToken = (req: Request, res: Response) => {
   });
 };
 
-/**
- * Middleware to sync CSRF token from session to a non-HttpOnly cookie.
- * This allows the frontend to read the token and send it back in a header.
- */
 export const syncCsrfToken = (
   req: Request,
   res: Response,
@@ -29,7 +25,7 @@ export const syncCsrfToken = (
   if (!req.session.csrfToken) {
     refreshCsrfToken(req, res);
   } else {
-    // Refresh the cookie on every GET request to keep it in sync
+    // Always sync the cookie to the session token to recover from deleted cookies
     res.cookie("XSRF-TOKEN", req.session.csrfToken, {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -53,6 +49,12 @@ export const verifyCsrfToken = (
   const safeMethods = ["GET", "HEAD", "OPTIONS"];
 
   if (safeMethods.includes(req.method)) {
+    return next();
+  }
+
+  // Exempt logout as per user request to ensure they can always end a session
+  // This helps when the session is in an inconsistent state.
+  if (req.path === "/auth/logout") {
     return next();
   }
 

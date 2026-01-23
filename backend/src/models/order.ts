@@ -14,6 +14,11 @@ const orderSchema = new Schema({
       quantity: { type: Number, min: 1, required: true },
     },
   ],
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",

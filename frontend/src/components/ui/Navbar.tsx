@@ -5,13 +5,13 @@ import Dropdown from "@/components/ui/Dropdown";
 import CartLink from "@/components/ui/CartLink";
 import EdMarket from "@/assets/EdMarket.png";
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  // { href: "/products", label: "Products" },
-];
+const navLinks = [{ href: "/", label: "Home" }];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/orders", label: "My Orders" }];
-const adminLinks = [{ href: "/products/manage", label: "Manage Products" }];
+const adminLinks = [
+  { href: "/products/manage", label: "Manage Products" },
+  { href: "/orders/manage", label: "Manage Orders" },
+];
 
 export const linkBaseClass =
   "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";
@@ -23,6 +23,15 @@ export default function Navbar() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const { user, logout } = useAuth();
+
+  const userElements = [
+    <button
+      className="block w-full text-left text-sm font-bold text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+      onClick={logout}
+    >
+      Logout
+    </button>,
+  ];
 
   return (
     <header
@@ -58,26 +67,13 @@ export default function Navbar() {
           ))}
           {user ? (
             <>
-              {authLinks.map((link) => (
-                <NavLink
-                  key={link.href}
-                  to={link.href}
-                  className={({ isActive }) =>
-                    `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-              <button
-                className={`${linkBaseClass} bg-sky-700`}
-                onClick={logout}
-              >
-                Logout
-              </button>
-              <p className="text-sm text-gray-200">Welcome {user.username}</p>
+              <Dropdown
+                elements={userElements}
+                title={`Welcome ${user.username}`}
+                links={authLinks}
+              />
               {user.isAdmin && (
-                <Dropdown title="Admin Options" links={adminLinks} />
+                <Dropdown title="Admin Tools" links={adminLinks} />
               )}
             </>
           ) : (
@@ -151,29 +147,14 @@ export default function Navbar() {
             ))}
             {user ? (
               <>
-                {authLinks.map((link) => (
-                  <NavLink
-                    key={link.href}
-                    to={link.href}
-                    className={({ isActive }) =>
-                      `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
-                    }
-                  >
-                    {link.label}
-                  </NavLink>
-                ))}
-                <button
-                  className={`${linkBaseClass} bg-sky-700 text-left`}
-                  onClick={() => {
-                    closeMenu();
-                    logout();
-                  }}
-                >
-                  Logout
-                </button>
-                <p className="text-sm text-gray-200">Welcome {user.username}</p>
+                <Dropdown
+                  elements={userElements}
+                  title={`Welcome ${user.username}`}
+                  links={authLinks}
+                  fullWidth
+                />
                 {user.isAdmin && (
-                  <Dropdown title="Admin Options" links={adminLinks} />
+                  <Dropdown title="Admin Tools" links={adminLinks} fullWidth />
                 )}
               </>
             ) : (
@@ -184,7 +165,6 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
                   }
-                  onClick={closeMenu}
                 >
                   {link.label}
                 </NavLink>

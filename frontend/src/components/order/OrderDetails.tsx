@@ -19,6 +19,16 @@ export default function OrderDetails({ order }: { order: OrderType }) {
       >
         {order.completed ? "Delivered" : "Undelivered"}
       </p>
+      <p className="text-right">
+        Ordered on{" "}
+        {new Date(order.date).toLocaleString(undefined, {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        })}
+      </p>
     </div>
   );
 }

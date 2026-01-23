@@ -25,13 +25,7 @@ export const csrfMiddleware = (
   }
 
   // 3. For unsafe methods, validate the token
-  const requestToken =
-    req.body?._csrf ||
-    req.query?._csrf ||
-    req.headers["csrf-token"] ||
-    req.headers["xsrf-token"] ||
-    req.headers["x-csrf-token"] ||
-    req.headers["x-xsrf-token"];
+  const requestToken = req.headers["x-csrf-token"];
 
   if (!requestToken || requestToken !== req.session.csrfToken) {
     return next(new ShopError("Invalid CSRF Token", 403));

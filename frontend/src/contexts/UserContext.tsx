@@ -5,7 +5,7 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import api, { setCsrfToken } from "@/api/axios";
+import api from "@/api/axios";
 import type { AuthContextType } from "@/types/user";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,7 +19,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const checkSession = async () => {
       try {
         const { data: csrfData } = await api.get("/csrf-token");
-        setCsrfToken(csrfData.csrfToken);
+        api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
+
         const { data } = await api.get("/auth/me");
         setUser(data.body.user);
       } catch (err) {
@@ -51,12 +52,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       username,
       password,
     });
+
+    const { data: csrfData } = await api.get("/csrf-token");
+    api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
+
     setUser(data.body.user);
   };
 
   const logout = async () => {
     await api.post("/auth/logout");
     setUser(null);
+    // Refresh CSRF token after logout to ensure next request (e.g. login) has valid token
+    const { data: csrfData } = await api.get("/csrf-token");
+    api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
   };
 
   return (

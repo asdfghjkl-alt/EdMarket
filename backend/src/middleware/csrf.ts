@@ -52,9 +52,10 @@ export const verifyCsrfToken = (
     return next();
   }
 
-  // Exempt logout as per user request to ensure they can always end a session
-  // This helps when the session is in an inconsistent state.
-  if (req.path === "/auth/logout") {
+  // Exempt auth routes as per user request to ensure they can always sign in/up/out
+  // This prevents the "first request failure" issue when no token is present yet.
+  const exemptedPaths = ["/auth/login", "/auth/register", "/auth/logout"];
+  if (exemptedPaths.includes(req.path)) {
     return next();
   }
 

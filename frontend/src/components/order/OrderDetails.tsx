@@ -31,7 +31,7 @@ export default function OrderDetails({
         className={`text-right font-semibold ${order.completed ? "text-green-500" : "text-red-400"}`}
       >
         {order.completed ? (
-          <p>
+          <>
             Delivered{" "}
             <span className="text-black">
               on{" "}
@@ -46,7 +46,7 @@ export default function OrderDetails({
                 },
               )}
             </span>
-          </p>
+          </>
         ) : (
           "Undelivered"
         )}

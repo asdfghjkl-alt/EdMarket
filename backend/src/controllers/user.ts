@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import ShopError from "@/utils/ShopError";
 import User from "@/models/user";
+import { refreshCsrfToken } from "@/middleware/csrf";
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -31,6 +32,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const login = async (req: Request, res: Response) => {
+  refreshCsrfToken(req, res);
   res.json({
     message: `Welcome ${req.user?.username}`,
     body: {
@@ -48,6 +50,7 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
     if (err) {
       return next(err);
     }
+    refreshCsrfToken(req, res);
     res.json({ message: "Successfully logged out!" });
   });
 };

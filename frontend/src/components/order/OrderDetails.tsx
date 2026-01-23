@@ -48,7 +48,7 @@ export default function OrderDetails({
             </span>
           </>
         ) : (
-          "Undelivered"
+          <>Undelivered</>
         )}
       </p>
       <p className="text-right">

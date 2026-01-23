@@ -5,7 +5,7 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import api from "@/api/axios";
+import api, { setCsrfToken } from "@/api/axios";
 import type { AuthContextType } from "@/types/user";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,6 +18,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
+        const { data: csrfData } = await api.get("/csrf-token");
+        setCsrfToken(csrfData.csrfToken);
         const { data } = await api.get("/auth/me");
         setUser(data.body.user);
       } catch (err) {

@@ -13,6 +13,7 @@ import ShopError from "@/utils/ShopError";
 import userRoutes from "@/routes/user";
 import productRoutes from "@/routes/product";
 import orderRoutes from "@/routes/order";
+import { csrfMiddleware } from "@/middleware/csrf";
 import User, { type IUser } from "@/models/user";
 import { dbUrl } from "@/loaders/db";
 import helmet from "helmet";
@@ -58,6 +59,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(session(sessionConfig));
+
+app.use(csrfMiddleware);
+
+app.get("/csrf-token", (req: Request, res: Response) => {
+  res.json({ csrfToken: req.session.csrfToken });
+});
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

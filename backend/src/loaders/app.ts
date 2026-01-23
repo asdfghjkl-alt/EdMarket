@@ -16,7 +16,6 @@ import orderRoutes from "@/routes/order";
 import User, { type IUser } from "@/models/user";
 import { dbUrl } from "@/loaders/db";
 import helmet from "helmet";
-import { syncCsrfToken, verifyCsrfToken } from "@/middleware/csrf";
 
 const app = express();
 
@@ -28,7 +27,6 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization", "X-CSRF-Token"],
   }),
 );
 
@@ -60,9 +58,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(session(sessionConfig));
-
-app.use(syncCsrfToken);
-app.use(verifyCsrfToken);
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

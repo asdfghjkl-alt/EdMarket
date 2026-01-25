@@ -1,6 +1,14 @@
 import { cloudinary } from "@/cloudinary";
 import { Schema, model } from "mongoose";
 
+export enum ProductUnit {
+  g = "g",
+  kg = "kg",
+  ml = "ml",
+  L = "L",
+  each = "each",
+}
+
 const imageSchema = new Schema(
   {
     _id: { _id: false },
@@ -29,6 +37,12 @@ export const productSchema = new Schema({
     type: Number,
     required: true,
     min: 0,
+  },
+  unit: {
+    type: String,
+    required: true,
+    enum: Object.values(ProductUnit),
+    default: ProductUnit.g,
   },
   price: {
     type: Number,

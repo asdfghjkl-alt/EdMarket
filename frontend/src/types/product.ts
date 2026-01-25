@@ -1,6 +1,7 @@
 interface ProductBase {
   name: string;
   price: number;
+  unit: string;
   quantity: number;
   description: string;
 }

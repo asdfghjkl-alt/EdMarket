@@ -13,6 +13,8 @@ export default function ProductManageView({
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
+  const displayUnit =
+    product.unit !== "each" ? product.unit : ` ${product.unit}`;
   const [disableDelete, setDisableDelete] = useState(false);
 
   async function deleteProduct(_id: string) {
@@ -41,7 +43,10 @@ export default function ProductManageView({
         />
       </td>
       <td>{product.name}</td>
-      <td>{product.quantity}g</td>
+      <td>
+        {product.quantity}
+        {displayUnit}
+      </td>
       <td>${product.price}</td>
       <td className="whitespace-pre-wrap">{product.description}</td>
       <td>

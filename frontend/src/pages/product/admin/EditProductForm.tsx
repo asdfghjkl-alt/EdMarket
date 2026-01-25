@@ -11,7 +11,7 @@ import TextArea from "@/components/ui/inputs/TextArea";
 import Loading from "@/components/ui/Loading";
 import ErrorPg from "@/components/ui/Error";
 import Close from "@/assets/close.png";
-
+const allowedUnits = ["g", "kg", "ml", "L", "each"];
 const productSchema = Joi.object({
   name: Joi.string().required().messages({
     "string.empty": "Please enter an image url",
@@ -27,6 +27,14 @@ const productSchema = Joi.object({
     "number.base": "Please enter a quantity",
   }),
   images: Joi.array().required(),
+  unit: Joi.string()
+    .valid(...allowedUnits)
+    .required()
+    .messages({
+      "string.empty": "Please enter a unit",
+      "any.only":
+        "Unit must be one of the following: " + allowedUnits.join(", "),
+    }),
   description: Joi.string().required().messages({
     "string.empty": "Please enter a description",
   }),
@@ -50,6 +58,7 @@ export default function EditProductForm() {
       name: "",
       price: 0,
       quantity: 0,
+      unit: "g",
       images: [],
       description: "",
     },
@@ -64,6 +73,7 @@ export default function EditProductForm() {
       formData.append("name", data.name);
       formData.append("price", data.price.toString());
       formData.append("quantity", data.quantity.toString());
+      formData.append("unit", data.unit);
       formData.append("description", data.description);
 
       if (images && images.length > 0) {
@@ -99,12 +109,14 @@ export default function EditProductForm() {
           name,
           price,
           quantity,
+          unit,
           images: productImages,
           description,
         } = data.body.product;
         setValue("name", name);
         setValue("price", price);
         setValue("quantity", quantity);
+        setValue("unit", unit);
         setValue("description", description);
         setExistingImages(productImages);
         setValue("images", []);
@@ -159,12 +171,33 @@ export default function EditProductForm() {
             <InputField
               name="quantity"
               type="number"
-              label="Quantity (g)"
-              className="w-40"
+              label="Quantity"
+              className="w-30"
               placeholder="Quantity"
               register={register}
               error={errors.quantity}
             />
+            <div className="mb-4 ml-5 text-left">
+              <label htmlFor="unit" className="font-medium">
+                Unit
+              </label>
+              <select
+                id="unit"
+                {...register("unit")}
+                className="w-full rounded-xl border-2 border-gray-400 p-4"
+              >
+                {allowedUnits.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+              {errors.unit && (
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.unit.message}
+                </p>
+              )}
+            </div>
           </div>
           <div className="mb-4 text-left">
             <label className="mb-1 block text-sm font-medium text-gray-700">

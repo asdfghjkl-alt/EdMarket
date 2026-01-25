@@ -2,7 +2,18 @@ import type { Product } from "@/types/product";
 import QuantityControl from "./QuantityControl";
 import { Link } from "react-router";
 
+const unitsToDisplay: Record<string, number> = {
+  g: 100,
+  kg: 1,
+  ml: 100,
+  L: 1,
+  each: 1,
+};
+
 export default function ProductCard({ product }: { product: Product }) {
+  const displayUnit =
+    product.unit !== "each" ? product.unit : ` ${product.unit}`;
+
   return (
     <div className="m-2 h-full rounded-md border border-solid border-gray-300 text-left shadow-gray-400 hover:shadow-md">
       <div className="flex h-full flex-col gap-20 p-3">
@@ -12,11 +23,18 @@ export default function ProductCard({ product }: { product: Product }) {
             src={product.images[0].display}
           />
           <p className="font-semibold">
-            {product.name} | {product.quantity}g
+            {product.name} | {product.quantity}
+            {displayUnit}
           </p>
           <h3 className="text-xl font-bold">${product.price.toFixed(2)}</h3>
           <p className="text-sm">
-            ${((product.price / product.quantity) * 100).toFixed(2)} / 100g
+            $
+            {(
+              (product.price / product.quantity) *
+              unitsToDisplay[product.unit]
+            ).toFixed(2)}{" "}
+            / {unitsToDisplay[product.unit]}
+            {displayUnit}
           </p>
         </Link>
         <QuantityControl product={product} />

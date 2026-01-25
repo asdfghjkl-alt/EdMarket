@@ -43,7 +43,7 @@ const processProductImages = async (
 };
 
 const addProduct = async (req: Request, res: Response) => {
-  const { name, quantity, price, description } = req.body;
+  const { name, quantity, price, description, unit } = req.body;
 
   if (!req.user) {
     return res.status(401).json({ message: "Somehow you are not logged in" });
@@ -58,6 +58,7 @@ const addProduct = async (req: Request, res: Response) => {
 
   const newProduct = new Product({
     name,
+    unit,
     quantity,
     price,
     images: uploadedImages,
@@ -102,7 +103,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 
 const editProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, quantity, price, description } = req.body;
+  const { name, quantity, price, description, unit } = req.body;
 
   const product = await Product.findById(id);
 
@@ -116,6 +117,7 @@ const editProduct = async (req: Request, res: Response) => {
   product.quantity = quantity;
   product.price = price;
   product.description = description;
+  product.unit = unit;
 
   if (req.files) {
     const files = req.files as Express.Multer.File[];

@@ -47,7 +47,7 @@ export default function ProductManageView({
         {product.quantity}
         {displayUnit}
       </td>
-      <td>${product.price}</td>
+      <td>${product.price.toFixed(2)}</td>
       <td className="whitespace-pre-wrap">{product.description}</td>
       <td>
         <Link className="edit-btn" to={`/products/edit/${product._id}`}>

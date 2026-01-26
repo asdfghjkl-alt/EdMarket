@@ -102,6 +102,7 @@ export default function EditProductForm() {
   }
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(true);
   const [fetchError, setFetchError] = useState(null as null | string);
 
   useEffect(() => {
@@ -109,7 +110,7 @@ export default function EditProductForm() {
 
     const fetchProduct = async () => {
       try {
-        setIsLoading(true);
+        setIsSubmitting(true);
         const { data } = await api.get(`/products/${id}`);
         const {
           name,
@@ -133,7 +134,7 @@ export default function EditProductForm() {
           setFetchError(err.response?.data.message);
         }
       } finally {
-        setIsLoading(false);
+        setIsSubmitting(false);
       }
     };
 
@@ -324,10 +325,14 @@ export default function EditProductForm() {
           />
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
             className="btn btn-edit w-full"
           >
-            {isLoading ? "Updating..." : "Update Product"}
+            {isLoading
+              ? "Loading..."
+              : isSubmitting
+                ? "Updating..."
+                : "Update Product"}
           </button>
         </form>
       </div>

@@ -33,6 +33,7 @@ export default function EditCategory() {
 
   const [errMsg, setErrMsg] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -58,12 +59,12 @@ export default function EditCategory() {
 
   async function onSubmit(data: CategoryFormData) {
     try {
-      setIsLoading(true);
+      setIsSubmitting(true);
       await api.put(`/categories/${id}`, data);
-      setIsLoading(false);
+      setIsSubmitting(false);
       navigate("/categories/manage");
     } catch (e) {
-      setIsLoading(false);
+      setIsSubmitting(false);
       if (e instanceof AxiosError) {
         setErrMsg(e.response?.data.message);
       } else {
@@ -87,10 +88,14 @@ export default function EditCategory() {
           />
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
             className="btn btn-edit w-full"
           >
-            {isLoading ? "Editing..." : "Edit Category"}
+            {isLoading
+              ? "Loading..."
+              : isSubmitting
+                ? "Editing..."
+                : "Edit Category"}
           </button>
         </form>
       </div>

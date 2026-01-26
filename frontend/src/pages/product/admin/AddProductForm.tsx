@@ -75,6 +75,7 @@ export default function AddProductForm() {
   const [categories, setCategories] = useState<string[]>([]);
   const [errMsg, setErrMsg] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -102,7 +103,7 @@ export default function AddProductForm() {
 
   async function onSubmit(data: ProductFormData) {
     try {
-      setIsLoading(true);
+      setIsSubmitting(true);
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("price", data.price.toString());
@@ -118,10 +119,10 @@ export default function AddProductForm() {
       formData.append("description", data.description);
 
       await api.post("/products", formData);
-      setIsLoading(false);
+      setIsSubmitting(false);
       navigate("/products/manage");
     } catch (e) {
-      setIsLoading(false);
+      setIsSubmitting(false);
       if (e instanceof AxiosError) {
         setErrMsg(e.response?.data.message);
       } else {
@@ -274,10 +275,14 @@ export default function AddProductForm() {
           />
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || isSubmitting}
             className="btn btn-submit w-full"
           >
-            {isLoading ? "Adding..." : "Add Product"}
+            {isLoading
+              ? "Loading..."
+              : isSubmitting
+                ? "Adding..."
+                : "Add Product"}
           </button>
         </form>
       </div>

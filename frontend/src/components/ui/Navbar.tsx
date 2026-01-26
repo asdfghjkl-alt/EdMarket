@@ -78,7 +78,7 @@ export default function Navbar() {
           </div>
         </NavLink>
 
-        <nav className="hidden items-center gap-3 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-3 lg:flex" aria-label="Primary">
           {navLinks.map((link) => (
             <NavLink
               key={link.href}
@@ -124,7 +124,7 @@ export default function Navbar() {
           <CartLink />
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <button
             type="button"
             className="flex h-10 w-11 flex-col items-center justify-center gap-1.5 rounded-md border border-teal-50/50 text-teal-50 transition hover:bg-sky-500"
@@ -160,7 +160,7 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <nav
             className="mx-auto flex max-w-7xl flex-col gap-2 border-t border-teal-100 bg-sky-700 p-5 text-base font-semibold tracking-wide"
             aria-label="Mobile"

@@ -16,7 +16,7 @@ export default function CartLink({
       to="/cart"
       onClick={onClick}
       className={({ isActive }) =>
-        `${linkBaseClass} flex items-center border-2 border-white/30 ${
+        `${linkBaseClass} flex items-center justify-center border-2 border-white/30 ${
           isActive ? "bg-sky-500" : "bg-sky-700"
         }`
       }

@@ -13,10 +13,7 @@ const router = Router();
 
 router.use(categoryLimit);
 
-router
-  .route("/")
-  .get(isLoggedIn, isAdmin, findAllCategories)
-  .post(isLoggedIn, isAdmin, addCategory);
+router.route("/").get(findAllCategories).post(isLoggedIn, isAdmin, addCategory);
 
 router
   .route("/:id")

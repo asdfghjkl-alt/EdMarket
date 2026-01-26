@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { useAuth } from "@/contexts/UserContext";
 import Dropdown from "@/components/ui/Dropdown";
 import CartLink from "@/components/ui/CartLink";
 import EdMarket from "@/assets/EdMarket.png";
+import type { CategoryType } from "@/types/category";
+import api from "@/api/axios";
 
-const navLinks = [{ href: "/", label: "Home" }];
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
+];
 const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/orders", label: "My Orders" }];
 const adminLinks = [
@@ -18,6 +23,25 @@ export const linkBaseClass =
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [categories, setCategories] = useState([] as string[]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchCategories = async () => {
+      try {
+        const { data } = await api.get("/categories");
+        setCategories(
+          data.body.categories.map((category: CategoryType) => category.name),
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchCategories();
+    return () => controller.abort();
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen((open) => !open);
   const closeMenu = () => setIsMenuOpen(false);
@@ -65,6 +89,13 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          <Dropdown
+            title={"Product Categories"}
+            links={categories.map((category) => ({
+              href: `/products?category=${category}`,
+              label: category,
+            }))}
+          />
           {user ? (
             <>
               <Dropdown
@@ -145,6 +176,15 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
+            <Dropdown
+              title={"Product Categories"}
+              links={categories.map((category) => ({
+                href: `/products?category=${category}`,
+                label: category,
+              }))}
+              fullWidth
+              onItemClick={closeMenu}
+            />
             {user ? (
               <>
                 <Dropdown
@@ -152,9 +192,15 @@ export default function Navbar() {
                   title={`Welcome ${user.username}`}
                   links={authLinks}
                   fullWidth
+                  onItemClick={closeMenu}
                 />
                 {user.isAdmin && (
-                  <Dropdown title="Admin Tools" links={adminLinks} fullWidth />
+                  <Dropdown
+                    title="Admin Tools"
+                    links={adminLinks}
+                    fullWidth
+                    onItemClick={closeMenu}
+                  />
                 )}
               </>
             ) : (

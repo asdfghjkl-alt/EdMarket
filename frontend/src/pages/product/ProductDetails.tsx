@@ -16,7 +16,7 @@ const unitsToDisplay: Record<string, number> = {
   each: 1,
 };
 
-export default function ProductView() {
+export default function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);

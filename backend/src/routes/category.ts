@@ -19,7 +19,7 @@ router
   .post(isLoggedIn, isAdmin, addCategory);
 
 router
-  .route(":id")
+  .route("/:id")
   .delete(isLoggedIn, isAdmin, checkNoProductsInCat, deleteCategory)
   .put(isLoggedIn, isAdmin, editCategory);
 

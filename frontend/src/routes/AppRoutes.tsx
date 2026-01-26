@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "@/pages/Home";
 import MainLayout from "@/layouts/MainLayout";
 import NotFound from "@/pages/NotFound";
 import UserRestrict from "@/components/auth/UserRestrict";
@@ -8,6 +7,7 @@ import ProductRoutes from "@/routes/ProductRoutes";
 import Cart from "@/pages/Cart";
 import OrderRoutes from "./OrderRoutes";
 import CategoryRoutes from "./CategoryRoutes";
+import Home from "@/pages/Home";
 
 export default function AppRoutes() {
   return (

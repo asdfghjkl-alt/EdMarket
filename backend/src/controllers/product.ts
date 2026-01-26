@@ -77,7 +77,20 @@ const addProduct = async (req: Request, res: Response) => {
 };
 
 const allProducts = async (req: Request, res: Response) => {
-  const products = await Product.find().populate("category");
+  const categoryName = req.query.category;
+  let filter = {};
+
+  if (categoryName) {
+    const category = await Category.findOne({ name: categoryName });
+    if (!category) {
+      return res.status(404).json({
+        message: "Category does not exist",
+      });
+    }
+    filter = { category: category._id };
+  }
+
+  const products = await Product.find(filter).populate("category");
 
   res.json({
     message: "Successfully retrieved new products",

@@ -8,11 +8,13 @@ export default function Dropdown({
   elements = [],
   links,
   fullWidth = false,
+  onItemClick,
 }: {
   title: string;
   elements?: ReactNode[];
   links: { href: string; label: string }[];
   fullWidth?: boolean;
+  onItemClick?: () => void;
 }) {
   return (
     <Menu
@@ -44,6 +46,7 @@ export default function Dropdown({
             <MenuItem key={link.href}>
               <NavLink
                 to={link.href}
+                onClick={onItemClick}
                 className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
               >
                 {link.label}
@@ -52,7 +55,10 @@ export default function Dropdown({
           ))}
           {elements.map((element, index) => (
             <MenuItem key={index}>
-              <div className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden">
+              <div
+                onClick={onItemClick}
+                className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
+              >
                 {element}
               </div>
             </MenuItem>

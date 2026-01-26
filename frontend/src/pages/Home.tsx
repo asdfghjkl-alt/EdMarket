@@ -5,7 +5,7 @@ import EdMarket from "@/assets/EdMarket.png";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center p-5 text-center">
+    <div className="animate-fade-in-up flex min-h-[calc(100vh-64px)] flex-col items-center justify-center p-5 text-center">
       <img src={EdMarket} alt="Logo" className="h-70 w-70" />
       <h1 className="mt-4 text-4xl">Welcome to EdMarket!</h1>
       <p className="mt-4 text-xl">
@@ -20,6 +20,12 @@ export default function Home() {
         secure user authentication, an admin dashboard for product, category and
         order management, dynamic cart display, and order processing.
       </p>
+      <Link
+        to="/products"
+        className="btn mt-4 flex items-center bg-blue-600 p-3 text-blue-100"
+      >
+        Browse Products
+      </Link>
       <a
         href="https://www.linkedin.com/in/edward-liu-50a205267"
         className="btn mt-4 flex items-center"
@@ -34,12 +40,6 @@ export default function Home() {
         <img src={Github} alt="Github" className="h-12 w-12" />
         <p>View on GitHub</p>
       </a>
-      <Link
-        to="/products"
-        className="btn mt-4 flex items-center bg-emerald-600 text-emerald-100"
-      >
-        <p>Browse Products</p>
-      </Link>
     </div>
   );
 }

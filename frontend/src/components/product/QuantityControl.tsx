@@ -3,7 +3,7 @@ import type { Product } from "@/types/product";
 
 export default function QuantityControl({
   product,
-  className,
+  className = "w-full",
 }: {
   product: Product;
   className?: string;

@@ -53,7 +53,7 @@ export default function ProductsView() {
     </div>
   ) : (
     <div className="m-6 text-center">
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-2 p-4 md:grid-cols-3 lg:grid-cols-5">
         {products.map((product: Product) => (
           <ProductCard key={product._id} product={product} />
         ))}

@@ -109,6 +109,7 @@ export default function AddProductForm() {
       formData.append("price", data.price.toString());
       formData.append("quantity", data.quantity.toString());
       formData.append("unit", data.unit);
+      formData.append("category", data.category);
 
       if (images && images.length > 0) {
         for (let i = 0; i < images.length; i++) {

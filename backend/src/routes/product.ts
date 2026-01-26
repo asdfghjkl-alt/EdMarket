@@ -58,6 +58,7 @@ router
     isLoggedIn,
     isAdmin,
     upload.array("images", 5),
+    validateProduct,
     checkEditImagesValid,
     editProduct,
   );

@@ -9,11 +9,11 @@ export default function Home() {
       <img src={EdMarket} alt="Logo" className="h-50 w-50" />
       <h1 className="text-4xl">Welcome to EdMarket!</h1>
       <p className="text-xl">Your one-stop shop for all your grocery needs.</p>
-      <p className="mx-30 mt-4">
+      <p className="mt-4 sm:mx-5 md:mx-30">
         A full-stack e-commerce application built with MERN stack (MongoDB,
         Express, React, Node.js) by Edward Liu.
       </p>
-      <p className="mx-30 mt-4">
+      <p className="mt-4 sm:mx-5 md:mx-30">
         The project constructs a full shopping website experience featuring
         secure user authentication, an admin dashboard for product, category and
         order management, dynamic cart display, and order processing.

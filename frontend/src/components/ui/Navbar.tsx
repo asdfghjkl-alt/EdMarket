@@ -78,38 +78,12 @@ export default function Navbar() {
           </div>
         </NavLink>
 
-        <nav className="hidden items-center gap-3 lg:flex" aria-label="Primary">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.href}
-              to={link.href}
-              className={({ isActive }) =>
-                `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
-          <Dropdown
-            title={"Product Categories"}
-            links={categories.map((category) => ({
-              href: `/products?category=${category}`,
-              label: category,
-            }))}
-          />
-          {user ? (
-            <>
-              <Dropdown
-                elements={userElements}
-                title={`Welcome ${user.username}`}
-                links={authLinks}
-              />
-              {user.isAdmin && (
-                <Dropdown title="Admin Tools" links={adminLinks} />
-              )}
-            </>
-          ) : (
-            unauthLinks.map((link) => (
+        <div className="flex items-center gap-3">
+          <nav
+            className="hidden items-center gap-3 lg:flex"
+            aria-label="Primary"
+          >
+            {navLinks.map((link) => (
               <NavLink
                 key={link.href}
                 to={link.href}
@@ -119,43 +93,75 @@ export default function Navbar() {
               >
                 {link.label}
               </NavLink>
-            ))
-          )}
-          <CartLink />
-        </nav>
+            ))}
+            <Dropdown
+              title={"Product Categories"}
+              links={categories.map((category) => ({
+                href: `/products?category=${category}`,
+                label: category,
+              }))}
+            />
+            {user ? (
+              <>
+                <Dropdown
+                  elements={userElements}
+                  title={`Welcome ${user.username}`}
+                  links={authLinks}
+                />
+                {user.isAdmin && (
+                  <Dropdown title="Admin Tools" links={adminLinks} />
+                )}
+              </>
+            ) : (
+              unauthLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))
+            )}
+          </nav>
 
-        <div className="flex items-center gap-2 lg:hidden">
-          <button
-            type="button"
-            className="flex h-10 w-11 flex-col items-center justify-center gap-1.5 rounded-md border border-teal-50/50 text-teal-50 transition hover:bg-sky-500"
-            aria-label="Toggle navigation menu"
-            aria-expanded={isMenuOpen}
-            onClick={toggleMenu}
-          >
-            <span className="sr-only">Menu</span>
-            <svg
-              className="h-8 w-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <CartLink onClick={closeMenu} />
+
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              className="flex h-10 w-11 flex-col items-center justify-center gap-1.5 rounded-md border border-teal-50/50 text-teal-50 transition hover:bg-sky-500"
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+              onClick={toggleMenu}
             >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
+              <span className="sr-only">Menu</span>
+              <svg
+                className="h-8 w-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -252,7 +258,6 @@ export default function Navbar() {
               </NavLink>
             ))
           )}
-          <CartLink onClick={closeMenu} />
         </nav>
       </div>
     </header>

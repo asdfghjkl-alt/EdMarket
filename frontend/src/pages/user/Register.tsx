@@ -114,7 +114,7 @@ export default function Register() {
             disabled={isRegistering}
             className="btn btn-submit w-full"
           >
-            Register
+            {isRegistering ? "Registering..." : "Register"}
           </button>
         </form>
       </div>

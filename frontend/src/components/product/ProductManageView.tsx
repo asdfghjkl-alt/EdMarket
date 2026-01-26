@@ -65,7 +65,7 @@ export default function ProductManageView({
           }}
         >
           <button disabled={disableDelete} className="btn btn-delete">
-            Delete
+            {disableDelete ? "Deleting..." : "Delete"}
           </button>
         </form>
       </td>

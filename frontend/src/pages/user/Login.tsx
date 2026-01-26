@@ -91,7 +91,7 @@ export default function Login() {
             disabled={isLoggingIn}
             className="btn btn-submit w-full"
           >
-            Login
+            {isLoggingIn ? "Logging in..." : "Login"}
           </button>
           <p className="mt-2">
             Do not have an EdMarket Account?{" "}

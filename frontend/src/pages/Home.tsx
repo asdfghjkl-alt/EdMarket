@@ -6,7 +6,7 @@ import EdMarket from "@/assets/EdMarket.png";
 export default function Home() {
   return (
     <div className="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center p-5 text-center">
-      <img src={EdMarket} alt="Logo" className="h-50 w-50" />
+      <img src={EdMarket} alt="Logo" className="h-70 w-70" />
       <h1 className="mt-4 text-4xl">Welcome to EdMarket!</h1>
       <p className="mt-4 text-xl">
         Your one-stop shop for all your grocery needs.

@@ -48,7 +48,7 @@ export default function ProductManageView({
         {displayUnit}
       </td>
       <td>${product.price.toFixed(2)}</td>
-      <td>{product.category.name}</td>
+      <td>{product.category?.name || "No Category"}</td>
       <td className="max-w-md overflow-hidden text-ellipsis whitespace-nowrap">
         {product.description}
       </td>

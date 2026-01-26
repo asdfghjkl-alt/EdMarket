@@ -9,7 +9,7 @@ import { Link } from "react-router";
 export default function ManageProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<null | string>(null);
+  const [errMsg, setErrMsg] = useState<null | string>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -21,7 +21,7 @@ export default function ManageProducts() {
         setProducts(data.body.products);
       } catch (err) {
         if (err instanceof AxiosError && err.name !== "AbortError") {
-          setError(err.response?.data.message);
+          setErrMsg(err.response?.data.message);
         }
       } finally {
         setIsLoading(false);
@@ -54,33 +54,35 @@ export default function ManageProducts() {
             to="/categories/manage"
             className="btn btn-manage w-full text-center"
           >
-            Manage Product Category
+            Manage Product Categories
           </Link>
         </div>
       </div>
-      {error && <p className="text-red-500">{error}</p>}
-      <table>
-        <thead>
-          <tr className="m-5 h-full rounded-md *:p-2 *:text-center *:font-semibold">
-            <td className="w-2/12">Image</td>
-            <td className="w-2/12">Name</td>
-            <td className="w-1/12">Quantity</td>
-            <td className="w-1/24">Price</td>
-            <td className="w-1/24">Category</td>
-            <td>Description</td>
-          </tr>
-        </thead>
-        <tbody>
+      {errMsg && <p className="text-red-500">{errMsg}</p>}
+      <div className="flex flex-col gap-4">
+        {/* Desktop Header */}
+        <div className="hidden rounded-md bg-gray-100 p-4 font-bold text-gray-700 md:grid md:grid-cols-12 md:gap-4 md:text-center">
+          <div className="col-span-2">Image</div>
+          <div className="col-span-2">Name</div>
+          <div className="col-span-2">Quantity</div>
+          <div className="col-span-1">Price</div>
+          <div className="col-span-1">Category</div>
+          <div className="col-span-2">Description</div>
+          <div className="col-span-2">Actions</div>
+        </div>
+
+        {/* Product List */}
+        <div className="flex flex-col gap-4">
           {products.map((product: Product) => (
             <ProductManageView
               key={product._id}
               product={product}
               setProducts={setProducts}
-              setError={setError}
+              setError={setErrMsg}
             />
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import api from "@/api/axios";
 import type { CategoryType } from "@/types/category";
 import { AxiosError } from "axios";
 import { useState } from "react";
+import { Link } from "react-router";
 
 export default function CategoryManageView({
   category,
@@ -32,23 +33,33 @@ export default function CategoryManageView({
   }
 
   return (
-    <tr className="m-5 h-full border-collapse rounded-md p-3 text-left shadow-gray-400 *:border-t-2 *:p-2 hover:shadow-md">
-      <td>{category.name}</td>
-      <td>
-        <button className="btn btn-edit w-full">Edit</button>
-      </td>
-      <td>
+    <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md md:grid md:grid-cols-4 md:items-center md:gap-4 md:text-center">
+      <div className="flex flex-col md:col-span-2">
+        <span className="font-bold md:hidden">Name:</span>
+        <span>{category.name}</span>
+      </div>
+
+      <div className="flex gap-2 md:col-span-2 md:justify-center">
+        <Link
+          to={`/categories/edit/${category._id}`}
+          className="btn btn-edit h-full text-sm"
+        >
+          Edit
+        </Link>
         <form
           action={() => {
             setDisableDelete(true);
             deleteCategory(category._id);
           }}
         >
-          <button disabled={disableDelete} className="btn btn-delete w-full">
-            Delete
+          <button
+            disabled={disableDelete}
+            className="btn btn-delete h-full text-sm"
+          >
+            {disableDelete ? "Deleting..." : "Delete"}
           </button>
         </form>
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }

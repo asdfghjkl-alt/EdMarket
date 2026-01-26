@@ -21,6 +21,21 @@ const addCategory = async (req: Request, res: Response) => {
   });
 };
 
+const getCategory = async (req: Request, res: Response) => {
+  const category = await Category.findById(req.params.id);
+
+  if (!category) {
+    return res.status(404).json({
+      message: "Category not found",
+    });
+  }
+
+  res.json({
+    message: "Successfully retrieved category",
+    body: { category },
+  });
+};
+
 const deleteCategory = async (req: Request, res: Response) => {
   const category = await Category.findByIdAndDelete(req.params.id);
 
@@ -47,6 +62,7 @@ const editCategory = async (req: Request, res: Response) => {
   }
 
   category.name = name;
+  await category.save();
 
   res.json({
     message: "Successfully deleted category",
@@ -54,4 +70,10 @@ const editCategory = async (req: Request, res: Response) => {
   });
 };
 
-export { findAllCategories, addCategory, deleteCategory, editCategory };
+export {
+  findAllCategories,
+  addCategory,
+  getCategory,
+  deleteCategory,
+  editCategory,
+};

@@ -35,40 +35,70 @@ export default function ProductManageView({
   }
 
   return (
-    <tr className="m-5 h-full border-collapse rounded-md p-3 text-left shadow-gray-400 *:border-t-2 *:p-2 hover:shadow-md">
-      <td>
+    <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md md:grid md:grid-cols-12 md:items-center md:gap-4 md:text-center">
+      <div className="flex justify-center md:col-span-2">
         <img
-          className="h-30 object-contain object-center"
+          className="h-24 w-24 rounded-md object-cover"
           src={product.images[0].url}
+          alt={product.name}
         />
-      </td>
-      <td>{product.name}</td>
-      <td>
-        {product.quantity}
-        {displayUnit}
-      </td>
-      <td>${product.price.toFixed(2)}</td>
-      <td>{product.category?.name || "No Category"}</td>
-      <td className="max-w-md overflow-hidden text-ellipsis whitespace-nowrap">
-        {product.description}
-      </td>
-      <td>
-        <Link className="btn btn-edit p-3" to={`/products/edit/${product._id}`}>
+      </div>
+
+      <div className="flex flex-col md:col-span-2">
+        <span className="font-bold md:hidden">Name:</span>
+        <span>{product.name}</span>
+      </div>
+
+      <div className="flex flex-col md:col-span-2">
+        <span className="font-bold md:hidden">Quantity:</span>
+        <span>
+          {product.quantity}
+          {displayUnit}
+        </span>
+      </div>
+
+      <div className="flex flex-col md:col-span-1">
+        <span className="font-bold md:hidden">Price:</span>
+        <span>${product.price.toFixed(2)}</span>
+      </div>
+
+      <div className="flex flex-col md:col-span-1">
+        <span className="font-bold md:hidden">Category:</span>
+        <span>{product.category?.name || "No Category"}</span>
+      </div>
+
+      <div className="flex flex-col md:col-span-2">
+        <span className="font-bold md:hidden">Description:</span>
+        <span
+          className="mx-auto max-w-xs truncate md:w-full"
+          title={product.description}
+        >
+          {product.description}
+        </span>
+      </div>
+
+      <div className="mt-4 flex justify-center gap-2 md:col-span-2 md:mt-0">
+        <Link
+          className="btn btn-edit px-4 py-2 text-sm"
+          to={`/products/edit/${product._id}`}
+        >
           Edit
         </Link>
-      </td>
-      <td>
         <form
+          className="inline-block"
           action={() => {
             setDisableDelete(true);
             deleteProduct(product._id);
           }}
         >
-          <button disabled={disableDelete} className="btn btn-delete">
+          <button
+            disabled={disableDelete}
+            className="btn btn-delete px-4 py-2 text-sm"
+          >
             {disableDelete ? "Deleting..." : "Delete"}
           </button>
         </form>
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 }

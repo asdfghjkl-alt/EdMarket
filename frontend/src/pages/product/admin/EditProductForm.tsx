@@ -9,7 +9,7 @@ import InputField from "@/components/ui/inputs/InputField";
 import api from "@/api/axios";
 import TextArea from "@/components/ui/inputs/TextArea";
 import Loading from "@/components/ui/Loading";
-import ErrorPg from "@/components/ui/Error";
+import ErrorPg from "@/components/ui/ErrorPg";
 import Close from "@/assets/close.png";
 import type { CategoryType } from "@/types/category";
 const allowedUnits = ["g", "kg", "ml", "L", "each"];
@@ -177,7 +177,7 @@ export default function EditProductForm() {
       <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1 className="text-xl font-semibold">Add a product</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          {errMsg}
+          {errMsg && <p className="text-red-500">{errMsg}</p>}
           <InputField
             name="name"
             label="Product Name"

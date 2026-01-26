@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "@/api/axios";
 import { AxiosError } from "axios";
 import Loading from "@/components/ui/Loading";
-import ErrorPg from "@/components/ui/Error";
+import ErrorPg from "@/components/ui/ErrorPg";
 import type { Product } from "@/types/product";
 import ProductCard from "@/components/product/ProductCard";
 import { useSearchParams } from "react-router-dom";

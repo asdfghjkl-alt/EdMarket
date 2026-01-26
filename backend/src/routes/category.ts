@@ -7,6 +7,7 @@ import {
   deleteCategory,
   editCategory,
   findAllCategories,
+  getCategory,
 } from "@/controllers/category";
 
 const router = Router();
@@ -17,6 +18,7 @@ router.route("/").get(findAllCategories).post(isLoggedIn, isAdmin, addCategory);
 
 router
   .route("/:id")
+  .get(getCategory)
   .delete(isLoggedIn, isAdmin, checkNoProductsInCat, deleteCategory)
   .put(isLoggedIn, isAdmin, editCategory);
 

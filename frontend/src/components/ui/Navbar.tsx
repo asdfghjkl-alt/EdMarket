@@ -15,6 +15,7 @@ const unauthLinks = [{ href: "/auth/login", label: "Login" }];
 const authLinks = [{ href: "/orders", label: "My Orders" }];
 const adminLinks = [
   { href: "/products/manage", label: "Manage Products" },
+  { href: "/categories/manage", label: "Manage Categories" },
   { href: "/orders/manage", label: "Manage Orders" },
 ];
 

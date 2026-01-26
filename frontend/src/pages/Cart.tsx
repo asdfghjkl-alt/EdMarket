@@ -39,25 +39,24 @@ export default function Cart() {
 
   return (
     <div className="m-6 text-center">
-      <table>
-        <thead>
-          <tr className="m-5 h-full rounded-md *:p-2 *:text-center *:font-semibold">
-            <td className="w-2/12">Image</td>
-            <td className="w-2/12">Name</td>
-            <td className="w-1/12">Quantity</td>
-            <td className="w-1/24">Price</td>
-            <td className="w-1/12">Units Purchased</td>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="flex flex-col gap-4">
+        {/* Desktop Header */}
+        <div className="hidden rounded-md bg-gray-100 p-4 font-bold text-gray-700 md:grid md:grid-cols-12 md:gap-4 md:text-center">
+          <div className="col-span-3">Image</div>
+          <div className="col-span-3">Name</div>
+          <div className="col-span-2">Stock</div>
+          <div className="col-span-2">Price</div>
+          <div className="col-span-2">Units Purchased</div>
+        </div>
+        <div className="flex flex-col gap-4">
           {cart.map((cartItem) => (
             <ProductCartView
               key={cartItem.product._id}
               product={cartItem.product}
             />
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
       {cart.length === 0 ? (
         <div className="my-5 rounded-xl border-2 border-solid border-gray-500 p-5">
           <p className="text-3xl font-bold">Cart is empty!</p>

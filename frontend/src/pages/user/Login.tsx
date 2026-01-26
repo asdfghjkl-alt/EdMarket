@@ -39,10 +39,6 @@ export default function Login() {
     }
   }, [user, loading, navigate]);
 
-  if (loading) {
-    return <div>Loading...</div>; // Render a spinner instead of the login form
-  }
-
   async function onSubmit(data: LoginFormData) {
     setIsLoggingIn(true);
     setErrMsg("");

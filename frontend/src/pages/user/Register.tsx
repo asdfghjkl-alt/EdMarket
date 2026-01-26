@@ -45,10 +45,6 @@ export default function Register() {
     }
   }, [user, loading, navigate]);
 
-  if (loading) {
-    return <div>Loading...</div>; // Render a spinner instead of the login form
-  }
-
   async function onSubmit(data: RegisterFormData) {
     setIsRegistering(true);
     setErrMsg("");

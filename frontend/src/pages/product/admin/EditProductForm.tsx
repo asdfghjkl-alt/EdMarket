@@ -8,7 +8,6 @@ import type { ProductFormData, Product } from "@/types/product";
 import InputField from "@/components/ui/inputs/InputField";
 import api from "@/api/axios";
 import TextArea from "@/components/ui/inputs/TextArea";
-import Loading from "@/components/ui/Loading";
 import ErrorPg from "@/components/ui/ErrorPg";
 import Close from "@/assets/close.png";
 import type { CategoryType } from "@/types/category";
@@ -165,9 +164,6 @@ export default function EditProductForm() {
     register("images");
   }, [register]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
   if (fetchError) {
     return <ErrorPg error={fetchError} />;
   }

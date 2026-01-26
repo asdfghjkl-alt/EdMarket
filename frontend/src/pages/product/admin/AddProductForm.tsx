@@ -8,7 +8,6 @@ import type { ProductFormData } from "@/types/product";
 import InputField from "@/components/ui/inputs/InputField";
 import api from "@/api/axios";
 import TextArea from "@/components/ui/inputs/TextArea";
-import Loading from "@/components/ui/Loading";
 import Close from "@/assets/close.png";
 import type { CategoryType } from "@/types/category";
 
@@ -132,10 +131,6 @@ export default function AddProductForm() {
   }
 
   const images = watch("images");
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <div className="flex h-screen w-full items-center justify-center">

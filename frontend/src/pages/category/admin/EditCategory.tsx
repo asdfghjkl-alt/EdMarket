@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { AxiosError } from "axios";
 import InputField from "@/components/ui/inputs/InputField";
 import api from "@/api/axios";
-import Loading from "@/components/ui/Loading";
 import type { CategoryFormData } from "@/types/category";
 
 const categorySchema = Joi.object({
@@ -71,10 +70,6 @@ export default function EditCategory() {
         setErrMsg("Unexpected error occurred");
       }
     }
-  }
-
-  if (isLoading) {
-    return <Loading />;
   }
 
   return (

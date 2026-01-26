@@ -3,7 +3,7 @@ import type { Product } from "@/types/product";
 
 export default function QuantityControl({
   product,
-  className = "w-full",
+  className,
 }: {
   product: Product;
   className?: string;
@@ -15,7 +15,7 @@ export default function QuantityControl({
       <div className="flex w-full items-center justify-between rounded-full border border-solid border-black p-1">
         <button
           onClick={() => removeOneItem(product)}
-          className="left-0 h-8 w-8 cursor-pointer rounded-full border bg-rose-600 text-rose-100"
+          className="btn left-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border bg-rose-600 text-rose-100"
         >
           -
         </button>
@@ -24,7 +24,7 @@ export default function QuantityControl({
         </p>
         <button
           onClick={() => addItem(product)}
-          className="right-0 h-8 w-8 cursor-pointer rounded-full border bg-emerald-600 text-emerald-100"
+          className="btn right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border bg-emerald-600 text-emerald-100"
         >
           +
         </button>
@@ -33,7 +33,7 @@ export default function QuantityControl({
   ) : (
     <button
       onClick={() => addItem(product)}
-      className={`mt-auto cursor-pointer rounded-full border bg-red-500 p-2 text-red-100 hover:bg-red-600 ${className}`}
+      className={`btn mt-auto rounded-full bg-red-500 text-red-100 transition-opacity ${className}`}
     >
       Add to Cart
     </button>

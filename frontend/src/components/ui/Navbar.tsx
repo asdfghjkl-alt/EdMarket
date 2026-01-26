@@ -218,7 +218,7 @@ export default function Navbar() {
                 </NavLink>
               ))
             )}
-            <CartLink />
+            <CartLink onClick={closeMenu} />
           </nav>
         </div>
       )}

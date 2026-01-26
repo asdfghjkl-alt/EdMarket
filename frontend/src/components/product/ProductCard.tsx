@@ -15,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
     product.unit !== "each" ? product.unit : ` ${product.unit}`;
 
   return (
-    <div className="m-2 h-full rounded-md border border-solid border-gray-300 text-left shadow-gray-400 hover:shadow-md">
+    <div className="m-2 h-full rounded-xl border border-solid border-gray-300 text-left shadow-sm transition-shadow hover:shadow-lg">
       <div className="flex h-full flex-col gap-20 p-3">
         <Link to={`/products/${product._id}`}>
           <img

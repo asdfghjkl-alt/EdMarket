@@ -19,7 +19,7 @@
 
 @layer components {
   .btn {
-    @apply cursor-pointer rounded-lg border p-2 transition-colors hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-35;
+    @apply cursor-pointer rounded-lg border p-2 transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-35;
   }
 
   .btn-submit {

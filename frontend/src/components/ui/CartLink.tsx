@@ -2,15 +2,21 @@ import { NavLink } from "react-router";
 import { linkBaseClass } from "./Navbar";
 import CartImg from "@/assets/cart.png";
 import { useOrder } from "@/contexts/OrderContext";
+import type { MouseEventHandler } from "react";
 
-export default function CartLink() {
+export default function CartLink({
+  onClick,
+}: {
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+}) {
   const { cart } = useOrder();
 
   return (
     <NavLink
       to="/cart"
+      onClick={onClick}
       className={({ isActive }) =>
-        `${linkBaseClass} flex items-center border-2 border-white/30 shadow-lg shadow-black/50 ${
+        `${linkBaseClass} flex items-center border-2 border-white/30 ${
           isActive ? "bg-sky-500" : "bg-sky-700"
         }`
       }

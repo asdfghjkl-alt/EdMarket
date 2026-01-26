@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "/api",
-  withCredentials: true, // THIS IS MANDATORY for cookies
+  withCredentials: true,
 });
 
 export default api;

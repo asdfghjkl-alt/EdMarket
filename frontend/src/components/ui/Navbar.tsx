@@ -60,7 +60,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 bg-sky-700 font-normal text-teal-50 shadow-lg shadow-black/30"
+      className="sticky top-0 z-50 w-full bg-sky-700 font-normal text-teal-50 shadow-lg shadow-black/30"
       role="banner"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 p-2">
@@ -212,6 +212,7 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
                   }
+                  onClick={closeMenu}
                 >
                   {link.label}
                 </NavLink>

@@ -173,8 +173,8 @@ export default function EditProductForm() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
+    <div className="flex min-h-screen w-full items-center justify-center py-12">
+      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1 className="text-xl font-semibold">Add a product</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {errMsg}
@@ -185,7 +185,7 @@ export default function EditProductForm() {
             register={register}
             error={errors.name}
           />
-          <div className="flex">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <InputField
               name="price"
               type="number"
@@ -193,25 +193,25 @@ export default function EditProductForm() {
               placeholder="Price"
               register={register}
               error={errors.price}
-              className="mr-5 w-70"
+              className="w-full"
             />
             <InputField
               name="quantity"
               type="number"
               label="Quantity"
-              className="w-30"
+              className="w-full"
               placeholder="Quantity"
               register={register}
               error={errors.quantity}
             />
-            <div className="mb-4 ml-5 text-left">
+            <div className="w-full text-left">
               <label htmlFor="unit" className="font-medium">
                 Unit
               </label>
               <select
                 id="unit"
                 {...register("unit")}
-                className="w-full rounded-xl border-2 border-gray-400 p-4"
+                className="w-full rounded-xl border-2 border-gray-400 p-3"
               >
                 {allowedUnits.map((unit) => (
                   <option key={unit} value={unit}>
@@ -233,7 +233,7 @@ export default function EditProductForm() {
             <select
               id="category"
               {...register("category")}
-              className="w-full rounded-xl border-2 border-gray-400 p-4"
+              className="w-full rounded-xl border-2 border-gray-400 p-3"
             >
               {categories.map((category) => (
                 <option key={category} value={category}>

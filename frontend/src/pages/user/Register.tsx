@@ -71,9 +71,9 @@ export default function Register() {
   }
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center py-12">
       <p className="my-8 text-5xl font-bold">EdMarket</p>
-      <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
+      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1>Register an account for EdMarket</h1>
         <p>
           Already have an account?{" "}

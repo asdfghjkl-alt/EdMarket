@@ -138,8 +138,8 @@ export default function AddProductForm() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
+    <div className="flex h-screen w-full items-center justify-center">
+      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1 className="text-xl font-semibold">Add a product</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <p className="text-red-500">{errMsg}</p>
@@ -150,7 +150,7 @@ export default function AddProductForm() {
             register={register}
             error={errors.name}
           />
-          <div className="flex">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <InputField
               name="price"
               type="number"
@@ -158,18 +158,18 @@ export default function AddProductForm() {
               placeholder="Price"
               register={register}
               error={errors.price}
-              className="mr-5 w-70"
+              className="w-full"
             />
             <InputField
               name="quantity"
               type="number"
               label="Quantity"
-              className="w-30"
+              className="w-full"
               placeholder="Quantity"
               register={register}
               error={errors.quantity}
             />
-            <div className="mb-4 ml-5 text-left">
+            <div className="w-full text-left">
               <label htmlFor="unit" className="font-medium">
                 Unit
               </label>

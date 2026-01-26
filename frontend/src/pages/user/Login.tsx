@@ -65,9 +65,9 @@ export default function Login() {
   }
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center py-12">
       <p className="my-8 text-5xl font-bold">EdMarket</p>
-      <div className="w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
+      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
         <h1>Login to EdMarket</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <p className="text-red-500">{errMsg}</p>

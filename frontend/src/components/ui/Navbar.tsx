@@ -160,12 +160,86 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <div className="lg:hidden">
-          <nav
-            className="mx-auto flex max-w-7xl flex-col gap-2 border-t border-teal-100 bg-sky-700 p-5 text-base font-semibold tracking-wide"
-            aria-label="Mobile"
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
+
+      <div
+        className={`fixed inset-y-0 right-0 z-50 w-96 transform bg-sky-800 shadow-xl transition-transform duration-300 ease-in-out lg:hidden ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between border-b border-sky-600 p-4">
+          <span className="text-xl font-bold text-white">Menu</span>
+          <button
+            onClick={closeMenu}
+            className="rounded-md p-1 text-teal-100 hover:bg-sky-700 hover:text-white"
+            aria-label="Close menu"
           >
-            {navLinks.map((link) => (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <nav
+          className="flex flex-col gap-2 p-4 text-base font-semibold tracking-wide"
+          aria-label="Mobile"
+        >
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.href}
+              to={link.href}
+              className={({ isActive }) =>
+                `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
+              }
+              onClick={closeMenu}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+          <Dropdown
+            title={"Product Categories"}
+            links={categories.map((category) => ({
+              href: `/products?category=${category}`,
+              label: category,
+            }))}
+            fullWidth
+            onItemClick={closeMenu}
+          />
+          {user ? (
+            <>
+              <Dropdown
+                elements={userElements}
+                title={`Welcome ${user.username}`}
+                links={authLinks}
+                fullWidth
+                onItemClick={closeMenu}
+              />
+              {user.isAdmin && (
+                <Dropdown
+                  title="Admin Tools"
+                  links={adminLinks}
+                  fullWidth
+                  onItemClick={closeMenu}
+                />
+              )}
+            </>
+          ) : (
+            unauthLinks.map((link) => (
               <NavLink
                 key={link.href}
                 to={link.href}
@@ -176,52 +250,11 @@ export default function Navbar() {
               >
                 {link.label}
               </NavLink>
-            ))}
-            <Dropdown
-              title={"Product Categories"}
-              links={categories.map((category) => ({
-                href: `/products?category=${category}`,
-                label: category,
-              }))}
-              fullWidth
-              onItemClick={closeMenu}
-            />
-            {user ? (
-              <>
-                <Dropdown
-                  elements={userElements}
-                  title={`Welcome ${user.username}`}
-                  links={authLinks}
-                  fullWidth
-                  onItemClick={closeMenu}
-                />
-                {user.isAdmin && (
-                  <Dropdown
-                    title="Admin Tools"
-                    links={adminLinks}
-                    fullWidth
-                    onItemClick={closeMenu}
-                  />
-                )}
-              </>
-            ) : (
-              unauthLinks.map((link) => (
-                <NavLink
-                  key={link.href}
-                  to={link.href}
-                  className={({ isActive }) =>
-                    `${linkBaseClass} ${isActive ? "bg-sky-500" : "bg-sky-700"}`
-                  }
-                  onClick={closeMenu}
-                >
-                  {link.label}
-                </NavLink>
-              ))
-            )}
-            <CartLink onClick={closeMenu} />
-          </nav>
-        </div>
-      )}
+            ))
+          )}
+          <CartLink onClick={closeMenu} />
+        </nav>
+      </div>
     </header>
   );
 }

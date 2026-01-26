@@ -17,9 +17,9 @@ const unitsToDisplay: Record<string, number> = {
 };
 
 export default function ProductView() {
-  const [product, setProduct] = useState(null as null | Product);
+  const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null as null | string);
+  const [error, setError] = useState<null | string>(null);
 
   const displayUnit =
     product?.unit !== "each" ? product?.unit : ` ${product?.unit}`;

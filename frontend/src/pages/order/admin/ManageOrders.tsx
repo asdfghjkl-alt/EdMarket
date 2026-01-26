@@ -6,9 +6,9 @@ import type { OrderType } from "@/types/order";
 import OrderDetails from "@/components/order/OrderDetails";
 
 export default function ManageOrders() {
-  const [orders, setOrders] = useState([] as OrderType[]);
+  const [orders, setOrders] = useState<OrderType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null as null | string);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     const controller = new AbortController();

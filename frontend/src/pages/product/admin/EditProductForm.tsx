@@ -11,6 +11,7 @@ import TextArea from "@/components/ui/inputs/TextArea";
 import Loading from "@/components/ui/Loading";
 import ErrorPg from "@/components/ui/Error";
 import Close from "@/assets/close.png";
+import type { CategoryType } from "@/types/category";
 const allowedUnits = ["g", "kg", "ml", "L", "each"];
 const productSchema = Joi.object({
   name: Joi.string().required().messages({
@@ -21,8 +22,8 @@ const productSchema = Joi.object({
     "number.greater": "Price must be greater than 0",
     "number.base": "Please enter a quantity",
   }),
-  quantity: Joi.number().integer().required().greater(0).messages({
-    "number.integer": "Quantity must be an integer",
+  quantity: Joi.number().multiple(0.001).required().greater(0).messages({
+    "number.multiple": "Quantity can only have 3 decimal places",
     "number.greater": "Quantity must be greater than 0",
     "number.base": "Please enter a quantity",
   }),
@@ -38,11 +39,15 @@ const productSchema = Joi.object({
   description: Joi.string().required().messages({
     "string.empty": "Please enter a description",
   }),
+  category: Joi.string().required().messages({
+    "string.empty": "Please enter a category",
+  }),
 });
 
 export default function EditProductForm() {
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
   const [existingImages, setExistingImages] = useState<Product["images"]>([]);
   const {
     register,
@@ -57,6 +62,7 @@ export default function EditProductForm() {
     defaultValues: {
       name: "",
       price: 0,
+      category: "",
       quantity: 0,
       unit: "g",
       images: [],
@@ -75,6 +81,7 @@ export default function EditProductForm() {
       formData.append("quantity", data.quantity.toString());
       formData.append("unit", data.unit);
       formData.append("description", data.description);
+      formData.append("category", data.category);
 
       if (images && images.length > 0) {
         for (let i = 0; i < images.length; i++) {
@@ -110,6 +117,7 @@ export default function EditProductForm() {
           price,
           quantity,
           unit,
+          category,
           images: productImages,
           description,
         } = data.body.product;
@@ -118,6 +126,7 @@ export default function EditProductForm() {
         setValue("quantity", quantity);
         setValue("unit", unit);
         setValue("description", description);
+        setValue("category", category.name);
         setExistingImages(productImages);
         setValue("images", []);
       } catch (err) {
@@ -128,6 +137,24 @@ export default function EditProductForm() {
         setIsLoading(false);
       }
     };
+
+    const fetchCategories = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await api.get(`/categories`);
+        setCategories(
+          data.body.categories.map((category: CategoryType) => category.name),
+        );
+      } catch (err) {
+        if (err instanceof AxiosError && err.name !== "AbortError") {
+          setErrMsg(err.response?.data.message);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCategories();
 
     fetchProduct();
 
@@ -198,6 +225,27 @@ export default function EditProductForm() {
                 </p>
               )}
             </div>
+          </div>
+          <div className="text-left">
+            <label htmlFor="category" className="font-medium">
+              Category
+            </label>
+            <select
+              id="category"
+              {...register("category")}
+              className="w-full rounded-xl border-2 border-gray-400 p-4"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            {errors.category && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.category.message}
+              </p>
+            )}
           </div>
           <div className="mb-4 text-left">
             <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -278,7 +326,7 @@ export default function EditProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="edit-btn cursor-pointer">
+          <button type="submit" className="btn btn-edit w-full">
             Update Product
           </button>
         </form>

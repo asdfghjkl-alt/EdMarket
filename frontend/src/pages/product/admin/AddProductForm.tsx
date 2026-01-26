@@ -10,6 +10,7 @@ import api from "@/api/axios";
 import TextArea from "@/components/ui/inputs/TextArea";
 import Loading from "@/components/ui/Loading";
 import Close from "@/assets/close.png";
+import type { CategoryType } from "@/types/category";
 
 const allowedUnits = ["g", "kg", "ml", "L", "each"];
 
@@ -22,10 +23,13 @@ const productSchema = Joi.object({
     "number.greater": "Price must be greater than 0",
     "number.base": "Please enter a quantity",
   }),
-  quantity: Joi.number().integer().required().greater(0).messages({
-    "number.integer": "Quantity must be an integer",
+  quantity: Joi.number().multiple(0.001).required().greater(0).messages({
+    "number.multiple": "Quantity can only have 3 decimal places",
     "number.greater": "Quantity must be greater than 0",
     "number.base": "Please enter a quantity",
+  }),
+  category: Joi.string().required().messages({
+    "string.empty": "Please enter a category",
   }),
   images: Joi.array().min(1).required().messages({
     "array.min": "Please upload at least one image",
@@ -69,8 +73,33 @@ export default function AddProductForm() {
   }, [register]);
 
   const navigate = useNavigate();
-  const [errMsg, setErrMsg] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
+  const [errMsg, setErrMsg] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchCategories = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await api.get(`/categories`);
+        setCategories(
+          data.body.categories.map((category: CategoryType) => category.name),
+        );
+      } catch (err) {
+        if (err instanceof AxiosError && err.name !== "AbortError") {
+          setErrMsg(err.response?.data.message);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCategories();
+
+    return () => controller.abort();
+  }, []);
 
   async function onSubmit(data: ProductFormData) {
     try {
@@ -162,6 +191,27 @@ export default function AddProductForm() {
               )}
             </div>
           </div>
+          <div className="text-left">
+            <label htmlFor="category" className="font-medium">
+              Category
+            </label>
+            <select
+              id="category"
+              {...register("category")}
+              className="w-full rounded-xl border-2 border-gray-400 p-4"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            {errors.category && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.category.message}
+              </p>
+            )}
+          </div>
           <div className="mb-4 text-left">
             <label
               htmlFor="images"
@@ -227,7 +277,7 @@ export default function AddProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="btn-submit cursor-pointer">
+          <button type="submit" className="btn btn-submit w-full">
             Add Product
           </button>
         </form>

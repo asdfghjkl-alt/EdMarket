@@ -7,9 +7,9 @@ import Loading from "@/components/ui/Loading";
 import { Link } from "react-router";
 
 export default function ManageProducts() {
-  const [products, setProducts] = useState([] as Product[]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null as null | string);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -39,13 +39,24 @@ export default function ManageProducts() {
 
   return (
     <div className="m-6">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 grid grid-cols-2 items-center justify-between">
         <h1 className="w-full text-center text-2xl font-bold">
           Manage Products
         </h1>
-        <Link to="/products/add" className="btn-submit text-center">
-          Add New Product
-        </Link>
+        <div className="flex flex-col items-center justify-center gap-2">
+          <Link
+            to="/products/add"
+            className="btn btn-submit w-full text-center"
+          >
+            Add New Product
+          </Link>
+          <Link
+            to="/categories/manage"
+            className="btn btn-manage w-full text-center"
+          >
+            Manage Product Category
+          </Link>
+        </div>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <table>
@@ -55,6 +66,7 @@ export default function ManageProducts() {
             <td className="w-2/12">Name</td>
             <td className="w-1/12">Quantity</td>
             <td className="w-1/24">Price</td>
+            <td className="w-1/24">Category</td>
             <td>Description</td>
           </tr>
         </thead>

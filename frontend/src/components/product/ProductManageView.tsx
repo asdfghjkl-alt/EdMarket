@@ -48,9 +48,12 @@ export default function ProductManageView({
         {displayUnit}
       </td>
       <td>${product.price.toFixed(2)}</td>
-      <td className="whitespace-pre-wrap">{product.description}</td>
+      <td>{product.category.name}</td>
+      <td className="max-w-md overflow-hidden text-ellipsis whitespace-nowrap">
+        {product.description}
+      </td>
       <td>
-        <Link className="edit-btn" to={`/products/edit/${product._id}`}>
+        <Link className="btn btn-edit p-3" to={`/products/edit/${product._id}`}>
           Edit
         </Link>
       </td>
@@ -61,10 +64,7 @@ export default function ProductManageView({
             deleteProduct(product._id);
           }}
         >
-          <button
-            disabled={disableDelete}
-            className="delete-btn cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
-          >
+          <button disabled={disableDelete} className="btn btn-delete">
             Delete
           </button>
         </form>

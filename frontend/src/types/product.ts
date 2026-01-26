@@ -8,9 +8,14 @@ interface ProductBase {
 
 export interface ProductFormData extends ProductBase {
   images: File[];
+  category: string;
 }
 
 export interface Product extends ProductBase {
+  category: {
+    _id: string;
+    name: string;
+  };
   _id: string;
   images: {
     url: string;

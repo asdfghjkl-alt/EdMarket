@@ -72,7 +72,7 @@ export default function OrderDetails({
                 markAsDelivered?.(order._id);
                 setIsPerformingAction(false);
               }}
-              className="mt-auto w-full rounded-lg border border-emerald-600 bg-emerald-600 p-2 text-emerald-100 transition-colors hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-400"
+              className="btn btn-submit mt-auto w-full"
             >
               Mark as Delivered
             </button>

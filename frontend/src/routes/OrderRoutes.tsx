@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import UserOrders from "@/pages/order/UserOrders";
 import AdminRestrict from "@/components/auth/AdminRestrict";
-import ManageOrders from "@/pages/order/ManageOrders";
+import ManageOrders from "@/pages/order/admin/ManageOrders";
 import UserRestrict from "@/components/auth/UserRestrict";
 
 export default function OrderRoutes() {

@@ -1,5 +1,6 @@
 import { cloudinary } from "@/cloudinary";
 import { Schema, model } from "mongoose";
+import Category from "./categories";
 
 export enum ProductUnit {
   g = "g",
@@ -52,6 +53,22 @@ export const productSchema = new Schema({
   images: {
     type: [imageSchema],
     required: true,
+  },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+    validate: {
+      // Custom validation software to check that associated category is valid
+      validator: async function (value: Schema.Types.ObjectId) {
+        const isValid = await Category.exists({ _id: value });
+        if (isValid) {
+          return true;
+        }
+        return false;
+      },
+      message: "Category id does not exist",
+    },
   },
   description: {
     type: String,

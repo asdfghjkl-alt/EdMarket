@@ -89,7 +89,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoggingIn}
-            className="btn-submit cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+            className="btn btn-submit w-full"
           >
             Login
           </button>

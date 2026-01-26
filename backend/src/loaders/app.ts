@@ -12,6 +12,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import ShopError from "@/utils/ShopError";
 import userRoutes from "@/routes/user";
 import productRoutes from "@/routes/product";
+import categoryRoutes from "@/routes/category";
 import orderRoutes from "@/routes/order";
 import { csrfMiddleware } from "@/middleware/csrf";
 import User, { type IUser } from "@/models/user";
@@ -119,6 +120,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use("/auth", userRoutes);
 app.use("/products", productRoutes);
+app.use("/categories", categoryRoutes);
 app.use("/orders", orderRoutes);
 
 app.all(/(.*)/, (req, res, next) => {

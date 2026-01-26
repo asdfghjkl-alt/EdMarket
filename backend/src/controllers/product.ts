@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import Product from "@/models/product";
 import { cloudinary } from "@/cloudinary/index";
 import { Readable } from "stream";
+import Category from "@/models/categories";
 
 interface ImageType {
   url: string;
@@ -43,7 +44,12 @@ const processProductImages = async (
 };
 
 const addProduct = async (req: Request, res: Response) => {
-  const { name, quantity, price, description, unit } = req.body;
+  const { name, quantity, price, description, unit, category } = req.body;
+
+  const realCategory = await Category.findOne({ name: category });
+  if (!realCategory) {
+    return res.status(404).json({ message: "Category does not exist" });
+  }
 
   if (!req.user) {
     return res.status(401).json({ message: "Somehow you are not logged in" });
@@ -62,6 +68,7 @@ const addProduct = async (req: Request, res: Response) => {
     quantity,
     price,
     images: uploadedImages,
+    category: realCategory._id,
     description,
   });
 
@@ -70,7 +77,7 @@ const addProduct = async (req: Request, res: Response) => {
 };
 
 const allProducts = async (req: Request, res: Response) => {
-  const products = await Product.find();
+  const products = await Product.find().populate("category");
 
   res.json({
     message: "Successfully retrieved new products",
@@ -79,7 +86,7 @@ const allProducts = async (req: Request, res: Response) => {
 };
 
 const findProduct = async (req: Request, res: Response) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate("category");
   if (!product) {
     return res
       .status(404)
@@ -103,7 +110,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 
 const editProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, quantity, price, description, unit } = req.body;
+  const { name, quantity, price, description, unit, category } = req.body;
 
   const product = await Product.findById(id);
 
@@ -113,11 +120,17 @@ const editProduct = async (req: Request, res: Response) => {
       .json({ message: "Product with specified id does not exist" });
   }
 
+  const realCategory = await Category.findOne({ name: category });
+  if (!realCategory) {
+    return res.status(404).json({ message: "Category does not exist" });
+  }
+
   product.name = name;
   product.quantity = quantity;
   product.price = price;
   product.description = description;
   product.unit = unit;
+  product.category = realCategory._id;
 
   if (req.files) {
     const files = req.files as Express.Multer.File[];

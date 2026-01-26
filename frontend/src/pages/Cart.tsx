@@ -79,7 +79,7 @@ export default function Cart() {
       <button
         disabled={cart.length === 0 || isSubmittingCart}
         onClick={submitOrder}
-        className="btn-submit cursor-pointer hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+        className="btn btn-submit w-full"
       >
         Proceed to Order
       </button>

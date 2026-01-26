@@ -90,8 +90,12 @@ export default function EditCategory() {
             register={register}
             error={errors.name}
           />
-          <button type="submit" className="btn btn-edit w-full">
-            Edit Category
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn btn-edit w-full"
+          >
+            {isLoading ? "Editing..." : "Edit Category"}
           </button>
         </form>
       </div>

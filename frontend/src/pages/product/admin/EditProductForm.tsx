@@ -326,8 +326,12 @@ export default function EditProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="btn btn-edit w-full">
-            Update Product
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn btn-edit w-full"
+          >
+            {isLoading ? "Updating..." : "Update Product"}
           </button>
         </form>
       </div>

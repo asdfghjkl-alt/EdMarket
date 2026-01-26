@@ -277,8 +277,12 @@ export default function AddProductForm() {
             error={errors.description}
             rows={3}
           />
-          <button type="submit" className="btn btn-submit w-full">
-            Add Product
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn btn-submit w-full"
+          >
+            {isLoading ? "Adding..." : "Add Product"}
           </button>
         </form>
       </div>

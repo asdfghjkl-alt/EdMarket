@@ -80,7 +80,7 @@ export default function Cart() {
         onClick={submitOrder}
         className="btn btn-submit w-full"
       >
-        Proceed to Order
+        {isSubmittingCart ? "Processing order..." : "Proceed to Order"}
       </button>
       {error && <p className="text-rose-400">{error}</p>}
     </div>

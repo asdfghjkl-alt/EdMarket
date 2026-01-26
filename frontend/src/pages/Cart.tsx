@@ -64,7 +64,7 @@ export default function Cart() {
         </div>
       ) : (
         <div>
-          <p>
+          <p className="my-3">
             Total Cost: $
             {cart
               .reduce(

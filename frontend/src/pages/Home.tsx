@@ -22,14 +22,14 @@ export default function Home() {
         href="https://www.linkedin.com/in/edward-liu-50a205267"
         className="btn mt-4 flex items-center"
       >
-        <img src={LinkedIn} alt="LinkedIn" className="h-10 w-10" />
+        <img src={LinkedIn} alt="LinkedIn" className="h-10 w-12" />
         <p>View Owner's LinkedIn</p>
       </a>
       <a
         href="https://github.com/asdfghjkl-alt/EdMarket"
         className="btn mt-4 flex items-center"
       >
-        <img src={Github} alt="Github" className="h-10 w-10" />
+        <img src={Github} alt="Github" className="h-12 w-12" />
         <p>View on GitHub</p>
       </a>
       <Link

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import Github from "@/assets/Github.png";
+// import Github from "@/assets/Github.png";
 import LinkedIn from "@/assets/LinkedIn.png";
 import EdMarket from "@/assets/EdMarket.png";
 
@@ -33,13 +33,13 @@ export default function Home() {
         <img src={LinkedIn} alt="LinkedIn" className="h-10 w-12" />
         <p>View Owner's LinkedIn</p>
       </a>
-      <a
+      {/* <a
         href="https://github.com/asdfghjkl-alt/EdMarket"
         className="btn mt-4 flex items-center"
       >
         <img src={Github} alt="Github" className="h-12 w-12" />
         <p>View on GitHub</p>
-      </a>
+      </a> */}
     </div>
   );
 }

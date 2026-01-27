@@ -50,6 +50,7 @@ export default function Register() {
     setErrMsg("");
     try {
       await authRegister(data.email, data.username, data.password);
+      // Navigates to previous page
       navigate(-1);
     } catch (e) {
       if (e instanceof AxiosError) {

@@ -23,23 +23,21 @@ export default function InputField<T extends FieldValues>({
   className?: string;
 }) {
   return (
-    <>
-      <div className={className}>
-        <div className="text-left">
-          <label className="font-medium" htmlFor={name}>
-            {label}
-          </label>
-          <input
-            id={name}
-            type={type}
-            placeholder={placeholder}
-            {...register(name)}
-          />
-        </div>
-        <div className="text-red-500">
-          {error && <span>{error.message}</span>}
-        </div>
+    <div className={className}>
+      <div className="text-left">
+        <label className="font-medium" htmlFor={name}>
+          {label}
+        </label>
+        <input
+          id={name}
+          type={type}
+          placeholder={placeholder}
+          {...register(name)}
+        />
       </div>
-    </>
+      <div className="text-red-500">
+        {error && <span>{error.message}</span>}
+      </div>
+    </div>
   );
 }

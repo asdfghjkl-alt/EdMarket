@@ -71,36 +71,6 @@ export default function EditProductForm() {
   const { id } = useParams();
   const images = watch("images");
 
-  async function onSubmit(data: ProductFormData) {
-    try {
-      setIsLoading(true);
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("price", data.price.toString());
-      formData.append("quantity", data.quantity.toString());
-      formData.append("unit", data.unit);
-      formData.append("description", data.description);
-      formData.append("category", data.category);
-
-      if (images && images.length > 0) {
-        for (let i = 0; i < images.length; i++) {
-          formData.append("images", images[i]);
-        }
-      }
-
-      await api.put(`/products/${id}`, formData);
-      setIsLoading(false);
-      navigate("/products/manage");
-    } catch (e) {
-      setIsLoading(false);
-      if (e instanceof AxiosError) {
-        setErrMsg(e.response?.data.message);
-      } else {
-        setErrMsg("Unexpected error occurred");
-      }
-    }
-  }
-
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(true);
   const [fetchError, setFetchError] = useState(null as null | string);
@@ -111,6 +81,7 @@ export default function EditProductForm() {
     const fetchProduct = async () => {
       try {
         setIsSubmitting(true);
+        // Gets initial data of product and sets it to the form
         const { data } = await api.get(`/products/${id}`);
         const {
           name,
@@ -121,6 +92,7 @@ export default function EditProductForm() {
           images: productImages,
           description,
         } = data.body.product;
+
         setValue("name", name);
         setValue("price", price);
         setValue("quantity", quantity);
@@ -141,6 +113,7 @@ export default function EditProductForm() {
     const fetchCategories = async () => {
       try {
         setIsLoading(true);
+        // Fetches categories and maps them by name
         const { data } = await api.get(`/categories`);
         setCategories(
           data.body.categories.map((category: CategoryType) => category.name),
@@ -155,11 +128,44 @@ export default function EditProductForm() {
     };
 
     fetchCategories();
-
     fetchProduct();
 
     return () => controller.abort();
   }, [id, setValue]);
+
+  async function onSubmit(data: ProductFormData) {
+    try {
+      setIsLoading(true);
+      // Creates new form data to send to backend (multipart/form-data)
+      const formData = new FormData();
+
+      formData.append("name", data.name);
+      formData.append("price", data.price.toString());
+      formData.append("quantity", data.quantity.toString());
+      formData.append("unit", data.unit);
+      formData.append("description", data.description);
+      formData.append("category", data.category);
+
+      // Appends images to the form data if existing
+      if (images && images.length > 0) {
+        for (let i = 0; i < images.length; i++) {
+          formData.append("images", images[i]);
+        }
+      }
+
+      // Attempts to update products
+      await api.put(`/products/${id}`, formData);
+      setIsLoading(false);
+      navigate("/products/manage");
+    } catch (e) {
+      setIsLoading(false);
+      if (e instanceof AxiosError) {
+        setErrMsg(e.response?.data.message);
+      } else {
+        setErrMsg("Unexpected error occurred");
+      }
+    }
+  }
 
   useEffect(() => {
     register("images");

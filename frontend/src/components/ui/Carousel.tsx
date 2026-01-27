@@ -41,7 +41,6 @@ export default function Carousel({ images }: CarouselProps) {
         style={{ backgroundImage: `url(${images[currentIndex].main})` }}
         className="h-full w-full rounded-2xl bg-contain bg-center bg-no-repeat duration-500"
       ></div>
-      {/* Left Arrow */}
       {images.length > 1 && (
         <button onClick={prevSlide} type="button">
           <div className="absolute top-[50%] left-5 -translate-y-[-50%] cursor-pointer rounded-full bg-black/20 p-2 text-2xl text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -49,7 +48,6 @@ export default function Carousel({ images }: CarouselProps) {
           </div>
         </button>
       )}
-      {/* Right Arrow */}
       {images.length > 1 && (
         <button onClick={nextSlide} type="button">
           <div className="absolute top-[50%] right-5 -translate-y-[-50%] cursor-pointer rounded-full bg-black/20 p-2 text-2xl text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -57,7 +55,6 @@ export default function Carousel({ images }: CarouselProps) {
           </div>
         </button>
       )}
-      {/* Dots */}
       {images.length > 1 && (
         <div className="flex justify-center py-2">
           {images.map((_, slideIndex) => (

@@ -16,6 +16,7 @@ export default function ManageOrders() {
     const fetchOrders = async () => {
       try {
         setIsLoading(true);
+        // Attempts to get all orders
         const { data } = await api.get("/orders/all");
         setOrders(data.body.orders);
       } catch (err) {
@@ -32,9 +33,15 @@ export default function ManageOrders() {
     return () => controller.abort();
   }, []);
 
+  /**
+   * Function to mark an order as delivered
+   * @param orderId id of order
+   */
   const markAsDelivered = async (orderId: string) => {
     try {
+      // Updates the order to be delivered
       await api.put(`/orders/${orderId}/delivered`);
+      // Locally updates the order
       const updatedOrders = orders.map((order: OrderType) => {
         if (order._id === orderId) {
           return { ...order, completed: true, completionDate: new Date() };
@@ -51,7 +58,9 @@ export default function ManageOrders() {
 
   const markAsUndelivered = async (orderId: string) => {
     try {
+      // Attempts to mark order as undelivered
       await api.put(`/orders/${orderId}/undelivered`);
+      // Locally updates the order
       const updatedOrders = orders.map((order: OrderType) => {
         if (order._id === orderId) {
           return { ...order, completed: false };

@@ -13,6 +13,7 @@ import type { CategoryType } from "@/types/category";
 
 const allowedUnits = ["g", "kg", "ml", "L", "each"];
 
+// Joi Schema to provide custom validation software
 const productSchema = Joi.object({
   name: Joi.string().required().messages({
     "string.empty": "Please enter a name",
@@ -82,6 +83,7 @@ export default function AddProductForm() {
 
     const fetchCategories = async () => {
       try {
+        // Attempts to fetch all categories
         setIsLoading(true);
         const { data } = await api.get(`/categories`);
         setCategories(
@@ -104,6 +106,7 @@ export default function AddProductForm() {
   async function onSubmit(data: ProductFormData) {
     try {
       setIsSubmitting(true);
+      // Creates FormData object to send to backend (multipart/form-data)
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("price", data.price.toString());
@@ -112,11 +115,11 @@ export default function AddProductForm() {
       formData.append("category", data.category);
 
       if (images && images.length > 0) {
+        // Adds all images to the form data
         for (let i = 0; i < images.length; i++) {
           formData.append("images", images[i]);
         }
       }
-
       formData.append("description", data.description);
 
       await api.post("/products", formData);

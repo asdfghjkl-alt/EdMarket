@@ -32,6 +32,7 @@ export default function ProductDetails() {
     const fetchProduct = async () => {
       try {
         setIsLoading(true);
+        // Attempts to get product by id
         const { data } = await api.get(`/products/${id}`);
         setProduct(data.body.product);
       } catch (err) {

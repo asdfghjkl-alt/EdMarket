@@ -14,7 +14,8 @@ export default function UserOrders() {
   useEffect(() => {
     const controller = new AbortController();
 
-    const fetchProducts = async () => {
+    // Function to fetch orders
+    const fetchOrders = async () => {
       try {
         setIsLoading(true);
         const { data } = await api.get("/orders");
@@ -28,7 +29,7 @@ export default function UserOrders() {
       }
     };
 
-    fetchProducts();
+    fetchOrders();
 
     return () => controller.abort();
   }, []);

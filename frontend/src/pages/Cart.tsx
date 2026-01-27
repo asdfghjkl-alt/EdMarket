@@ -19,6 +19,7 @@ export default function Cart() {
 
     try {
       setError("");
+      // Only sends product ids with the cart
       const cartToSend = cart.map(({ product, quantity }) => {
         return { product: product._id, quantity };
       });

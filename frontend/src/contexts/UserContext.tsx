@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const { data } = await api.get("/auth/me");
         setUser(data.body.user);
       } catch (err) {
-        // 401 means no session exists, which is fine
+        // Sets user to null on request failure
         setUser(null);
       } finally {
         setLoading(false);
@@ -35,6 +35,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkSession();
   }, []);
 
+  /**
+   * Function to register the user
+   * @param email email of user
+   * @param username username of user
+   * @param password password of user
+   */
   const register = async (
     email: string,
     username: string,
@@ -45,6 +51,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       username,
       password,
     });
+
+    const { data: csrfData } = await api.get("/csrf-token");
+    // Sets the CSRF token for all subsequent requests
+    api.defaults.headers.common["X-CSRF-Token"] = csrfData.csrfToken;
+
+    // Updates user to the returned user
     setUser(data.body.user);
   };
 

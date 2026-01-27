@@ -23,23 +23,21 @@ export default function TextArea<T extends FieldValues>({
   className?: string;
 }) {
   return (
-    <>
-      <div className={className}>
-        <div className="text-left">
-          <label className="font-medium" htmlFor={name}>
-            {label}
-          </label>
-          <textarea
-            placeholder={placeholder}
-            rows={rows}
-            id={name}
-            {...register(name)}
-          ></textarea>
-        </div>
-        <div className="mb-1 text-red-500">
-          {error && <span>{error.message}</span>}
-        </div>
+    <div className={className}>
+      <div className="text-left">
+        <label className="font-medium" htmlFor={name}>
+          {label}
+        </label>
+        <textarea
+          placeholder={placeholder}
+          rows={rows}
+          id={name}
+          {...register(name)}
+        ></textarea>
       </div>
-    </>
+      <div className="mb-1 text-red-500">
+        {error && <span>{error.message}</span>}
+      </div>
+    </div>
   );
 }

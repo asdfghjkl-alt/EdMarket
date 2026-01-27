@@ -14,6 +14,7 @@ export default function ManageCategories() {
   useEffect(() => {
     const controller = new AbortController();
 
+    // Fetches all existing categories
     const fetchCategories = async () => {
       try {
         setIsLoading(true);
@@ -33,8 +34,13 @@ export default function ManageCategories() {
     return () => controller.abort();
   }, []);
 
+  /**
+   * Function to submit the new category
+   * @param data category data
+   */
   async function onSubmit(data: CategoryFormData) {
     try {
+      // Attempts to add new category
       const { data: response } = await api.post("/categories", data);
       setCategories((prevCategories) => [
         ...prevCategories,

@@ -17,6 +17,7 @@ export default function ManageProducts() {
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
+        // Attempts to get all products from backend
         const { data } = await api.get("/products");
         setProducts(data.body.products);
       } catch (err) {
@@ -60,7 +61,6 @@ export default function ManageProducts() {
       </div>
       {errMsg && <p className="text-red-500">{errMsg}</p>}
       <div className="flex flex-col gap-4">
-        {/* Desktop Header */}
         <div className="hidden rounded-md bg-gray-100 p-4 font-bold text-gray-700 md:grid md:grid-cols-12 md:gap-4 md:text-center">
           <div className="col-span-2">Image</div>
           <div className="col-span-2">Name</div>
@@ -71,7 +71,6 @@ export default function ManageProducts() {
           <div className="col-span-2">Actions</div>
         </div>
 
-        {/* Product List */}
         <div className="flex flex-col gap-4">
           {products.map((product: Product) => (
             <ProductManageView

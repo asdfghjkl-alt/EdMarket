@@ -36,7 +36,6 @@ const validateProduct = (req: Request, res: Response, next: NextFunction) => {
  * Validates uploaded images based on max file size and total file size limit
  * @param initNoFiles
  * @param initFileSizes
- * @returns
  */
 const validateImages = (
   req: Request,
@@ -84,7 +83,6 @@ const validateImages = (
 
 /**
  * Validation middleware to check uploaded images on adding product are valid
- * @returns
  */
 const checkInitImagesValid = (
   req: Request,
@@ -100,7 +98,6 @@ const checkInitImagesValid = (
 
 /**
  * Validation middleware to check uploaded images when editing product is valid
- * @returns
  */
 const checkEditImagesValid = async (
   req: Request,

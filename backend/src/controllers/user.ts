@@ -2,12 +2,16 @@ import type { NextFunction, Request, Response } from "express";
 import ShopError from "@/utils/ShopError";
 import User from "@/models/user";
 
+/**
+ * Function to register a user
+ */
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, username, password } = req.body;
     const user = new User({ email, username, isAdmin: false });
     const registeredUser = await User.register(user, password);
 
+    // Auto logs in after registration
     req.login(registeredUser, (err) => {
       if (err) next(err);
       res.status(200).json({
@@ -30,6 +34,9 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+/**
+ * On login success, returns the user object
+ */
 const login = async (req: Request, res: Response) => {
   res.json({
     message: `Welcome ${req.user?.username}`,
@@ -43,6 +50,9 @@ const login = async (req: Request, res: Response) => {
   });
 };
 
+/**
+ * Logs out the user
+ */
 const logout = async (req: Request, res: Response, next: NextFunction) => {
   req.logout(function (err) {
     if (err) {

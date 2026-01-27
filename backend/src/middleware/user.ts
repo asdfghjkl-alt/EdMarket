@@ -3,7 +3,6 @@ import ShopError from "@/utils/ShopError";
 
 /**
  * Middleware to check that user is logged in
- * @returns
  */
 const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   // Uses passport js integrated function
@@ -17,7 +16,6 @@ const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * Middleware to check that user is admin
- * @returns
  */
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   // Uses passport js integrated user object

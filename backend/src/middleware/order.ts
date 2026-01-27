@@ -8,9 +8,6 @@ interface CartItem {
 
 /**
  * Middleware to filter invalid items from the cart
- * @param req
- * @param res
- * @param next
  */
 const filterInvalidItems = async (
   req: Request,

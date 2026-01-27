@@ -10,7 +10,6 @@ declare module "express-session" {
 
 /**
  * Middleware to validate CSRF token to prevent csrf attacks
- * @returns
  */
 export const csrfMiddleware = (
   req: Request,

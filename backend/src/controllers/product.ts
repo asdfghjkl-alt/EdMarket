@@ -13,7 +13,6 @@ interface ImageType {
 /**
  * Processes uploaded images on multer to cloudinary
  * @param files Files that were uploaded to multer
- * @returns
  */
 const processProductImages = async (
   files: Express.Multer.File[],
@@ -50,7 +49,6 @@ const processProductImages = async (
 
 /**
  * Method to add a new product
- * @returns
  */
 const addProduct = async (req: Request, res: Response) => {
   const { name, quantity, price, description, unit, category } = req.body;
@@ -88,13 +86,13 @@ const addProduct = async (req: Request, res: Response) => {
 };
 
 /**
- * Method to retrieve all products
- * @returns
+ * Method to retrieve all products with filtration based on category
  */
 const allProducts = async (req: Request, res: Response) => {
   const categoryName = req.query.category;
   let filter = {};
 
+  // Modifies filter based on if the user has inputted a category search
   if (categoryName) {
     const category = await Category.findOne({ name: categoryName });
     if (!category) {
@@ -105,6 +103,7 @@ const allProducts = async (req: Request, res: Response) => {
     filter = { category: category._id };
   }
 
+  // Retrieves all products with filtering
   const products = await Product.find(filter).populate("category");
 
   res.json({
@@ -113,8 +112,13 @@ const allProducts = async (req: Request, res: Response) => {
   });
 };
 
+/**
+ * Finds specific product by its id
+ */
 const findProduct = async (req: Request, res: Response) => {
   const product = await Product.findById(req.params.id).populate("category");
+
+  // Checks that product exists
   if (!product) {
     return res
       .status(404)
@@ -128,6 +132,8 @@ const findProduct = async (req: Request, res: Response) => {
 
 const deleteProduct = async (req: Request, res: Response) => {
   const deletedProd = await Product.findByIdAndDelete(req.params.id);
+
+  // Checks that product being deleted still exists
   if (!deletedProd) {
     return res
       .status(404)
@@ -142,17 +148,20 @@ const editProduct = async (req: Request, res: Response) => {
 
   const product = await Product.findById(id);
 
+  // Checks that product to be edited exists
   if (!product) {
     return res
       .status(404)
       .json({ message: "Product with specified id does not exist" });
   }
 
+  // Attempts to link category name with actual category
   const realCategory = await Category.findOne({ name: category });
   if (!realCategory) {
     return res.status(404).json({ message: "Category does not exist" });
   }
 
+  // Enters updated fields of product
   product.name = name;
   product.quantity = quantity;
   product.price = price;
@@ -161,6 +170,7 @@ const editProduct = async (req: Request, res: Response) => {
   product.category = realCategory._id;
 
   if (req.files) {
+    // Appends uploaded images to product
     const files = req.files as Express.Multer.File[];
     const uploadedImages = await processProductImages(files);
     product.images.push(...uploadedImages);

@@ -10,12 +10,17 @@ interface ImageType {
   size: number;
 }
 
+/**
+ * Processes uploaded images on multer to cloudinary
+ * @param files Files that were uploaded to multer
+ * @returns
+ */
 const processProductImages = async (
   files: Express.Multer.File[],
 ): Promise<ImageType[]> => {
   const uploadedImages = (await Promise.all(
     files.map(async (file) => {
-      // 1. We must create a promise wrapper because upload_stream is callback-based
+      // Promise wrapper when uploading the image to cloudinary
       return new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
@@ -34,7 +39,7 @@ const processProductImages = async (
           },
         );
 
-        // 2. Convert the Multer buffer to a readable stream and pipe it to Cloudinary
+        // Converts multer buffer into readable stream and pipes it to cloudinary
         Readable.from(file.buffer).pipe(uploadStream);
       });
     }),
@@ -43,18 +48,23 @@ const processProductImages = async (
   return uploadedImages;
 };
 
+/**
+ * Method to add a new product
+ * @returns
+ */
 const addProduct = async (req: Request, res: Response) => {
   const { name, quantity, price, description, unit, category } = req.body;
 
   const realCategory = await Category.findOne({ name: category });
+  // Checks that category exists in the database
   if (!realCategory) {
     return res.status(404).json({ message: "Category does not exist" });
   }
-
+  // Checks that user is logged in (TS angry)
   if (!req.user) {
     return res.status(401).json({ message: "Somehow you are not logged in" });
   }
-
+  // Checks that files exist (TS angry)
   if (!req.files) {
     return res.status(400).json({ message: "You need to upload an image" });
   }
@@ -62,6 +72,7 @@ const addProduct = async (req: Request, res: Response) => {
   const files = req.files as Express.Multer.File[];
   const uploadedImages = await processProductImages(files);
 
+  // Creates new product with the uploaded files
   const newProduct = new Product({
     name,
     unit,
@@ -76,6 +87,10 @@ const addProduct = async (req: Request, res: Response) => {
   res.json({ message: "Successfully added new product" });
 };
 
+/**
+ * Method to retrieve all products
+ * @returns
+ */
 const allProducts = async (req: Request, res: Response) => {
   const categoryName = req.query.category;
   let filter = {};

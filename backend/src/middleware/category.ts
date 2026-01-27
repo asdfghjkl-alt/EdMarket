@@ -2,6 +2,10 @@ import Category from "@/models/categories";
 import Product from "@/models/product";
 import type { NextFunction, Request, Response } from "express";
 
+/**
+ * Function to check that no products exist in the category before deleting
+ * @returns
+ */
 const checkNoProductsInCat = async (
   req: Request,
   res: Response,

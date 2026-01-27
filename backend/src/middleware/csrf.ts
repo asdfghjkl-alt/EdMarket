@@ -8,23 +8,28 @@ declare module "express-session" {
   }
 }
 
+/**
+ * Middleware to validate CSRF token to prevent csrf attacks
+ * @returns
+ */
 export const csrfMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction,
 ): void => {
-  // 1. Ensure a CSRF token exists in the session
+  // Checks CSRF token exists on the session
   if (!req.session.csrfToken) {
+    // If not, generate one and store it in session
     req.session.csrfToken = generateCsrfToken();
   }
 
-  // 2. Check if the method is safe
+  // Safe methods against csrf attacks are the following
   const safeMethods = ["GET", "HEAD", "OPTIONS"];
   if (safeMethods.includes(req.method)) {
     return next();
   }
 
-  // 3. For unsafe methods, validate the token
+  // For unsafe requests, token is needed to be validated
   const requestToken = req.headers["x-csrf-token"];
 
   if (!requestToken || requestToken !== req.session.csrfToken) {

@@ -11,6 +11,7 @@ import TextArea from "@/components/ui/inputs/TextArea";
 import ErrorPg from "@/components/ui/ErrorPg";
 import Close from "@/assets/close.png";
 import type { CategoryType } from "@/types/category";
+
 const allowedUnits = ["g", "kg", "ml", "L", "each"];
 const productSchema = Joi.object({
   name: Joi.string().required().messages({

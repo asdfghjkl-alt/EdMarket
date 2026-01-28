@@ -17,6 +17,7 @@ const adminLinks = [
   { href: "/products/manage", label: "Manage Products" },
   { href: "/categories/manage", label: "Manage Categories" },
   { href: "/orders/manage", label: "Manage Orders" },
+  { href: "/auth/manage", label: "Manage Users" },
 ];
 
 export const linkBaseClass =

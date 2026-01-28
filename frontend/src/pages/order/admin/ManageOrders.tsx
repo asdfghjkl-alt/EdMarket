@@ -85,6 +85,7 @@ export default function ManageOrders() {
     </div>
   ) : (
     <>
+      <h1 className="m-5 text-center text-4xl">Manage Orders</h1>
       {error && (
         <p className="text-center text-xl font-bold text-red-500">{error}</p>
       )}

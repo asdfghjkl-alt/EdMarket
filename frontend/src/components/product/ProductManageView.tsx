@@ -35,7 +35,7 @@ export default function ProductManageView({
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md md:grid md:grid-cols-12 md:items-center md:gap-4 md:text-center">
+    <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4 text-center shadow-sm transition-shadow hover:shadow-md md:grid md:grid-cols-12 md:items-center md:gap-4">
       <div className="flex justify-center md:col-span-2">
         <img
           className="h-24 w-24 rounded-md object-cover"
@@ -70,7 +70,7 @@ export default function ProductManageView({
       <div className="flex flex-col md:col-span-2">
         <span className="font-bold md:hidden">Description:</span>
         <span
-          className="mx-auto max-w-xs truncate md:w-full"
+          className="max-w-xs truncate md:w-full"
           title={product.description}
         >
           {product.description}

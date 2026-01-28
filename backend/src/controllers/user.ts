@@ -2,6 +2,8 @@ import type { NextFunction, Request, Response } from "express";
 import ShopError from "@/utils/ShopError";
 import User from "@/models/user";
 
+const allowedRoles = ["admin", "seller", "buyer"];
+
 /**
  * Function to register a user
  */
@@ -62,6 +64,9 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
+/**
+ * Gets user information from session
+ */
 const me = async (req: Request, res: Response) => {
   if (req.user) {
     const { _id, username, role } = req.user;
@@ -79,4 +84,42 @@ const me = async (req: Request, res: Response) => {
   res.status(401).json({ message: "Not authenticated" });
 };
 
-export { register, login, logout, me };
+/**
+ * Admin route to get all users and information
+ */
+const getAllUsers = async (req: Request, res: Response) => {
+  const users = await User.find();
+  const usersRet = users.map((user) => {
+    return {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    };
+  });
+
+  res.json({
+    message: "Users fetched successfully",
+    body: { users: usersRet },
+  });
+};
+
+const changeUserRole = async (req: Request, res: Response) => {
+  const { id, role } = req.params;
+
+  if (req.user?._id.equals(id as string)) {
+    throw new ShopError("You cannot modify your own role", 400);
+  }
+  if (!allowedRoles.includes(role as string)) {
+    throw new ShopError("Invalid role", 400);
+  }
+
+  const user = await User.findByIdAndUpdate(id, { role });
+  if (!user) {
+    throw new ShopError("User not found", 404);
+  }
+
+  res.json({ message: "User made seller successfully", body: { user } });
+};
+
+export { register, login, logout, me, getAllUsers, changeUserRole };

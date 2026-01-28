@@ -23,6 +23,8 @@ export default function ManageProducts() {
       } catch (err) {
         if (err instanceof AxiosError && err.name !== "AbortError") {
           setErrMsg(err.response?.data.message);
+        } else {
+          console.error(err);
         }
       } finally {
         setIsLoading(false);
@@ -71,16 +73,14 @@ export default function ManageProducts() {
           <div className="col-span-2">Actions</div>
         </div>
 
-        <div className="flex flex-col gap-4">
-          {products.map((product: Product) => (
-            <ProductManageView
-              key={product._id}
-              product={product}
-              setProducts={setProducts}
-              setError={setErrMsg}
-            />
-          ))}
-        </div>
+        {products.map((product: Product) => (
+          <ProductManageView
+            key={product._id}
+            product={product}
+            setProducts={setProducts}
+            setError={setErrMsg}
+          />
+        ))}
       </div>
     </div>
   );

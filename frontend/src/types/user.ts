@@ -11,6 +11,7 @@ export interface User {
   _id: string;
   username: string;
   role: "buyer" | "seller" | "admin";
+  email: string;
 }
 
 export interface AuthContextType {

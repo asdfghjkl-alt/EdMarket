@@ -17,6 +17,11 @@ export interface Product extends ProductBase {
     name: string;
   };
   _id: string;
+  seller: {
+    _id: string;
+    username: string;
+    email: string;
+  };
   images: {
     url: string;
     thumbnail: string;

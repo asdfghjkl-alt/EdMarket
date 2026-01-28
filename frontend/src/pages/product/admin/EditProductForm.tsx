@@ -11,6 +11,7 @@ import TextArea from "@/components/ui/inputs/TextArea";
 import ErrorPg from "@/components/ui/ErrorPg";
 import Close from "@/assets/close.png";
 import type { CategoryType } from "@/types/category";
+import { useAuth } from "@/contexts/UserContext";
 
 const allowedUnits = ["g", "kg", "ml", "L", "each"];
 const productSchema = Joi.object({
@@ -70,6 +71,7 @@ export default function EditProductForm() {
     },
   });
   const { id } = useParams();
+  const { user } = useAuth();
   const images = watch("images");
 
   const [isLoading, setIsLoading] = useState(true);
@@ -92,7 +94,12 @@ export default function EditProductForm() {
           category,
           images: productImages,
           description,
+          seller,
         } = data.body.product;
+
+        if (seller._id !== user?._id) {
+          navigate("/products/manage");
+        }
 
         setValue("name", name);
         setValue("price", price);

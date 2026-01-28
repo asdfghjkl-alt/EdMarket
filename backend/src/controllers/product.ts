@@ -107,7 +107,7 @@ const allProducts = async (req: Request, res: Response) => {
   // Retrieves all products with filtering
   const products = await Product.find(filter)
     .populate("category")
-    .populate("seller");
+    .populate("seller", "username email");
 
   res.json({
     message: "Successfully retrieved new products",
@@ -121,7 +121,7 @@ const allProducts = async (req: Request, res: Response) => {
 const findProduct = async (req: Request, res: Response) => {
   const product = await Product.findById(req.params.id)
     .populate("category")
-    .populate("seller");
+    .populate("seller", "username email");
 
   // Checks that product exists
   if (!product) {
@@ -226,14 +226,17 @@ const getProductsBySeller = async (req: Request, res: Response) => {
   }
 
   if (req.user.role === "admin") {
-    const products = await Product.find();
+    const products = await Product.find().populate("seller", "username email");
     return res.json({
       message: "Successfully retrieved products",
       body: { products },
     });
   }
 
-  const products = await Product.find({ seller: req.user._id });
+  const products = await Product.find({ seller: req.user._id }).populate(
+    "seller",
+    "username email",
+  );
   res.json({ message: "Successfully retrieved products", body: { products } });
 };
 

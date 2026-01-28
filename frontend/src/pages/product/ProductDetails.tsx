@@ -63,11 +63,11 @@ export default function ProductDetails() {
             <Carousel images={product.images} />
           </div>
           <div className="p-3">
-            <h1 className="my-4">
+            <h2 className="my-4">
               {product.name} | {product.quantity}
               {displayUnit}
-            </h1>
-            <h2 className="mb-4">${product.price.toFixed(2)}</h2>
+            </h2>
+            <h3 className="mb-4">${product.price.toFixed(2)}</h3>
             <p className="mb-4 text-sm text-gray-400">
               $
               {(
@@ -82,10 +82,13 @@ export default function ProductDetails() {
               product={product}
             />
             <div className="mr-20">
-              <h1 className="mt-10 mb-4">Product Details</h1>
-              <p className="text-lg whitespace-pre-line">
-                {product.description}
-              </p>
+              <h2 className="mt-10 mb-4">Product Details</h2>
+              <p className="whitespace-pre-line">{product.description}</p>
+            </div>
+            <div className="mr-20">
+              <h2 className="mt-10 mb-4">Seller Details</h2>
+              <p>Username: {product.seller.username}</p>
+              <p>Email: {product.seller.email}</p>
             </div>
           </div>
         </div>

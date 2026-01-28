@@ -5,11 +5,14 @@ import type { Product } from "@/types/product";
 import ProductManageView from "@/components/product/ProductManageView";
 import Loading from "@/components/ui/Loading";
 import { Link } from "react-router";
+import { useAuth } from "@/contexts/UserContext";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errMsg, setErrMsg] = useState<null | string>(null);
+
+  const { user } = useAuth();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -45,18 +48,22 @@ export default function ManageProducts() {
       <div className="mb-4 grid grid-cols-2 items-center justify-between">
         <h2 className="w-full text-center">Manage Products</h2>
         <div className="flex flex-col items-center justify-center gap-2">
-          <Link
-            to="/categories/manage"
-            className="btn btn-manage w-full text-center"
-          >
-            Manage Product Categories
-          </Link>
-          <Link
-            to="/products/add"
-            className="btn btn-submit w-full text-center"
-          >
-            Add New Product
-          </Link>
+          {user?.role === "admin" && (
+            <Link
+              to="/categories/manage"
+              className="btn btn-manage w-full text-center"
+            >
+              Manage Product Categories
+            </Link>
+          )}
+          {user?.role === "seller" && (
+            <Link
+              to="/products/add"
+              className="btn btn-submit w-full text-center"
+            >
+              Add New Product
+            </Link>
+          )}
         </div>
       </div>
       {errMsg && <p className="text-red-500">{errMsg}</p>}

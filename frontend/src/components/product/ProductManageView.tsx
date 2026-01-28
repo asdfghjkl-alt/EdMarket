@@ -1,4 +1,5 @@
 import api from "@/api/axios";
+import { useAuth } from "@/contexts/UserContext";
 import type { Product } from "@/types/product";
 import { AxiosError } from "axios";
 import { useState } from "react";
@@ -16,6 +17,8 @@ export default function ProductManageView({
   const displayUnit =
     product.unit !== "each" ? product.unit : ` ${product.unit}`;
   const [disableDelete, setDisableDelete] = useState(false);
+
+  const { user } = useAuth();
 
   async function deleteProduct(_id: string) {
     try {
@@ -78,12 +81,14 @@ export default function ProductManageView({
       </div>
 
       <div className="mt-4 flex justify-center gap-2 md:col-span-2 md:mt-0">
-        <Link
-          className="btn btn-edit px-4 py-2 text-sm"
-          to={`/products/edit/${product._id}`}
-        >
-          Edit
-        </Link>
+        {user?.role === "seller" && (
+          <Link
+            className="btn btn-edit px-4 py-2 text-sm"
+            to={`/products/edit/${product._id}`}
+          >
+            Edit
+          </Link>
+        )}
         <form
           className="inline-block"
           action={() => {

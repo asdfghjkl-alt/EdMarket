@@ -19,6 +19,7 @@ const adminLinks = [
   { href: "/orders/manage", label: "Manage Orders" },
   { href: "/auth/manage", label: "Manage Users" },
 ];
+const sellerLinks = [{ href: "/products/manage", label: "Manage Products" }];
 
 export const linkBaseClass =
   "tracking-wide px-5 py-2 rounded-xl text-teal-50 hover:bg-sky-600 transition-colors";
@@ -111,6 +112,9 @@ export default function Navbar() {
                 />
                 {user.role === "admin" && (
                   <Dropdown title="Admin Tools" links={adminLinks} />
+                )}
+                {user.role === "seller" && (
+                  <Dropdown title="Seller Tools" links={sellerLinks} />
                 )}
               </>
             ) : (

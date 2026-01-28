@@ -3,6 +3,8 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import { useState } from "react";
 import type { CategoryFormData } from "@/types/category";
+import NotFound from "@/pages/NotFound";
+import { useAuth } from "@/contexts/UserContext";
 
 const categorySchema = Joi.object({
   name: Joi.string().required().messages({
@@ -27,6 +29,8 @@ export default function AddCategoryForm({
       name: "",
     },
   });
+
+  const { user } = useAuth();
 
   const [isLoading, setIsLoading] = useState(false);
 

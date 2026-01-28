@@ -20,6 +20,17 @@ export default function Home() {
         secure user authentication, an admin dashboard for product, category and
         order management, dynamic cart display, and order processing.
       </p>
+      <p className="mt-4 max-w-2xl sm:mx-5 md:mx-30">
+        Further, Role Based Access Control has now been fully implemented with
+        roles of buyers, sellers and admins with different level of permissions
+        for actions.
+      </p>
+      <p className="mt-4 max-w-2xl sm:mx-5 md:mx-30">
+        In the project, buyers can only view products and add them to cart,
+        sellers can also create, update and delete their own products, and
+        admins can delete any products, manage orders, manage user roles and add
+        product categories.
+      </p>
       <Link
         to="/products"
         className="btn mt-4 flex items-center bg-blue-600 p-3 text-blue-100"

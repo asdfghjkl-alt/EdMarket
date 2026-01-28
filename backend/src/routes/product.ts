@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { isAdmin, isLoggedIn } from "@/middleware/user";
+import {
+  isAdmin,
+  isAdminOrSeller,
+  isLoggedIn,
+  isSeller,
+} from "@/middleware/user";
 import {
   checkEditImagesValid,
   checkInitImagesValid,
@@ -42,7 +47,7 @@ router
   .route("/")
   .post(
     isLoggedIn,
-    isAdmin,
+    isSeller,
     upload.array("images", 5),
     validateProduct,
     checkInitImagesValid,
@@ -53,10 +58,10 @@ router
 router
   .route("/:id")
   .get(findProduct)
-  .delete(isLoggedIn, isAdmin, deleteProduct)
+  .delete(isLoggedIn, isAdminOrSeller, deleteProduct)
   .put(
     isLoggedIn,
-    isAdmin,
+    isSeller,
     upload.array("images", 5),
     validateProduct,
     checkEditImagesValid,

@@ -79,6 +79,7 @@ const addProduct = async (req: Request, res: Response) => {
     images: uploadedImages,
     category: realCategory._id,
     description,
+    seller: req.user._id,
   });
 
   await newProduct.save();
@@ -130,21 +131,45 @@ const findProduct = async (req: Request, res: Response) => {
   });
 };
 
+/**
+ * Deletes a specific product by its id
+ */
 const deleteProduct = async (req: Request, res: Response) => {
-  const deletedProd = await Product.findByIdAndDelete(req.params.id);
+  const product = await Product.findById(req.params.id);
 
-  // Checks that product being deleted still exists
-  if (!deletedProd) {
+  if (!product) {
     return res
       .status(404)
       .json({ message: "Product with specified id does not exist" });
   }
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ message: "Somehow you were not authenticated" });
+  }
+
+  if (!product.seller.equals(req.user._id) && req.user.role !== "admin") {
+    return res
+      .status(401)
+      .json({ message: "You are not authorized to edit this product" });
+  }
+
+  await Product.findByIdAndDelete(req.params.id);
   res.status(200).json({ message: "Successfully deleted product!" });
 };
 
+/**
+ * Edits a specific product by its id
+ */
 const editProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, quantity, price, description, unit, category } = req.body;
+
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ message: "Somehow you were not authenticated" });
+  }
 
   const product = await Product.findById(id);
 
@@ -153,6 +178,12 @@ const editProduct = async (req: Request, res: Response) => {
     return res
       .status(404)
       .json({ message: "Product with specified id does not exist" });
+  }
+
+  if (!product.seller.equals(req.user._id)) {
+    return res
+      .status(401)
+      .json({ message: "You are not authorized to edit this product" });
   }
 
   // Attempts to link category name with actual category
@@ -180,4 +211,33 @@ const editProduct = async (req: Request, res: Response) => {
   res.json({ message: "Product successfully updated!" });
 };
 
-export { addProduct, allProducts, findProduct, deleteProduct, editProduct };
+/**
+ * Gets all products sold by the seller
+ */
+const getProductsBySeller = async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res
+      .status(401)
+      .json({ message: "Somehow you were not authenticated" });
+  }
+
+  if (req.user.role === "admin") {
+    const products = await Product.find();
+    return res.json({
+      message: "Successfully retrieved products",
+      body: { products },
+    });
+  }
+
+  const products = await Product.find({ seller: req.user._id });
+  res.json({ message: "Successfully retrieved products", body: { products } });
+};
+
+export {
+  addProduct,
+  allProducts,
+  findProduct,
+  deleteProduct,
+  editProduct,
+  getProductsBySeller,
+};

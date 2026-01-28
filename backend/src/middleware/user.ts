@@ -26,4 +26,26 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { isLoggedIn, isAdmin };
+/**
+ * Middleware to check that user is seller
+ */
+const isSeller = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user?.role !== "seller") {
+    return next(new ShopError("Page does not exist", 404));
+  }
+
+  next();
+};
+
+/**
+ * Middleware to check that user is admin or seller
+ */
+const isAdminOrSeller = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user?.role !== "admin" && req.user?.role !== "seller") {
+    return next(new ShopError("Page does not exist", 404));
+  }
+
+  next();
+};
+
+export { isLoggedIn, isAdmin, isSeller, isAdminOrSeller };

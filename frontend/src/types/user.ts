@@ -10,7 +10,7 @@ export interface RegisterFormData extends LoginFormData {
 export interface User {
   _id: string;
   username: string;
-  isAdmin: boolean;
+  role: "buyer" | "seller" | "admin";
 }
 
 export interface AuthContextType {

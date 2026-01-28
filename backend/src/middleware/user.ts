@@ -19,7 +19,7 @@ const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
  */
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   // Uses passport js integrated user object
-  if (!req.user?.isAdmin) {
+  if (req.user?.role !== "admin") {
     return next(new ShopError("Page does not exist", 404));
   }
 

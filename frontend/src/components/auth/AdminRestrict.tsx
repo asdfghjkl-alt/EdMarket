@@ -9,7 +9,7 @@ export default function AdminRestrict({ element }: { element: ReactNode }) {
 
   useEffect(() => {
     if (!loading) {
-      setIsAdmin(user?.isAdmin as boolean);
+      setIsAdmin(user?.role === "admin");
     }
   }, [user, loading]);
 

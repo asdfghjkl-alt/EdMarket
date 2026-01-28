@@ -8,6 +8,7 @@ import type {
 export interface IUser extends PassportLocalMongooseDocument {
   email: string;
   isAdmin: boolean;
+  role: "buyer" | "seller" | "admin";
 }
 
 const userSchema = new Schema({
@@ -18,6 +19,12 @@ const userSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["buyer", "seller", "admin"],
+    default: "buyer",
     required: true,
   },
 });

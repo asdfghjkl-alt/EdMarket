@@ -17,10 +17,6 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  isAdmin: {
-    type: Boolean,
-    required: true,
-  },
   role: {
     type: String,
     enum: ["buyer", "seller", "admin"],

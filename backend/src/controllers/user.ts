@@ -20,7 +20,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
           user: {
             username: registeredUser.username,
             _id: registeredUser._id,
-            isAdmin: registeredUser.isAdmin,
+            role: registeredUser.role,
           },
         },
       });
@@ -44,7 +44,7 @@ const login = async (req: Request, res: Response) => {
       user: {
         username: req.user?.username,
         _id: req.user?._id,
-        isAdmin: req.user?.isAdmin,
+        role: req.user?.role,
       },
     },
   });
@@ -64,14 +64,14 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
 
 const me = async (req: Request, res: Response) => {
   if (req.user) {
-    const { _id, username, isAdmin } = req.user;
+    const { _id, username, role } = req.user;
     return res.json({
       message: "Was authenticated",
       body: {
         user: {
           _id,
           username,
-          isAdmin,
+          role,
         },
       },
     });

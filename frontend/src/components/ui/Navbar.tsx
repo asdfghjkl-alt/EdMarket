@@ -108,7 +108,7 @@ export default function Navbar() {
                   title={`Welcome ${user.username}`}
                   links={authLinks}
                 />
-                {user.isAdmin && (
+                {user.role === "admin" && (
                   <Dropdown title="Admin Tools" links={adminLinks} />
                 )}
               </>
@@ -235,7 +235,7 @@ export default function Navbar() {
                 fullWidth
                 onItemClick={closeMenu}
               />
-              {user.isAdmin && (
+              {user.role === "admin" && (
                 <Dropdown
                   title="Admin Tools"
                   links={adminLinks}

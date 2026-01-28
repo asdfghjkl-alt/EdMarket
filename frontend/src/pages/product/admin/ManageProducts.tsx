@@ -18,7 +18,7 @@ export default function ManageProducts() {
       try {
         setIsLoading(true);
         // Attempts to get all products from backend
-        const { data } = await api.get("/products");
+        const { data } = await api.get("/products/manage");
         setProducts(data.body.products);
       } catch (err) {
         if (err instanceof AxiosError && err.name !== "AbortError") {
@@ -46,16 +46,16 @@ export default function ManageProducts() {
         <h2 className="w-full text-center">Manage Products</h2>
         <div className="flex flex-col items-center justify-center gap-2">
           <Link
-            to="/products/add"
-            className="btn btn-submit w-full text-center"
-          >
-            Add New Product
-          </Link>
-          <Link
             to="/categories/manage"
             className="btn btn-manage w-full text-center"
           >
             Manage Product Categories
+          </Link>
+          <Link
+            to="/products/add"
+            className="btn btn-submit w-full text-center"
+          >
+            Add New Product
           </Link>
         </div>
       </div>

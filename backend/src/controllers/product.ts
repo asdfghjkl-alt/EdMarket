@@ -105,7 +105,9 @@ const allProducts = async (req: Request, res: Response) => {
   }
 
   // Retrieves all products with filtering
-  const products = await Product.find(filter).populate("category");
+  const products = await Product.find(filter)
+    .populate("category")
+    .populate("seller");
 
   res.json({
     message: "Successfully retrieved new products",
@@ -117,7 +119,9 @@ const allProducts = async (req: Request, res: Response) => {
  * Finds specific product by its id
  */
 const findProduct = async (req: Request, res: Response) => {
-  const product = await Product.findById(req.params.id).populate("category");
+  const product = await Product.findById(req.params.id)
+    .populate("category")
+    .populate("seller");
 
   // Checks that product exists
   if (!product) {

@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import ProductDetails from "@/pages/product/ProductDetails";
 import ManageProducts from "@/pages/product/admin/ManageProducts";
-import AdminRestrict from "@/components/auth/AdminRestrict";
 import AddProductForm from "@/pages/product/admin/AddProductForm";
 import EditProductForm from "@/pages/product/admin/EditProductForm";
 import ProductsView from "@/pages/product/ProductsView";
+import SellerRestrict from "@/components/auth/SellerRestrict";
+import AdminSellerRestrict from "@/components/auth/AdminSellerRestrict";
 
 export default function ProductRoutes() {
   return (
@@ -12,16 +13,16 @@ export default function ProductRoutes() {
       <Route index element={<ProductsView />} />
       <Route
         path="add"
-        element={<AdminRestrict element={<AddProductForm />} />}
+        element={<SellerRestrict element={<AddProductForm />} />}
       />
       <Route
         path="manage"
-        element={<AdminRestrict element={<ManageProducts />} />}
+        element={<AdminSellerRestrict element={<ManageProducts />} />}
       />
       <Route path=":id" element={<ProductDetails />} />
       <Route
         path="edit/:id"
-        element={<AdminRestrict element={<EditProductForm />} />}
+        element={<SellerRestrict element={<EditProductForm />} />}
       />
     </Routes>
   );

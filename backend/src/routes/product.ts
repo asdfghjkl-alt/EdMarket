@@ -16,6 +16,7 @@ import {
   deleteProduct,
   findProduct,
   editProduct,
+  getProductsBySeller,
 } from "@/controllers/product";
 import { productLimit } from "@/utils/limiter";
 import multer from "multer";
@@ -54,6 +55,8 @@ router
     addProduct,
   )
   .get(allProducts);
+
+router.get("/manage", isLoggedIn, isAdminOrSeller, getProductsBySeller);
 
 router
   .route("/:id")

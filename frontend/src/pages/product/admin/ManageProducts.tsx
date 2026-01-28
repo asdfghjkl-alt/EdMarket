@@ -43,9 +43,7 @@ export default function ManageProducts() {
   return (
     <div className="m-6">
       <div className="mb-4 grid grid-cols-2 items-center justify-between">
-        <h1 className="w-full text-center text-2xl font-bold">
-          Manage Products
-        </h1>
+        <h2 className="w-full text-center">Manage Products</h2>
         <div className="flex flex-col items-center justify-center gap-2">
           <Link
             to="/products/add"

@@ -65,7 +65,7 @@ export default function ManageCategories() {
     <>
       <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2">
         <AddCategoryForm onSubmit={onSubmit} />
-        <h1 className="ml-2">Manage Categories</h1>
+        <h2 className="ml-2">Manage Categories</h2>
       </div>
       {errMsg && (
         <p className="text-center text-xl font-bold text-red-500">{errMsg}</p>

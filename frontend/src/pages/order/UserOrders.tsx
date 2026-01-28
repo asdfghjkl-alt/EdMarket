@@ -46,10 +46,13 @@ export default function UserOrders() {
       <p className="text-center text-xl font-bold">No orders found</p>
     </div>
   ) : (
-    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
-      {orders.map((order: OrderType) => (
-        <OrderDetails order={order} key={order._id} />
-      ))}
+    <div className="m-6 text-center">
+      <h1 className="m-5">User Orders</h1>
+      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
+        {orders.map((order: OrderType) => (
+          <OrderDetails order={order} key={order._id} />
+        ))}
+      </div>
     </div>
   );
 }

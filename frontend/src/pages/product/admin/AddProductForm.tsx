@@ -140,7 +140,7 @@ export default function AddProductForm() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
       <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <h1 className="text-xl font-semibold">Add a product</h1>
+        <h3>Add a product</h3>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <p className="text-red-500">{errMsg}</p>
           <InputField

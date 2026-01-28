@@ -76,7 +76,7 @@ export default function EditCategory() {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <h1 className="text-xl font-semibold">Edit a category</h1>
+        <h3>Edit a category</h3>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {errMsg && <p className="text-red-500">{errMsg}</p>}
           <InputField

@@ -40,8 +40,8 @@ export default function Cart() {
 
   return (
     <div className="m-6 text-center">
+      <h1 className="m-5">Cart</h1>
       <div className="flex flex-col gap-4">
-        {/* Desktop Header */}
         <div className="hidden rounded-md bg-gray-100 p-4 font-bold text-gray-700 md:grid md:grid-cols-12 md:gap-4 md:text-center">
           <div className="col-span-3">Image</div>
           <div className="col-span-3">Name</div>
@@ -60,7 +60,7 @@ export default function Cart() {
       </div>
       {cart.length === 0 ? (
         <div className="my-5 rounded-xl border-2 border-solid border-gray-500 p-5">
-          <p className="text-3xl font-bold">Cart is empty!</p>
+          <h2>Cart is empty!</h2>
           <p>Please order at least 1 item to order.</p>
         </div>
       ) : (

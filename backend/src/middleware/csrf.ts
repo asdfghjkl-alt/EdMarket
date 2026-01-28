@@ -32,7 +32,9 @@ export const csrfMiddleware = (
   const requestToken = req.headers["x-csrf-token"];
 
   if (!requestToken || requestToken !== req.session.csrfToken) {
-    return next(new ShopError("Invalid CSRF Token", 403));
+    return next(
+      new ShopError("Invalid CSRF Token, please refresh the page", 403),
+    );
   }
 
   next();
